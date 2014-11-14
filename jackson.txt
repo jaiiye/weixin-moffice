@@ -1,0 +1,69 @@
+
+http://127.0.0.1/weixin?msg_signature=7abd244cc75382840b2ae1ffa5e6369d446be816&timestamp=1415958709&nonce=442448040&echostr=61uOvaJRYSWd3rmReR5QUTpHo7epx7sAs4WU6D1RpnJx2mpDWjs%2Bb6nTLkdroMNtfI8v3SSEiaByD2yy8x8aTA%3D%3D
+
+
+msg_signature=7abd244cc75382840b2ae1ffa5e6369d446be816&timestamp=1415958709&nonce=442448040&echostr=61uOvaJRYSWd3rmReR5QUTpHo7epx7sAs4WU6D1RpnJx2mpDWjs%2Bb6nTLkdroMNtfI8v3SSEiaByD2yy8x8aTA%3D%3D
+
+
+[ERROR]-[Thread: http-80-2]-[com.jfinal.core.ActionHandler.handle()]: /weixin?signature=12487cbec47169ad48d16145e332c37cd0dedab3&timestamp=1415954662&nonce=320378306&encrypt_type=aes&msg_signature=96f39b491c5e5afeb1129b9ae660acced3fcc04c
+java.lang.NullPointerException
+	at com.jfinal.weixin.sdk.jfinal.WeixinController.getInMsg(WeixinController.java:113)
+	at com.jfinal.weixin.sdk.jfinal.WeixinController.index(WeixinController.java:54)
+	
+
+#可验证成功
+timestamp=1415934372  nonce=670066847  signature=0ae6101406df6145220b193f2513235a7457ff3a
+http://127.0.0.1/weixin/?signature=0ae6101406df6145220b193f2513235a7457ff3a&timestamp=1415934372&nonce=670066847
+
+<xml><ToUserName><![CDATA[gh_cb9520809797]]></ToUserName>
+<FromUserName><![CDATA[oIVT3jg0gSp-ckJ0S1SKkQDFP86E]]></FromUserName>
+<CreateTime>1415934372</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[123]]></Content>
+<MsgId>6081391821223979849</MsgId>
+</xml>
+
+<xml><ToUserName><![CDATA[gh_cb9520809797]]></ToUserName><Encrypt><![CDATA[6rDYf8GORQo+NWNyv6jkstnLUGfWRGYdws8Gd0QvRo/uY01AXXwAl1h3t9DVBWS8At3BXqf55MRr3ksc0UOMwy3J1XuxsnwMYsenVI2JEKjkU6l+Ukm9EJlB0RwW2JDT+dxaFTVwXATZ7J87d+shXgllxquWQTlAtgqOR+Q2piPWo/HmM0QlQpq2nnKOi5tjFeFPc+uXoIRAQUEFsAWpTFVv4yGDDDgQBkaUwixx7hV0PcubVGvdU0iiCZeBQ01SxtlJTweEMhWpk3YtUOv9/GIobK2Jz4iJUyCIGKRLqf1nww51gYV2UkpU5BWLy5WEIy4EuxkRrsp1LKGR3nPqX+IaaQ1GirQBUU5nSFOLDQIWA1V+Va04adRrJW8RZJvRoEf3OW07grVrc29efxW4vxllhx0RoSpC7MuV16LG0cg=]]></Encrypt></xml>
+
+
+===========================================================
+at java.lang.Integer.parseInt(Integer.java:417)
+	at java.lang.Integer.parseInt(Integer.java:499)
+	at com.jfinal.weixin.sdk.msg.InMsgParaser.doParse(InMsgParaser.java:45)
+	at com.jfinal.weixin.sdk.msg.InMsgParaser.parse(InMsgParaser.java:24)
+	at com.jfinal.weixin.sdk.jfinal.WeixinController.getInMsg(WeixinController.java:109)
+	at com.jfinal.weixin.sdk.jfinal.WeixinController.index(WeixinController.java:52)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at com.jfinal.core.ActionInvocation.invoke(ActionInvocation.java:55)
+	at com.jfinal.weixin.sdk.jfinal.WeixinInterceptor.intercept(WeixinInterceptor.java:37)
+	at com.jfinal.core.ActionInvocation.invoke(ActionInvocation.java:51)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:73)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:127)
+	at org.jstripe.tomcat.probe.Tomcat55AgentValve.invoke(Tomcat55AgentValve.java:20)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11AprProcessor.process(Http11AprProcessor.java:879)
+	at org.apache.coyote.http11.Http11AprProtocol$Http11ConnectionHandler.process(Http11AprProtocol.java:600)
+	at org.apache.tomcat.util.net.AprEndpoint$Worker.run(AprEndpoint.java:1703)
+	at java.lang.Thread.run(Thread.java:662)
+
+===================================================================================================
+JSON TYPE				JAVA TYPE
+object					LinkedHashMap<String,Object>
+array					ArrayList<Object>
+string					String
+number (no fraction)	Integer, Long or BigInteger (smallest applicable)
+number (fraction)		Double (configurable to use BigDecimal)
+true|false				Boolean
+null					null
+
+
