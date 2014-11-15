@@ -1,0 +1,80 @@
+<html>
+<head></head>
+<script src="../js/jquery.min.js"></script>
+<body>
+<form action="" method="post"">
+<table>
+	<tr>
+		<td>AppId</td>
+		<td><input type="text" id="AppId" value="${AppId}" /></td>
+	</tr>
+	<tr>
+		<td>AppSecret</td>
+		<td><input type="text" id="AppSecret" value="${AppSecret}"  style="width:250px;"/></td>
+	</tr>
+	<tr>
+		<td>Token</td>
+		<td><input type="text" id="Token" value="${Token}" /></td>
+	</tr>
+	<tr>
+		<td>EncodingAESKey</td>
+		<td><input type="text" id="EncodingAESKey"  style="width:400px;"
+			value="${EncodingAESKey}" /></td>
+	</tr>
+	<tr>
+		<td>回调测试</td>
+		<td><input type="button" value="开始测试" id="btn1" /></td>
+	</tr>
+	<tr>
+		<td>消息测试</td>
+		<td>
+			<input type="button" value="明文测试" id="btn2" />
+			<input type="button" value="密文测试" id="btn3" />
+		</td>
+	</tr>
+</table>
+<span id="msg" style="color:red"></span>
+<script>
+$("#btn1").click(function(e){
+	$("#msg").html("...");
+
+	var url="../qy/?";
+	url+="msg_signature=7abd244cc75382840b2ae1ffa5e6369d446be816"
+	url+="&timestamp=1415958709&nonce=442448040";
+	url+="&echostr=61uOvaJRYSWd3rmReR5QUTpHo7epx7sAs4WU6D1RpnJx2mpDWjs%2Bb6nTLkdroMNtfI8v3SSEiaByD2yy8x8aTA%3D%3D";
+	
+	//timestamp=1416034264  echostr=8583553582566995966  nonce=511963257  signature=fff7b91c473b747c85b553f4291c62ef92ad6a3f  
+	//url="../weixin/?";
+	//url+="signature=e67b9299fd071b3ec00f9b6dd4a51e70667c88be&echostr=142116668875210684&timestamp=1416035492&nonce=587138786";
+	$.post(url,{},function(ret){
+	    $("#msg").html(ret);
+	});
+});
+$("#btn2").click(function(e){
+	var url="../weixin/?";
+	url+="signature=70e08c27adaba2bebdc8545951bee8b7ba0f8581&timestamp=1416046629&nonce=69799373";
+	var xml="<xml><URL><![CDATA[http://www.dinglantech.com.cn/webapp/weixin/?signature=70e08c27adaba2bebdc8545951bee8b7ba0f8581&timestamp=1416046629&nonce=69799373]]></URL><ToUserName><![CDATA[1212]]></ToUserName><FromUserName><![CDATA[1212]]></FromUserName><CreateTime>1416034264</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[1234565]]></Content><MsgId>12321312312</MsgId></xml>";
+	
+	//注意设置contentType: "application/json",负责服务器端出错
+	$.ajax({url: url,processData: false,type:'post',contentType: "application/json", data:xml,success: function(data, textStatus){
+		$("#msg").html($(data).text()); 
+	}});
+});
+$("#btn3").click(function(e){
+	var url="../qy/?";
+	url+="msg_signature=c16c9fe2ede1d8e96db79edf49150c0215c5f74b&timestamp=1416056603&nonce=1344265638";
+	var xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><Encrypt><![CDATA[XChkfEXUyiyzFNlmyF2D1bMI3+Y06qRFyZM8H1RPjfiL2jXuPcuWBZ07bfXpxD1zOBIT33kfHI/7OiwXAnuro15sHPhpiQFNRa8rQDn8gCjkexH2wj6g1qenobBGLFXCxrDTnM7VDMK06UiAir6EOPPCV0PBCHRHsSViB1jV/fD6F65S8nTuN2Mb1Y0uCv9B6ebbKTMTbNHT0URTYQwzOFUPzD+fVOJO4OKvZmkG1/f9ES/WiB348gXgCnMh4M2LYzIzapQJC/RBFqTlOQdhcz6RC/FExfsTuj+ItJ1Hz1QY4AVHyeDnHd9cERQufIwGNg1TdCZ60V+u8MgSLVa1+Xc4A24bQmaPLaBBWp13sO2NejmKo4rMrqIVNtARd9S1Wizz84xz68pJ+4LVX5sQnkcNxmEI+cY9mi0LOl94Zkhm1Wp8fm5PF6Duuk0DZkzqyWUGxFaibpqLYnUzV1/mDg==]]></Encrypt><AgentID><![CDATA[10]]></AgentID></xml>";
+	
+	//注意设置contentType: "application/json",负责服务器端出错
+	$.ajax({url: url,processData: false,type:'post',contentType: "application/json", data:xml,success: function(data, textStatus){
+		//debugger; 
+		$("#msg").html($(data).text()); 
+	}});
+});
+
+</script>
+</form>
+</body>
+</html>
+
+
