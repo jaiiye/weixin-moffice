@@ -4,7 +4,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 
-package com.jfinal.weixin.sdk.jfinal;
+package com.jfinal.weixin.demo;
 
 import com.jfinal.aop.Interceptor;
 import com.jfinal.core.ActionInvocation;
@@ -20,13 +20,16 @@ import com.jfinal.weixin.sdk.kit.SignatureCheckKit;
  * 注意： WeixinController 的继承类如果覆盖了 index 方法，则需要对该 index 方法声明该拦截器
  * 		因为子类覆盖父类方法会使父类方法配置的拦截器失效，从而失去本拦截器的功能
  */
-public class WeixinInterceptor implements Interceptor {
+public class CoreInterceptor implements Interceptor {
 	
-	private static final Logger log =  Logger.getLogger(WeixinInterceptor.class);
+	private static final Logger log =  Logger.getLogger(CoreInterceptor.class);
 	
 	public void intercept(ActionInvocation ai) {
 		// 如果是服务器配置请求，则配置服务器并返回
 		Controller controller = ai.getController();
+		String url=controller.getRequest().getRequestURL().toString()+"?" + controller.getRequest().getQueryString();
+		log.info("request url:"+url);
+		
 		if (isConfigServerRequest(controller)) {
 			configServer(controller);
 			return ;
@@ -35,9 +38,6 @@ public class WeixinInterceptor implements Interceptor {
 		// 签名检测
 		if (checkSignature(controller)) {
 			ai.invoke();
-		}
-		else {
-			controller.renderText("check signature failure");
 		}
 	}
 	
@@ -49,8 +49,10 @@ public class WeixinInterceptor implements Interceptor {
 		String timestamp = controller.getPara("timestamp");
 		String nonce = controller.getPara("nonce");
 		
+		
+		//调试发现公众号转发消息时参数没有signature,暂时直接返回true 彭2014.11.15
 		if (StrKit.isBlank(signature) || StrKit.isBlank(timestamp) || StrKit.isBlank(nonce)) {
-			controller.renderText("check signature failure");
+			controller.renderText("check signature failure. (sigature|timestamp|none) not exist ");
 			return false;
 		}
 		
@@ -58,11 +60,13 @@ public class WeixinInterceptor implements Interceptor {
 			return true;
 		}
 		else {
-			log.error("check signature failure: " +
-					" signature = " + controller.getPara("signature") +
-					" timestamp = " + controller.getPara("timestamp") +
-					" nonce = " + controller.getPara("nonce"));
+			String sb="check signature failure: " +
+			" signature = " + controller.getPara("signature") +
+			" timestamp = " + controller.getPara("timestamp") +
+			" nonce = " + controller.getPara("nonce");
 			
+			log.error(sb);
+			controller.renderText(sb);
 			return false;
 		}
 	}
@@ -85,7 +89,9 @@ public class WeixinInterceptor implements Interceptor {
         String timestamp = c.getPara("timestamp");
         String nonce = c.getPara("nonce");
         
+        //非加密验证
         boolean isOk = SignatureCheckKit.me.checkSignature(signature, timestamp, nonce);
+        
 		if (isOk)
 			c.renderText(echostr);
 		else

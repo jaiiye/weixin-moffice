@@ -4,7 +4,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 
-package com.jfinal.weixin.sdk.jfinal;
+package com.jfinal.weixin.demo;
 
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
@@ -32,9 +32,9 @@ import com.jfinal.weixin.sdk.msg.OutTextMsg;
 /**
  * 接收微信服务器消息，自动解析成 InMsg 并分发到相应的处理方法
  */
-public abstract class WeixinController extends Controller {
+public abstract class CorpController extends Controller {
 	
-	private static final Logger log =  Logger.getLogger(WeixinController.class);
+	private static final Logger log =  Logger.getLogger(CorpController.class);
 	private String inMsgXml = null;		// 本次请求 xml数据
 	private InMsg inMsg = null;			// 本次请求 xml 解析后的 InMsg 对象
 	private WxCryptUtil cryptUtil=null;
@@ -42,12 +42,11 @@ public abstract class WeixinController extends Controller {
 	/**
 	 * weixin 公众号服务器调用唯一入口，即在开发者中心输入的 URL 必须要指向此 action
 	 */
-	@Before(WeixinInterceptor.class)
+	@Before(CorpInterceptor.class)
 	public void index() {
 		// 开发模式输出微信服务发送过来的  xml 消息
 		if (ApiConfig.isDevMode()) {
-			System.out.println("接收消息:");
-			System.out.println(getInMsgXml());
+			log.info("接收消息:"+getInMsgXml());
 		}
 		
 		// 解析消息并根据消息类型分发到相应的处理方法
@@ -85,11 +84,17 @@ public abstract class WeixinController extends Controller {
 		String outMsgXml = OutMsgXmlBuilder.build(outMsg);
 		// 开发模式向控制台输出即将发送的 OutMsg 消息的 xml 内容
 		if (ApiConfig.isDevMode()) {
-			System.out.println("发送消息:");
-			System.out.println(outMsgXml);
-			System.out.println("--------------------------------------------------------------------------------\n");
+			log.info("发送消息:"+outMsgXml);
+			log.info("--------------------------------------------------------------------------------\n");
 		}
-		renderText(outMsgXml, "text/xml");
+		
+		String destMsgXml=outMsgXml;
+		WxCryptUtil pc = getWxCryptUtil();
+		destMsgXml= pc.encrypt(outMsgXml);
+		log.info("加密消息:"+destMsgXml);
+		log.info("--------------------------------------------------------------------------------\n");
+		
+		renderText(destMsgXml, "text/xml");
 	}
 	
 	public void renderOutTextMsg(String content) {
@@ -109,19 +114,17 @@ public abstract class WeixinController extends Controller {
 	public InMsg getInMsg() {
 		String xml=getInMsgXml();
 		
-		String  encrypt_type = this.getPara("encrypt_type");
-		if(!encrypt_type.isEmpty()){
-			 WxCryptUtil pc = getWxCryptUtil();
-			 String msgSignature = getPara("msg_signature");
-			 String timestamp = getPara("timestamp");
-			 String nonce = getPara("nonce");
-			 xml= pc.decrypt(msgSignature, timestamp, nonce, xml);
-		}
+		WxCryptUtil pc = getWxCryptUtil();
+		String msgSignature = getPara("msg_signature");
+		String timestamp = getPara("timestamp");
+		String nonce = getPara("nonce");
+		xml= pc.decrypt(msgSignature, timestamp, nonce, xml);
+		log.info("脱密消息:"+xml);
+		log.info("--------------------------------------------------------------------------------\n");
 		
 		inMsg = InMsgParaser.parse(xml); 
 		return inMsg;
-	}
-	
+	}	
 	private WxCryptUtil getWxCryptUtil(){
 		if(cryptUtil==null){
 			cryptUtil=new WxCryptUtil(ApiConfig.getToken(),ApiConfig.getEncodingAESKey(),ApiConfig.getAppId());
