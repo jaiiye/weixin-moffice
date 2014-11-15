@@ -87,7 +87,7 @@ public class WxCryptUtil {
     String nonce = genRandomStr();
 
     try {
-      String signature = SHA1.gen(token, timeStamp, nonce, encryptedXml);
+      String signature = EncryptionKit.sha1Encrypt(token, timeStamp, nonce, encryptedXml);
       String result = generateXml(encryptedXml, signature, timeStamp, nonce);
       return result;
     } catch (NoSuchAlgorithmException e) {
@@ -155,13 +155,10 @@ public class WxCryptUtil {
    * @return 解密后的原文
    */
   public String decrypt(String msgSignature, String timeStamp, String nonce, String encryptedXml) {
-    // 密钥，公众账号的app corpSecret
     // 提取密文
     String cipherText = extractEncryptPart(encryptedXml);
-     
-    try {
-      // 验证安全签名
-      String signature = SHA1.gen(token, timeStamp, nonce, cipherText);
+    try { // 验证安全签名
+      String signature = EncryptionKit.sha1Encrypt(token, timeStamp, nonce, cipherText);
       if (!signature.equals(msgSignature)) {
         throw new RuntimeException("加密消息签名校验失败");
       }

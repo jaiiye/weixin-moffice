@@ -20,26 +20,15 @@ import com.jfinal.weixin.sdk.api.ApiConfig;
 public class SignatureCheckKit {
 	
 	public static final SignatureCheckKit me = new SignatureCheckKit();
+	public boolean checkSignature(String signature, String timestamp, String nonce,String msg_encrypt) {
+		String TOKEN = ApiConfig.getToken();
+		String array[] = {TOKEN, timestamp, nonce,msg_encrypt};
+		Arrays.sort(array);
+		String tempStr = new StringBuilder().append(array[0] + array[1] + array[2] + array[3]).toString();
+		tempStr = EncryptionKit.sha1Encrypt(tempStr);
+		return tempStr.equalsIgnoreCase(signature);
+	}
 	
-	/**
-	 * php 示例
-	 *  $signature = $_GET["signature"];
-        $timestamp = $_GET["timestamp"];
-        $nonce = $_GET["nonce"];	
-        		
-		$token = TOKEN;
-		$tmpArr = array($token, $timestamp, $nonce);
-		sort($tmpArr, SORT_STRING);
-		$tmpStr = implode( $tmpArr );
-		$tmpStr = sha1( $tmpStr );
-		
-		if( $tmpStr == $signature ){
-			return true;
-		}else{
-			return false;
-		}
-	 * @return
-	 */
 	public boolean checkSignature(String signature, String timestamp, String nonce) {
 		String TOKEN = ApiConfig.getToken();
 		String array[] = {TOKEN, timestamp, nonce};
@@ -48,7 +37,6 @@ public class SignatureCheckKit {
 		tempStr = EncryptionKit.sha1Encrypt(tempStr);
 		return tempStr.equalsIgnoreCase(signature);
 	}
-	
 	public boolean checkSignature(Controller c) {
         return checkSignature(c.getPara("signature"), c.getPara("timestamp"), c.getPara("nonce"));
 	}

@@ -32,14 +32,13 @@ public class WeixinConfig extends JFinalConfig {
 	}
 	
 	public void configRoute(Routes me) {
-		me.add("/weixin", DemoController.class);
+		me.add("/gz", GzController.class);
+		me.add("/qy", QyController.class);
 		me.add("/api", ApiController.class);
+		me.add("/test", TestController.class);
 	}
 	
 	public void configPlugin(Plugins me) {
-		// C3p0Plugin c3p0Plugin = new C3p0Plugin(getProperty("jdbcUrl"), getProperty("user"), getProperty("password").trim());
-		// me.add(c3p0Plugin);
-		
 		EhCachePlugin ecp = new EhCachePlugin();
 		me.add(ecp);
 	}
@@ -54,5 +53,6 @@ public class WeixinConfig extends JFinalConfig {
 	
 	public static void main(String[] args) {
 		JFinal.start("webapp", 80, "/", 5);
+		
 	}
 }
