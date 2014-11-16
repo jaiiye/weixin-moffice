@@ -26,6 +26,9 @@ import javax.servlet.ServletContext;
 
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockServletContext;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
@@ -40,9 +43,9 @@ import com.jfinal.log.Logger;
 
 public abstract class ControllerTestCase<T extends JFinalConfig> {
     protected static final Logger LOG = Logger.getLogger(ControllerTestCase.class);
-    protected static ServletContext servletContext = new MockServletContext();;
-    protected static MockHttpRequest request;
-    protected static MockHttpResponse response;
+    protected static ServletContext servletContext = new MockServletContext("/");
+    protected static MockHttpServletRequest request;
+    protected static MockHttpServletResponse response;
     protected static Handler handler;
     private static boolean configStarted = false;
     private static JFinalConfig configInstance;
@@ -53,7 +56,8 @@ public abstract class ControllerTestCase<T extends JFinalConfig> {
     private Class<? extends JFinalConfig> config;
 
     private static void initConfig(Class<JFinal> clazz, JFinal me, ServletContext servletContext, JFinalConfig config) {
-        Reflect.on(me).call("init", config, servletContext);
+    	
+    	Reflect.on(me).call("init", config, servletContext);
     }
 
     public static void start(Class<? extends JFinalConfig> configClass) throws Exception {
@@ -81,7 +85,7 @@ public abstract class ControllerTestCase<T extends JFinalConfig> {
         return request.getAttribute(key);
     }
 
-    private String getTarget(String url, MockHttpRequest request) {
+    private String getTarget(String url, MockHttpServletRequest request) {
         String target = url;
         if (url.contains("?")) {
             target = url.substring(0, url.indexOf("?"));
@@ -119,8 +123,12 @@ public abstract class ControllerTestCase<T extends JFinalConfig> {
             bodyData = Joiner.on("").join(req);
         }
         StringWriter resp = new StringWriter();
-        request = new MockHttpRequest(bodyData);
-        response = new MockHttpResponse(resp);
+        request = new MockHttpServletRequest();//bodyData
+        request.setContent(bodyData.getBytes());
+        
+        response = new MockHttpServletResponse();//resp
+        //response.setContentType(resp);
+        
         Reflect.on(handler).call("handle", getTarget(actionUrl, request), request, response, new boolean[] { true });
         String response = resp.toString();
         if (responseFile != null) {
