@@ -32,6 +32,65 @@
 			<input type="button" value="密文测试" id="btn3" />
 		</td>
 	</tr>
+	<tr>
+		<td>菜单测试</td>
+		<td>
+			<textarea id="menu" style="width:700px;height:100px;">
+{
+    "button": [
+        {
+            "name": "扫码", 
+            "sub_button": [
+                {
+                    "type": "scancode_waitmsg", 
+                    "name": "扫码带提示", 
+                    "key": "rselfmenu_0_0", 
+                    "sub_button": [ ]
+                }, 
+                {
+                    "type": "scancode_push", 
+                    "name": "扫码推事件", 
+                    "key": "rselfmenu_0_1", 
+                    "sub_button": [ ]
+                }
+            ]
+        }, 
+        {
+            "name": "发图", 
+            "sub_button": [
+                {
+                    "type": "pic_sysphoto", 
+                    "name": "系统拍照发图", 
+                    "key": "rselfmenu_1_0", 
+                   "sub_button": [ ]
+                 }, 
+                {
+                    "type": "pic_photo_or_album", 
+                    "name": "拍照或者相册发图", 
+                    "key": "rselfmenu_1_1", 
+                    "sub_button": [ ]
+                }, 
+                {
+                    "type": "pic_weixin", 
+                    "name": "微信相册发图", 
+                    "key": "rselfmenu_1_2", 
+                    "sub_button": [ ]
+                }
+            ]
+        }, 
+        {
+            "name": "发送位置", 
+            "type": "location_select", 
+            "key": "rselfmenu_2_0"
+        }
+    ]
+}
+			</textarea>
+			<br>
+			<input type="button" value="创建菜单" id="btn4" />
+			<input type="button" value="获取菜单" id="btn5" />
+		</td>
+	</tr>
 </table>
 <span id="msg" style="color:red"></span>
 <script>
@@ -42,10 +101,7 @@ $("#btn1").click(function(e){
 	url+="msg_signature=7abd244cc75382840b2ae1ffa5e6369d446be816"
 	url+="&timestamp=1415958709&nonce=442448040";
 	url+="&echostr=61uOvaJRYSWd3rmReR5QUTpHo7epx7sAs4WU6D1RpnJx2mpDWjs%2Bb6nTLkdroMNtfI8v3SSEiaByD2yy8x8aTA%3D%3D";
-	
-	//timestamp=1416034264  echostr=8583553582566995966  nonce=511963257  signature=fff7b91c473b747c85b553f4291c62ef92ad6a3f  
-	//url="../weixin/?";
-	//url+="signature=e67b9299fd071b3ec00f9b6dd4a51e70667c88be&echostr=142116668875210684&timestamp=1416035492&nonce=587138786";
+
 	$.post(url,{},function(ret){
 	    $("#msg").html(ret);
 	});
@@ -70,6 +126,23 @@ $("#btn3").click(function(e){
 		//debugger; 
 		$("#msg").html($(data).text()); 
 	}});
+});
+
+
+$("#btn4").click(function(e){
+	$("#msg").html("...");
+	var url="../api/createMenu?";
+	$.post(url,{menu:$("#menu").text()},function(ret){
+	    $("#msg").html(ret);
+	});
+});
+
+$("#btn5").click(function(e){
+	$("#msg").html("...");
+	var url="../api/getMenu?";
+	$.post(url,{},function(ret){
+	    $("#msg").html(ret);
+	});
 });
 
 </script>

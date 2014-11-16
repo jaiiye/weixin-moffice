@@ -35,6 +35,7 @@ public class WeixinConfig extends JFinalConfig {
 		me.add("/gz", GzController.class);
 		me.add("/qy", QyController.class);
 		me.add("/api", ApiController.class);
+		me.add("/user", UserController.class);
 		me.add("/test", TestController.class);
 	}
 	

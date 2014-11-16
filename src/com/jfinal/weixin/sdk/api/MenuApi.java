@@ -13,8 +13,10 @@ import com.jfinal.weixin.sdk.kit.HttpKit;
  */
 public class MenuApi {
 	
-	private static String getMenu = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=";
-	private static String createMenu = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
+	//private static String getMenu = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=";
+	//private static String createMenu = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
+	private static String getMenu = "https://qyapi.weixin.qq.com/cgi-bin/menu/get?agentid=10&access_token=";
+	private static String createMenu = "https://qyapi.weixin.qq.com/cgi-bin/menu/create?agentid=10&access_token=";
 	
 	/**
 	 * 查询菜单
@@ -27,7 +29,7 @@ public class MenuApi {
 	/**
 	 * 创建菜单
 	 */
-	public ApiResult createMenu(String jsonStr) {
+	public static ApiResult createMenu(String jsonStr) {
 		String jsonResult = HttpKit.post(createMenu + AccessTokenApi.getAccessToken().getAccessToken(), jsonStr);
 		return new ApiResult(jsonResult);
 	}

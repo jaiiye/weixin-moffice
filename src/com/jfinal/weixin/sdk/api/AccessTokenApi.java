@@ -20,8 +20,9 @@ import com.jfinal.weixin.sdk.kit.ParaMap;
 public class AccessTokenApi {
 	
 	// "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
-	private static String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
+	//private static String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
 	
+	private static String url ="https://qyapi.weixin.qq.com/cgi-bin/gettoken?rnd=1";
 	private static AccessToken accessToken;
 	
 	public static AccessToken getAccessToken() {
@@ -39,7 +40,7 @@ public class AccessTokenApi {
 	private static AccessToken requestAccesToken() {
 		final String appId = ApiConfig.getAppId();
 		final String appSecret = ApiConfig.getAppSecret();
-		Map<String, String> queryParas = ParaMap.create("appid", appId).put("secret", appSecret).getData();
+		Map<String, String> queryParas = ParaMap.create("corpid", appId).put("corpsecret", appSecret).getData();
 		String json = HttpKit.get(url, queryParas);
 		return new AccessToken(json);
 	}

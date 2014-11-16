@@ -11,7 +11,6 @@ import com.jfinal.core.Controller;
 import com.jfinal.log.Logger;
 import com.jfinal.weixin.sdk.api.ApiConfig;
 import com.jfinal.weixin.sdk.kit.HttpKit;
-import com.jfinal.weixin.sdk.kit.WxCryptUtil;
 import com.jfinal.weixin.sdk.msg.InFollowEvent;
 import com.jfinal.weixin.sdk.msg.InImageMsg;
 import com.jfinal.weixin.sdk.msg.InLinkMsg;
@@ -37,7 +36,6 @@ public abstract class CoreController extends Controller {
 	private static final Logger log =  Logger.getLogger(CoreController.class);
 	private String inMsgXml = null;		// 本次请求 xml数据
 	private InMsg inMsg = null;			// 本次请求 xml 解析后的 InMsg 对象
-	private WxCryptUtil cryptUtil=null;
 	
 	/**
 	 * weixin 公众号服务器调用唯一入口，即在开发者中心输入的 URL 必须要指向此 action

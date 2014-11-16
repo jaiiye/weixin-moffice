@@ -23,11 +23,23 @@ public class ApiController extends Controller {
 	}
 	
 	/**
+	 * 获取公众号菜单
+	 */
+	public void createMenu() {
+		String jsonStr=this.getPara("menu");
+		ApiResult apiResult = MenuApi.createMenu(jsonStr);
+		if (apiResult.isSucceed())
+			renderText(apiResult.getJson());
+		else
+			renderText(apiResult.getErrorMsg());
+	}
+	
+	/**
 	 * 获取公众号关注用户
 	 */
 	public void getFollowers() {
 		ApiResult apiResult = UserApi.getFollows();
-		// TODO 用 jackson 解析结果出来
+		//用 jackson 解析结果出来
 		renderText(apiResult.getJson());
 	}
 }
