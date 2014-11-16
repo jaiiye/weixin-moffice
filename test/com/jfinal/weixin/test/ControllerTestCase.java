@@ -29,6 +29,7 @@ import org.junit.Before;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletContext;
+import org.springframework.web.context.ContextLoader;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
@@ -43,7 +44,7 @@ import com.jfinal.log.Logger;
 
 public abstract class ControllerTestCase<T extends JFinalConfig> {
     protected static final Logger LOG = Logger.getLogger(ControllerTestCase.class);
-    protected static ServletContext servletContext = new MockServletContext("/");
+    protected static ServletContext servletContext ;
     protected static MockHttpServletRequest request;
     protected static MockHttpServletResponse response;
     protected static Handler handler;
@@ -64,6 +65,10 @@ public abstract class ControllerTestCase<T extends JFinalConfig> {
         if (configStarted) {
             return;
         }
+        
+        MockServletContext servletContext = new MockServletContext();
+        servletContext.addInitParameter(ContextLoader.CONFIG_LOCATION_PARAM, "");
+        
         Class<JFinal> clazz = JFinal.class;
         JFinal me = JFinal.me();
         configInstance = configClass.newInstance();
