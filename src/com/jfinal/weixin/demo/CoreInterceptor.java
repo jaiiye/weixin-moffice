@@ -27,8 +27,8 @@ public class CoreInterceptor implements Interceptor {
 	public void intercept(ActionInvocation ai) {
 		// 如果是服务器配置请求，则配置服务器并返回
 		Controller controller = ai.getController();
-		String url=controller.getRequest().getRequestURL().toString()+"?" + controller.getRequest().getQueryString();
-		log.info("request url:"+url);
+		//String url=controller.getRequest().getRequestURL().toString()+"?" + controller.getRequest().getQueryString();
+		//log.info("request url:"+url);
 		
 		if (isConfigServerRequest(controller)) {
 			configServer(controller);

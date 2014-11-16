@@ -5,7 +5,6 @@ import java.net.URL;
 
 import org.junit.Test;
 
-import com.jfinal.kit.PathKit;
 import com.jfinal.weixin.sdk.api.ApiResult;
 import com.jfinal.weixin.sdk.api.UserApi;
 
