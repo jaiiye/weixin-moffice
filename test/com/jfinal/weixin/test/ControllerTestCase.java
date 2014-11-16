@@ -26,10 +26,6 @@ import javax.servlet.ServletContext;
 
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.MockServletContext;
-import org.springframework.web.context.ContextLoader;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
@@ -41,12 +37,13 @@ import com.jfinal.core.JFinal;
 import com.jfinal.ext.kit.Reflect;
 import com.jfinal.handler.Handler;
 import com.jfinal.log.Logger;
+import com.jfinal.weixin.test.util.*;
 
 public abstract class ControllerTestCase<T extends JFinalConfig> {
     protected static final Logger LOG = Logger.getLogger(ControllerTestCase.class);
     protected static ServletContext servletContext ;
-    protected static MockHttpServletRequest request;
-    protected static MockHttpServletResponse response;
+    protected static MockHttpRequest request;
+    protected static MockHttpResponse response;
     protected static Handler handler;
     private static boolean configStarted = false;
     private static JFinalConfig configInstance;
@@ -67,8 +64,7 @@ public abstract class ControllerTestCase<T extends JFinalConfig> {
         }
         
         MockServletContext servletContext = new MockServletContext();
-        servletContext.addInitParameter(ContextLoader.CONFIG_LOCATION_PARAM, "");
-        
+         
         Class<JFinal> clazz = JFinal.class;
         JFinal me = JFinal.me();
         configInstance = configClass.newInstance();
@@ -90,7 +86,7 @@ public abstract class ControllerTestCase<T extends JFinalConfig> {
         return request.getAttribute(key);
     }
 
-    private String getTarget(String url, MockHttpServletRequest request) {
+    private String getTarget(String url, MockHttpRequest request) {
         String target = url;
         if (url.contains("?")) {
             target = url.substring(0, url.indexOf("?"));
@@ -128,10 +124,8 @@ public abstract class ControllerTestCase<T extends JFinalConfig> {
             bodyData = Joiner.on("").join(req);
         }
         StringWriter resp = new StringWriter();
-        request = new MockHttpServletRequest();//bodyData
-        request.setContent(bodyData.getBytes());
-        
-        response = new MockHttpServletResponse();//resp
+        request = new MockHttpRequest(bodyData);
+        response = new MockHttpResponse(resp);//
         //response.setContentType(resp);
         
         Reflect.on(handler).call("handle", getTarget(actionUrl, request), request, response, new boolean[] { true });
