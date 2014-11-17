@@ -31,7 +31,12 @@ import com.jfinal.weixin.sdk.msg.OutVoiceMsg;
  */
 public class QyController extends CorpController {
 	
-	private static final String helpStr = "\t发送 help 可获得帮助，发送 \"美女\" 可看美女，发送 news 可看新闻，发送 music 可听音乐，你还可以试试发送图片、语音、位置、收藏等信息，看会有什么 。公众号持续更新中，想要更多惊喜欢迎每天关注 ^_^";
+	private static final String helpStr = "\t【help】预计实现功能：" +
+			"\t1.通信录" +
+			"\t2.快速分享" +
+			"\t3.移动签到" +
+			"\t4.快速分享" +
+			"\t每天关注 ^_^";
 	
 	/**
 	 * 实现父类抽方法，处理文本消息
@@ -72,7 +77,7 @@ public class QyController extends CorpController {
 		// 其它文本消息直接返回原值 + 帮助提示
 		else {
 			OutTextMsg outMsg = new OutTextMsg(inTextMsg);
-			outMsg.setContent("\t文本消息已成功接收，内容为： " + inTextMsg.getContent() + "\n\n" + helpStr);
+			outMsg.setContent("\t文本消息已成功接收，内容为： " + inTextMsg.getContent());
 			render(outMsg);
 		}
 	}

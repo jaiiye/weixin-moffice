@@ -1,15 +1,22 @@
 package com.jfinal.weixin.test;
 
 
+import java.io.StringReader;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
 
 import com.jfinal.weixin.demo.WeixinConfig;
-import com.jfinal.weixin.sdk.kit.EncryptionKit;
-import com.jfinal.weixin.sdk.kit.SignatureCheckKit;
 import com.jfinal.weixin.sdk.kit.WxCryptUtil;
 import com.jfinal.weixin.sdk.api.ApiConfig;
 
@@ -50,41 +57,41 @@ public class QyTestCase extends ControllerTestCase<WeixinConfig> {
 		Assert.assertEquals(msg_signature, signature);
 	}
 	
-	@Test 
-	public void testDecrypt() {
+	/*
+	 * 测试加解密
+	 * 1.加密算法有问题（加密后再解密，和原名文，不一致）
+	 * 2.自己增加了方法，进行修正，微信自己的加密方法仍然不知道；
+	 */
+	@Ignore 
+	public void testEncryptAndDecrypt(){		
 		WxCryptUtil cryptUtil=this.getWxCryptUtil();
-		String dest="d86AT8h8YT3uu7GFX0IafC/Vgm+en40riIe+/K/oiT24ZjDj1IhpJD3Hf6JoFaGwhvCBfIwz4iY1RoX/sTSq5h2dUagyio8thX/mRY6OBHFyqS0HtGJCzsh2KuDGqZKn/F8qks/8LfkC87vbXJGn+Yt94RvWx29pouE3fzR09kmlWVA3J9kP+InL+lbelTJ3eVzpbV9ToyczWHI0Hdmk7YGzRB0mXAIaArmODV0CXx/h0PcsDbb/DZzuIs1PQ7EqGWiOqL61E88/Q2vIvmiqD73fzJymOPZh1svpXV18qTjpbKkYe8pBO5njtD1wQ1nZ5jKGoTfhMRUhas5BY5l84FSPC3orAjZVxwKdtoESRi4NkZSA/y14tsTTRHzYd50huSPtrzqicEk4QgIVkC9PEcEBZib4Ifr5NYJNvv/YZdhgdbOF7k3ettr++RT6ONNYcldKrexfovcx3/lgSLvKug==";
-		//String str="eZtPb8E6OmC4vPE35do3Xaxmz3li6SCOtMtQ6MUSFqYNCGYGRW7SaCgUsYfttTmR/8z8AcLguAx4IXCPBOEfPYSJVmVcqocHGbGvgZqDy1NqnFJ3M9vpbC1Mi1FAjQKQxLQWFQm4Kbv/lBkNr6lGl/psSo40/37dThAlc4aAFm38aj5s1tEZXUK0MuhJj59B8fqoOpi0DrrXcV5jnbOCiuDFYssWU5dx9Y4iNMIs/z1lsHfz7jUVrhyqS6na2tiSh79JxiRmKXX8jSEnE+MduxSQR1o4iL+wQBcCn2HLFORIh4/HqKJUUS0AuhgVbVwQ8uvriZ93+qGekifXpX+w4GTKxScNCFme13GBUU7Ji6neMBGq1JJ6I1FajvfH3F7uUOcK2Lgd3eV1sC/QdbnJzRgAxwcNHLmgfhr3KG8yZ9k=";
-		//msg_signature=5e50cfc94f2f0f64f64cdb425cc323e641038a90 timestamp=1416190315  nonce=456641363 
 		
-		String signature=cryptUtil.signature("1416190315", "456641363",dest);
-		Assert.assertEquals("5e50cfc94f2f0f64f64cdb425cc323e641038a90", signature);
+		String dest0="PPlWjtSU58hBx/LjqqC+sGp3vYw3pvj+s5piC9IcwLrXMoATImSOX9+0Mo8eCW80UDEEUOX21WWVHZf6dtNfQw==";
+		String dest1="urpJLoY7ZOl6g/BRh97eXE13hbsb2hmK9XPkQDfa3R/tShuhCrJNeYmZoIjijx+GJlGPnTkHbx0bjBHdIxWNAw==";
 		
-		String src=cryptUtil.decrypt(dest);
-		System.out.println(src);
-		System.out.println("---------------------------------------------------");
+		String src0=cryptUtil.decrypt(dest0);
+		String src1=cryptUtil.decrypt(dest1);
+		Assert.assertEquals( src0, src1);
 		
-		String dest2=src=cryptUtil.encrypt("456641363", src);
-		src=cryptUtil.decrypt(dest2);
-		System.out.println(src);
-		
-		System.out.println("---------------------------------------------------");
-		
-		System.out.println("dest="+dest);
-		System.out.println("dest2="+dest2);
+		String src=String.valueOf(new Date().getTime());
+		String randomStr="1766739666";
+		String dest =cryptUtil.decrypt(cryptUtil.encrypt(randomStr, src));
+		Assert.assertEquals( src, dest);
 	}
 	
 	/*
 	 * 接收文本消息
 	 */ 
-    @Ignore
-	public void testGetMsg() throws NoSuchAlgorithmException {
+    @Test
+	public void testGetMsg() {
     	WxCryptUtil wcu= this.getWxCryptUtil();
     	
-    	String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416190315</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[123]]></Content><MsgId>4587033601933049922</MsgId><AgentID>10</AgentID></xml>";
-    	String secretXml=wcu.encrypt(nonce,xml);
+    	String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416190315</CreateTime><Content><![CDATA[";
+    	xml+="123";
+    	xml+="]]></Content><MsgType><![CDATA[text]]></MsgType><MsgId>4587033601933049922</MsgId><AgentID>10</AgentID></xml>";
     	
     	String body="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName>\n<Encrypt><![CDATA[";
+    	String secretXml=wcu.encrypt(nonce,xml);
     	body +=secretXml; 
     	body += "]]></Encrypt>\n<AgentID><![CDATA[10]]></AgentID>\n</xml>";
     	
@@ -92,10 +99,50 @@ public class QyTestCase extends ControllerTestCase<WeixinConfig> {
     	
         String url = String.format("/qy?msg_signature=%1$s&timestamp=%2$s&nonce=%3$s",msg_signature,timestamp,nonce);
         String resp=  use(url).post(body).invoke();
-        System.out.println(resp);
+        String dest = innerDecrypt(resp);
+        System.out.println("解密结果dest："+dest);
     }  
     
-    private WxCryptUtil getWxCryptUtil(){
+    
+    
+    
+    
+    /*
+     * 内部验证解密
+     */
+    private String  innerDecrypt( String xml){
+    	WxCryptUtil wcu= this.getWxCryptUtil();
+    	String msgSignature = this.extractEncryptPart(xml, "MsgSignature");
+    	String timeStamp = this.extractEncryptPart(xml, "TimeStamp");
+    	String nonce = this.extractEncryptPart(xml, "Nonce");
+    	
+    	return wcu.decrypt(msgSignature, timeStamp, nonce, xml);
+    }
+    private String extractEncryptPart(String xml,String name) {
+		try {
+			DocumentBuilder db = builderLocal.get();
+			Document document = db
+					.parse(new InputSource(new StringReader(xml)));
+
+			Element root = document.getDocumentElement();
+			return root.getElementsByTagName(name).item(0)
+					.getTextContent();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+    private final ThreadLocal<DocumentBuilder> builderLocal = new ThreadLocal<DocumentBuilder>() {
+		@Override
+		protected DocumentBuilder initialValue() {
+			try {
+				return DocumentBuilderFactory.newInstance()
+						.newDocumentBuilder();
+			} catch (ParserConfigurationException exc) {
+				throw new IllegalArgumentException(exc);
+			}
+		}
+	};
+	private WxCryptUtil getWxCryptUtil(){
     	WxCryptUtil cryptUtil=null;
     	if(cryptUtil==null){
 			cryptUtil=new WxCryptUtil(ApiConfig.getToken(),ApiConfig.getEncodingAESKey(),ApiConfig.getAppId());
