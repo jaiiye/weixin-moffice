@@ -6,22 +6,7 @@
 
 package com.jfinal.weixin.demo;
 
-import com.jfinal.weixin.sdk.msg.InFollowEvent;
-import com.jfinal.weixin.sdk.msg.InImageMsg;
-import com.jfinal.weixin.sdk.msg.InLinkMsg;
-import com.jfinal.weixin.sdk.msg.InLocationEvent;
-import com.jfinal.weixin.sdk.msg.InLocationMsg;
-import com.jfinal.weixin.sdk.msg.InMenuEvent;
-import com.jfinal.weixin.sdk.msg.InQrCodeEvent;
-import com.jfinal.weixin.sdk.msg.InSpeechRecognitionResults;
-import com.jfinal.weixin.sdk.msg.InTextMsg;
-import com.jfinal.weixin.sdk.msg.InVideoMsg;
-import com.jfinal.weixin.sdk.msg.InVoiceMsg;
-import com.jfinal.weixin.sdk.msg.OutImageMsg;
-import com.jfinal.weixin.sdk.msg.OutMusicMsg;
-import com.jfinal.weixin.sdk.msg.OutNewsMsg;
-import com.jfinal.weixin.sdk.msg.OutTextMsg;
-import com.jfinal.weixin.sdk.msg.OutVoiceMsg;
+import com.jfinal.weixin.sdk.msg.*;
 
 /**
  * 将此 DemoController 在YourJFinalConfig 中注册路由，

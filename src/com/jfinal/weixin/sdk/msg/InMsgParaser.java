@@ -58,6 +58,7 @@ public class InMsgParaser {
         	return parseInLinkMsg(root, toUserName, fromUserName, createTime, msgType);
         if ("event".equals(msgType))
         	return parseInEvent(root, toUserName, fromUserName, createTime, msgType);
+        
         throw new RuntimeException("无法识别的消息类型，请查阅微信公众平台开发文档");
 	}
 	

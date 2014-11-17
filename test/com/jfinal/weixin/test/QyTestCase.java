@@ -103,9 +103,14 @@ public class QyTestCase extends ControllerTestCase<WeixinConfig> {
         System.out.println("解密结果dest："+dest);
     }  
     
-    
-    
-    
+    @Test
+    public void testQrCode(){
+    	
+    	String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><Encrypt><![CDATA[NQ4iqwUCpkl+/1sU4wF6d37gMLJyLeYiHGRpZB/cAqvET7SIVDOAGzO/bnd5zYHZWLgvOm8BsA6m1Vaq3fL6aBQRQB+EaZgOlEAbX2ARJyR8tnFqOTLqF+4MO0WKJ1IvYGWCw8fROax5AHd5v3iGmIszjqKrRXlL7Oeq547X++l94wUtM+BiZgSeAjUsOmUyOi7mA5DG+LXSoweLVqCIvat53mkoNZdq7uSHtqUrqogskTg8aAc/lW2i/YIluYQKu+RIKbx6rGx/moms+LWMqi+cW8d0WJa3/aZlvNHZMukHV8P3TFNlPa3rwPTvg8zGO4hcN1lGOPLLs40o76ykSmnbhYxjKZe7P5uuUMc7bkAsARSaIfefp+bOTc3Wu06d0HdXvrKga5n4NhOVxBQ8H2j5lRqmYIZ4ZLJwY1MQU1KH7EEj1uOgwJfJMbfKNaQYzGDMuXcRP9WkukzNteoq52U9kBBODNYooAR/eR2Ry06mavuwHL0/ChQWcw6XqRmO1TXyFvYFpf08NxJa3x4QAFlmGRXvbL2cjoUEISBJzQO7Nxh/G/KKsHaCgRDmbFDDAQHM5kQ6o68L34oriGTk3EX4fhX+0bakItJwyvQ6tXtexPUpJkdJExxEm5dGel2QTqw07afMhH5AqjCeAvkcZkItldnkMYuUlnvJzl91npfPki+wS+FdOifP7/Wpa7uKMI78p+p/Ky4znj+LAb+e4ROC8P6yT5ZYZrrXK47GjDgtvadIFewTEQ6W3AJJNif+]]></Encrypt><AgentID><![CDATA[10]]></AgentID></xml>";
+    	String url = String.format("/qy?msg_signature=%1$s&timestamp=%2$s&nonce=%3$s",msg_signature,timestamp,nonce);
+        String resp=  use(url).post(xml).invoke();
+        String dest = innerDecrypt(resp);
+    }   
     
     /*
      * 内部验证解密

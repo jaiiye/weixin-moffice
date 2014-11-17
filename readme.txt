@@ -1,106 +1,31 @@
 2014.11.17 
 =============================================================
 1.修改mock相关类，使其满足对getRequestURL，getReader等函数的调用；
+     可满足微信借口的单元测试
 2.加密算法有问题（加密后再解密，和原名文，不一致）
      自己增加了方法，进行修正，微信自己的加密方法仍然不知道；
 3.
 	 
-JFinal action report -------- 2014-11-16 20:01:40 ------------------------------
-Controller  : com.jfinal.weixin.demo.QiyeController.(QiyeController.java:1)
-Method      : index
-Interceptor : com.jfinal.weixin.sdk.jfinal.CorpInterceptor.(CorpInterceptor.java:1)
-Parameter   : timestamp=1416139301  nonce=1318888434  msg_signature=92d78117ec30e9e55db25e343111be8a80c1186b  
---------------------------------------------------------------------------------
-config url:http://www.dinglantech.com.cn/webapp/qy/?msg_signature=92d78117ec30e9e55db25e343111be8a80c1186b&timestamp=1416139301&nonce=1318888434
-接收消息:
-<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><Encrypt><![CDATA[x+cecPmzYQEu6NKD0F5j7n2uDwksrOWWl50dpbY5jMH3vmRrc6nhJScxj27ZztDjauQ++tTUPr4jeUk/5VqlBA1OOR4iICh67pGhEAoB0firFlikMTtj53B7nYNsCPYmfggr8g2sxqReQTfXpWa5z7CqPPNSevl0l8uc5cuy7lAinRsXFvbiT/msSGRXkrDfkZ+/DZAyA9IwwddR38B9yCXFoMX+2JkkVImBpoYHMl+n/pAFUN/zi4gIOCxeUkPaYynoHZfWCMYY+f/dXovU85saDKuWol0YEqf66WxPlwFMCIh+M5eqDKB6p5+1MOyjKrIXFja35BAlsiisPi66PQR6yMaD3w3aBN54Qbl3U0BGebM8AY/czVKgGwl711vMmYuduXWkWJxlkgfwjDLd3Z0XBNfQdkdkXEL1Bt1XIzeaeOdMkZFkhk671jU4OFTB0aaeEPM0ltQPPcprdTjarw==]]></Encrypt><AgentID><![CDATA[10]]></AgentID></xml>
+2014-11-17 17:05:50
+[INFO]-[Thread: http-80-9]-[com.jfinal.weixin.demo.CorpController.index()]: 接收消息:<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName>
+<Encrypt><![CDATA[NQ4iqwUCpkl+/1sU4wF6d37gMLJyLeYiHGRpZB/cAqvET7SIVDOAGzO/bnd5zYHZWLgvOm8BsA6m1Vaq3fL6aBQRQB+EaZgOlEAbX2ARJyR8tnFqOTLqF+4MO0WKJ1IvYGWCw8fROax5AHd5v3iGmIszjqKrRXlL7Oeq547X++l94wUtM+BiZgSeAjUsOmUyOi7mA5DG+LXSoweLVqCIvat53mkoNZdq7uSHtqUrqogskTg8aAc/lW2i/YIluYQKu+RIKbx6rGx/moms+LWMqi+cW8d0WJa3/aZlvNHZMukHV8P3TFNlPa3rwPTvg8zGO4hcN1lGOPLLs40o76ykSmnbhYxjKZe7P5uuUMc7bkAsARSaIfefp+bOTc3Wu06d0HdXvrKga5n4NhOVxBQ8H2j5lRqmYIZ4ZLJwY1MQU1KH7EEj1uOgwJfJMbfKNaQYzGDMuXcRP9WkukzNteoq52U9kBBODNYooAR/eR2Ry06mavuwHL0/ChQWcw6XqRmO1TXyFvYFpf08NxJa3x4QAFlmGRXvbL2cjoUEISBJzQO7Nxh/G/KKsHaCgRDmbFDDAQHM5kQ6o68L34oriGTk3EX4fhX+0bakItJwyvQ6tXtexPUpJkdJExxEm5dGel2QTqw07afMhH5AqjCeAvkcZkItldnkMYuUlnvJzl91npfPki+wS+FdOifP7/Wpa7uKMI78p+p/Ky4znj+LAb+e4ROC8P6yT5ZYZrrXK47GjDgtvadIFewTEQ6W3AJJNif+]]></Encrypt>
+<AgentID><![CDATA[10]]></AgentID>
+</xml>
 
-脱密消息:<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName>
+
+2014-11-17 17:05:50
+[INFO]-[Thread: http-80-9]-[com.jfinal.weixin.demo.CorpController.getInMsg()]: 脱密消息:<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName>
 <FromUserName><![CDATA[15991890112]]></FromUserName>
-<CreateTime>1416139301</CreateTime>
+<CreateTime>1416215152</CreateTime>
 <MsgType><![CDATA[event]]></MsgType>
-<AgentID>10</AgentID>
-<Event><![CDATA[subscribe]]></Event>
-<EventKey><![CDATA[]]></EventKey>
-</xml>
---------------------------------------------------------------------------------
-
-发送消息:<xml>
-<ToUserName><![CDATA[15991890112]]></ToUserName>
-<FromUserName><![CDATA[wxb21adacab9c87404]]></FromUserName>
-<CreateTime>1416139300</CreateTime>
-<MsgType><![CDATA[text]]></MsgType>
-<Content><![CDATA[感谢关注 JFinal Weixin 极速开发，为您节约更多时间，去陪恋人、家人和朋友 :) 
-
-
- 	发送 help 可获得帮助，发送 "美女" 可看美女，发送 news 可看新闻，发送 music 可听音乐，你还可以试试发送图片、语音、位置、收藏等信息，看会有什么 。公众号持续更新中，想要更多惊喜欢迎每天关注 ^_^]]></Content>
-</xml>
---------------------------------------------------------------------------------
-
-加密消息:<xml>
-<Encrypt><![CDATA[ao2SEh2XrQ1ebXU+r/081qXxm0vb1jCcZ93tdK67fuMTG8bIg2N3CoIGFJyDYjxGgxfETo+SHBBcqwLIesMARDtRYizI7f7kBsQjWW1WYozyGVT5CgS6xw6d26uXbdwP52BXY/oHc52FD4HEPiHr9FgbIBOMUw/Zrwy3YWmD8yXLTdFcmHdSvqoCO8ubo81YNWUvOOawjyHK6xirqB6p7/SDrXamGsZG0agO6yk+79dXrA7gOw5MzpQibRQIdGx5O9e9Xy+DuBUVcu1n/KkIIyYn72rDKfe9zBulAX0la/u4PhSxJYzZf0rzrelhF+pusp/Ojo8MPSpxh3oqfe/xNMcBq/ZRltwxSW8C5+642tKOkM445cb94lT5oacX/jlHzpKtTgO5/Ubm0QODImn+igr8MBqwusHzUawC4eYS985Ep/035Ehc96yToiGMaRPgRzyfiMY7//m0WPVzziVbhvBweWPCjBLKiPceCfCwS8nbb/j1OV9PaUBuTjM3nmdS+Ppb3hHeSjcXrcs1XN4+Ci2C2IGMq6Ubt50AFZ9jmo/+C09UvG63hPI18sR1jwA8q6cgTdTSA59GrkdNR8rd2I3gff/v/mSK8YnkNWsMh9e5TeGHwdnkOhVdkrlI54SSxXhcZA8iMD/cBrKOqEdwSCQRZhCjMxcULZ57vwn1Jx6fFHQzb4nMcggGXs8CbsfYHRCgj1E6OUj92UIjo2N3MVX+iQ6JCpzmnsj4W8rdq6Tcmnxmeo3CP3P5vYFyQ44sJAblwcna51IRTSRhMyJ8GsmLFmQ1QU0+3ySaG7I0ANggMs7pC3YbTFGQNil7mjs359l7MZr79q1wHUriwm7WASFrX0Pr5r8laICxNR8AJ32076tZz6kL7p+/sb35IiPY]]></Encrypt>
-<MsgSignature><![CDATA[37e62ca69b2d24435aab0aa6bd714c3fc2796c62]]></MsgSignature>
-<TimeStamp>1416139300</TimeStamp>
-<Nonce><![CDATA[KfcyK1LAwXFaFws7]]></Nonce>
-</xml>
---------------------------------------------------------------------------------
-
-
-[ERROR]-[Thread: http-80-1]-[com.jfinal.weixin.sdk.jfinal.CorpInterceptor.checkSignature()]: check signature failure:  signature = null timestamp = 1416055074 nonce = 63945481
-
-JFinal action report -------- 2014-11-15 21:03:22 ------------------------------
-Controller  : com.jfinal.weixin.demo.QiyeController.(QiyeController.java:1)
-Method      : index
-Interceptor : com.jfinal.weixin.sdk.jfinal.CorpInterceptor.(CorpInterceptor.java:1)
-Parameter   : timestamp=1416056603  nonce=1344265638  msg_signature=c16c9fe2ede1d8e96db79edf49150c0215c5f74b  
---------------------------------------------------------------------------------
-config url:http://www.dinglantech.com.cn/webapp/qy/?msg_signature=c16c9fe2ede1d8e96db79edf49150c0215c5f74b&timestamp=1416056603&nonce=1344265638
-接收消息:<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><Encrypt><![CDATA[XChkfEXUyiyzFNlmyF2D1bMI3+Y06qRFyZM8H1RPjfiL2jXuPcuWBZ07bfXpxD1zOBIT33kfHI/7OiwXAnuro15sHPhpiQFNRa8rQDn8gCjkexH2wj6g1qenobBGLFXCxrDTnM7VDMK06UiAir6EOPPCV0PBCHRHsSViB1jV/fD6F65S8nTuN2Mb1Y0uCv9B6ebbKTMTbNHT0URTYQwzOFUPzD+fVOJO4OKvZmkG1/f9ES/WiB348gXgCnMh4M2LYzIzapQJC/RBFqTlOQdhcz6RC/FExfsTuj+ItJ1Hz1QY4AVHyeDnHd9cERQufIwGNg1TdCZ60V+u8MgSLVa1+Xc4A24bQmaPLaBBWp13sO2NejmKo4rMrqIVNtARd9S1Wizz84xz68pJ+4LVX5sQnkcNxmEI+cY9mi0LOl94Zkhm1Wp8fm5PF6Duuk0DZkzqyWUGxFaibpqLYnUzV1/mDg==]]></Encrypt><AgentID><![CDATA[10]]></AgentID></xml>
-
-cipherText:XChkfEXUyiyzFNlmyF2D1bMI3+Y06qRFyZM8H1RPjfiL2jXuPcuWBZ07bfXpxD1zOBIT33kfHI/7OiwXAnuro15sHPhpiQFNRa8rQDn8gCjkexH2wj6g1qenobBGLFXCxrDTnM7VDMK06UiAir6EOPPCV0PBCHRHsSViB1jV/fD6F65S8nTuN2Mb1Y0uCv9B6ebbKTMTbNHT0URTYQwzOFUPzD+fVOJO4OKvZmkG1/f9ES/WiB348gXgCnMh4M2LYzIzapQJC/RBFqTlOQdhcz6RC/FExfsTuj+ItJ1Hz1QY4AVHyeDnHd9cERQufIwGNg1TdCZ60V+u8MgSLVa1+Xc4A24bQmaPLaBBWp13sO2NejmKo4rMrqIVNtARd9S1Wizz84xz68pJ+4LVX5sQnkcNxmEI+cY9mi0LOl94Zkhm1Wp8fm5PF6Duuk0DZkzqyWUGxFaibpqLYnUzV1/mDg==
-脱密消息:<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName>
-<FromUserName><![CDATA[15991890112]]></FromUserName>
-<CreateTime>1416056603</CreateTime>
-<MsgType><![CDATA[text]]></MsgType>
-<Content><![CDATA[654]]></Content>
-<MsgId>4587033601933049869</MsgId>
+<Event><![CDATA[location_select]]></Event>
+<EventKey><![CDATA[rselfmenu_2_0]]></EventKey>
+<SendLocationInfo><Location_X><![CDATA[34]]></Location_X>
+<Location_Y><![CDATA[109]]></Location_Y>
+<Scale><![CDATA[15]]></Scale>
+<Label><![CDATA[]]></Label>
+<Poiname><![CDATA[]]></Poiname>
+</SendLocationInfo>
 <AgentID>10</AgentID>
 </xml>
---------------------------------------------------------------------------------
-
-发送消息:<xml>
-<ToUserName><![CDATA[15991890112]]></ToUserName>
-<FromUserName><![CDATA[wxb21adacab9c87404]]></FromUserName>
-<CreateTime>1416056602</CreateTime>
-<MsgType><![CDATA[text]]></MsgType>
-<Content><![CDATA[	文本消息已成功接收，内容为： 654
-
-	发送 help 可获得帮助，发送 "美女" 可看美女，发送 news 可看新闻，发送 music 可听音乐，你还可以试试发送图片、语音、位置、收藏等信息，看会有什么 。公众号持续更新中，想要更多惊喜欢迎每天关注 ^_^]]></Content>
-</xml>
---------------------------------------------------------------------------------
-=================================================================================================
-2014-11-15 20:20:34
-[ERROR]-[Thread: http-80-1]-[com.jfinal.weixin.sdk.jfinal.CorpInterceptor.checkSignature()]: check signature failure:  signature = null timestamp = 1416054035 nonce = 196684862
-
-JFinal action report -------- 2014-11-15 20:20:46 ------------------------------
-Controller  : com.jfinal.weixin.demo.QiyeController.(QiyeController.java:1)
-Method      : index
-Interceptor : com.jfinal.weixin.sdk.jfinal.CorpInterceptor.(CorpInterceptor.java:1)
-Parameter   : timestamp=1416054046  nonce=559831674  msg_signature=09b76480721668ea4390ec4b20575c6dd558d4b1  
---------------------------------------------------------------------------------
-config url:http://www.dinglantech.com.cn/webapp/qy/?msg_signature=09b76480721668ea4390ec4b20575c6dd558d4b1&timestamp=1416054046&nonce=559831674
-
-
-/qy/?msg_signature=512cec7843f23204b32b54052e96b4a66b80a390&timestamp=1416051053&nonce=275648335&echostr=6d5dopNOnj%2BFmqqURqsTzAJBGxOhw0Ve6Gd897UD2x82IRMBPLKDH6C5vBMXszHgN%2B8LrxsO%2FpQf3mmo3pO67A%3D%3D
-
-===================================================================================================
-JSON TYPE				JAVA TYPE
-object					LinkedHashMap<String,Object>
-array					ArrayList<Object>
-string					String
-number (no fraction)	Integer, Long or BigInteger (smallest applicable)
-number (fraction)		Double (configurable to use BigDecimal)
-true|false				Boolean
-null					null
-
-
+	 
