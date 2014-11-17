@@ -2,7 +2,6 @@ package com.jfinal.weixin.test;
 
 
 import java.io.StringReader;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -28,7 +27,7 @@ import com.jfinal.weixin.sdk.api.ApiConfig;
  * invoke	调用url
  * findAttrAfterInvoke	action调用之后getAttr的值
  */
-public class QyTestCase extends ControllerTestCase<WeixinConfig> {
+public class QyTestCase extends TestCase<WeixinConfig> {
 	private String timestamp="1416187783";
 	private String nonce="1766739666";
 	String msg_signature="c4eb00b041686352e79086a41431eebe60b682c0";
