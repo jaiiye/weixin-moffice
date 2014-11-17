@@ -20,12 +20,31 @@ import com.jfinal.weixin.sdk.api.ApiConfig;
 public class SignatureCheckKit {
 	
 	public static final SignatureCheckKit me = new SignatureCheckKit();
-	public boolean checkSignature(String signature, String timestamp, String nonce,String msg_encrypt) {
+	
+	/*
+	 * 生成签名
+	 */
+	private String genSignature(String timestamp, String nonce,String msg_encrypt) {
+		
 		String TOKEN = ApiConfig.getToken();
 		String array[] = {TOKEN, timestamp, nonce,msg_encrypt};
 		Arrays.sort(array);
+	    StringBuilder sb = new StringBuilder();
+	    for(String a : array) {
+	      sb.append(a);
+	    }
+	    String tempStr = EncryptionKit.sha1Encrypt(sb.toString());
+	    
+		/*
 		String tempStr = new StringBuilder().append(array[0] + array[1] + array[2] + array[3]).toString();
 		tempStr = EncryptionKit.sha1Encrypt(tempStr);
+		*/
+		
+		return tempStr;
+	}
+	
+	public boolean checkSignature(String signature, String timestamp, String nonce,String msg_encrypt) {		
+		String tempStr =this.genSignature(timestamp,nonce,msg_encrypt);
 		return tempStr.equalsIgnoreCase(signature);
 	}
 	

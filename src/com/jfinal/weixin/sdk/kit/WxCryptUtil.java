@@ -18,6 +18,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
+import com.jfinal.weixin.sdk.api.ApiConfig;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -66,7 +68,19 @@ public class WxCryptUtil {
     this.appidOrCorpid = appidOrCorpid;
     this.aesKey = Base64.decodeBase64(encodingAesKey + "=");
   }
-
+  /*
+	 * 生成签名
+	 */
+	public String signature(String timestamp, String nonce,String msg_encrypt) {
+		String array[] = {this.token, timestamp, nonce,msg_encrypt};
+		Arrays.sort(array);
+	    StringBuilder sb = new StringBuilder();
+	    for(String a : array) {
+	      sb.append(a);
+	    }
+	    String tempStr = EncryptionKit.sha1Encrypt(sb.toString());
+		return tempStr;
+	}
   /**
    * 将公众平台回复用户的消息加密打包.
    * <ol>
@@ -101,7 +115,7 @@ public class WxCryptUtil {
    * @param plainText 需要加密的明文
    * @return 加密后base64编码的字符串
    */
-  protected String encrypt(String randomStr, String plainText) {
+  public String encrypt(String randomStr, String plainText) {
     ByteGroup byteCollector = new ByteGroup();
     byte[] randomStringBytes = randomStr.getBytes(CHARSET);
     byte[] plainTextBytes = plainText.getBytes(CHARSET);

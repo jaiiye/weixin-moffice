@@ -89,6 +89,8 @@ public class CorpInterceptor implements Interceptor {
 		if (isOk){
 			WxCryptUtil pc = getWxCryptUtil();
 			echostr= pc.decrypt(echostr);
+			
+			log.info("验证成功，解密后的echostr:"+echostr);
 			c.renderText(echostr);
 		}
 		else

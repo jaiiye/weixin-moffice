@@ -1,10 +1,17 @@
 package com.jfinal.weixin.test;
 
 
+import java.security.NoSuchAlgorithmException;
+
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.jfinal.weixin.demo.WeixinConfig;
-
+import com.jfinal.weixin.sdk.kit.EncryptionKit;
+import com.jfinal.weixin.sdk.kit.SignatureCheckKit;
+import com.jfinal.weixin.sdk.kit.WxCryptUtil;
+import com.jfinal.weixin.sdk.api.ApiConfig;
 
 /*
  * 所有对Controller的测试必须继承ControllerTestCase,此类中方法说明如下
@@ -15,21 +22,84 @@ import com.jfinal.weixin.demo.WeixinConfig;
  * findAttrAfterInvoke	action调用之后getAttr的值
  */
 public class QyTestCase extends ControllerTestCase<WeixinConfig> {
-	@Test //测试关注
-    public void test3() {
-        String url = "/qy?msg_signature=92d78117ec30e9e55db25e343111be8a80c1186b&timestamp=1416139301&nonce=1318888434";
-        String body = "<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><Encrypt><![CDATA[x+cecPmzYQEu6NKD0F5j7n2uDwksrOWWl50dpbY5jMH3vmRrc6nhJScxj27ZztDjauQ++tTUPr4jeUk/5VqlBA1OOR4iICh67pGhEAoB0firFlikMTtj53B7nYNsCPYmfggr8g2sxqReQTfXpWa5z7CqPPNSevl0l8uc5cuy7lAinRsXFvbiT/msSGRXkrDfkZ+/DZAyA9IwwddR38B9yCXFoMX+2JkkVImBpoYHMl+n/pAFUN/zi4gIOCxeUkPaYynoHZfWCMYY+f/dXovU85saDKuWol0YEqf66WxPlwFMCIh+M5eqDKB6p5+1MOyjKrIXFja35BAlsiisPi66PQR6yMaD3w3aBN54Qbl3U0BGebM8AY/czVKgGwl711vMmYuduXWkWJxlkgfwjDLd3Z0XBNfQdkdkXEL1Bt1XIzeaeOdMkZFkhk671jU4OFTB0aaeEPM0ltQPPcprdTjarw==]]></Encrypt><AgentID><![CDATA[10]]></AgentID></xml>";
+	private String timestamp="1416187783";
+	private String nonce="1766739666";
+	String msg_signature="c4eb00b041686352e79086a41431eebe60b682c0";
+	String echostr="PPlWjtSU58hBx/LjqqC+sGp3vYw3pvj+s5piC9IcwLrXMoATImSOX9+0Mo8eCW80UDEEUOX21WWVHZf6dtNfQw==";
+	
+	/*
+	 * 测试验证
+	 * 1.目前用WxCryptUtil加密的结果和微信的结果不一致，但能验证通过，奇怪！
+	 * 2.增加验证正确log提示；
+	 */
+	@Ignore 
+    public void testYanZheng() {
+        String url = "/qy?msg_signature="+msg_signature;
+        url+="&timestamp="+timestamp+"&nonce="+nonce+"&echostr="+echostr;
+        
+        String resp=  use(url).post("").invoke();
+        Assert.assertEquals("3813775250553528279",resp);
+    }  
+	/*
+	 * 测试签名
+	 */
+	@Ignore 
+	public void testSignature(){
+		WxCryptUtil cryptUtil=this.getWxCryptUtil();
+		String signature=cryptUtil.signature(timestamp, nonce,echostr);
+		Assert.assertEquals(msg_signature, signature);
+	}
+	
+	@Test 
+	public void testDecrypt() {
+		WxCryptUtil cryptUtil=this.getWxCryptUtil();
+		String dest="d86AT8h8YT3uu7GFX0IafC/Vgm+en40riIe+/K/oiT24ZjDj1IhpJD3Hf6JoFaGwhvCBfIwz4iY1RoX/sTSq5h2dUagyio8thX/mRY6OBHFyqS0HtGJCzsh2KuDGqZKn/F8qks/8LfkC87vbXJGn+Yt94RvWx29pouE3fzR09kmlWVA3J9kP+InL+lbelTJ3eVzpbV9ToyczWHI0Hdmk7YGzRB0mXAIaArmODV0CXx/h0PcsDbb/DZzuIs1PQ7EqGWiOqL61E88/Q2vIvmiqD73fzJymOPZh1svpXV18qTjpbKkYe8pBO5njtD1wQ1nZ5jKGoTfhMRUhas5BY5l84FSPC3orAjZVxwKdtoESRi4NkZSA/y14tsTTRHzYd50huSPtrzqicEk4QgIVkC9PEcEBZib4Ifr5NYJNvv/YZdhgdbOF7k3ettr++RT6ONNYcldKrexfovcx3/lgSLvKug==";
+		//String str="eZtPb8E6OmC4vPE35do3Xaxmz3li6SCOtMtQ6MUSFqYNCGYGRW7SaCgUsYfttTmR/8z8AcLguAx4IXCPBOEfPYSJVmVcqocHGbGvgZqDy1NqnFJ3M9vpbC1Mi1FAjQKQxLQWFQm4Kbv/lBkNr6lGl/psSo40/37dThAlc4aAFm38aj5s1tEZXUK0MuhJj59B8fqoOpi0DrrXcV5jnbOCiuDFYssWU5dx9Y4iNMIs/z1lsHfz7jUVrhyqS6na2tiSh79JxiRmKXX8jSEnE+MduxSQR1o4iL+wQBcCn2HLFORIh4/HqKJUUS0AuhgVbVwQ8uvriZ93+qGekifXpX+w4GTKxScNCFme13GBUU7Ji6neMBGq1JJ6I1FajvfH3F7uUOcK2Lgd3eV1sC/QdbnJzRgAxwcNHLmgfhr3KG8yZ9k=";
+		//msg_signature=5e50cfc94f2f0f64f64cdb425cc323e641038a90 timestamp=1416190315  nonce=456641363 
+		
+		String signature=cryptUtil.signature("1416190315", "456641363",dest);
+		Assert.assertEquals("5e50cfc94f2f0f64f64cdb425cc323e641038a90", signature);
+		
+		String src=cryptUtil.decrypt(dest);
+		System.out.println(src);
+		System.out.println("---------------------------------------------------");
+		
+		String dest2=src=cryptUtil.encrypt("456641363", src);
+		src=cryptUtil.decrypt(dest2);
+		System.out.println(src);
+		
+		System.out.println("---------------------------------------------------");
+		
+		System.out.println("dest="+dest);
+		System.out.println("dest2="+dest2);
+	}
+	
+	/*
+	 * 接收文本消息
+	 */ 
+    @Ignore
+	public void testGetMsg() throws NoSuchAlgorithmException {
+    	WxCryptUtil wcu= this.getWxCryptUtil();
+    	
+    	String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416190315</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[123]]></Content><MsgId>4587033601933049922</MsgId><AgentID>10</AgentID></xml>";
+    	String secretXml=wcu.encrypt(nonce,xml);
+    	
+    	String body="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName>\n<Encrypt><![CDATA[";
+    	body +=secretXml; 
+    	body += "]]></Encrypt>\n<AgentID><![CDATA[10]]></AgentID>\n</xml>";
+    	
+    	msg_signature=wcu.signature(timestamp, nonce, secretXml);
+    	
+        String url = String.format("/qy?msg_signature=%1$s&timestamp=%2$s&nonce=%3$s",msg_signature,timestamp,nonce);
         String resp=  use(url).post(body).invoke();
         System.out.println(resp);
     }  
-	/*
-	@Test
-    public void line() throws Exception {
-        String url = "/post";
-        String filePath = Thread.currentThread().getContextClassLoader().getResource("dataReq.xml").getFile();
-        String fileResp = "/home/kid/git/jfinal-ext/resource/dataResp.xml";
-        String resp = use(url).post(new File(filePath)).writeTo(new File(fileResp)).invoke();
-        System.out.println(resp);
-    }
-    */
+    
+    private WxCryptUtil getWxCryptUtil(){
+    	WxCryptUtil cryptUtil=null;
+    	if(cryptUtil==null){
+			cryptUtil=new WxCryptUtil(ApiConfig.getToken(),ApiConfig.getEncodingAESKey(),ApiConfig.getAppId());
+		}
+		return cryptUtil;
+	}
 }

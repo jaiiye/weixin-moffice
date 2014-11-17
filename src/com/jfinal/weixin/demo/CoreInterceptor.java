@@ -27,9 +27,6 @@ public class CoreInterceptor implements Interceptor {
 	public void intercept(ActionInvocation ai) {
 		// 如果是服务器配置请求，则配置服务器并返回
 		Controller controller = ai.getController();
-		//String url=controller.getRequest().getRequestURL().toString()+"?" + controller.getRequest().getQueryString();
-		//log.info("request url:"+url);
-		
 		if (isConfigServerRequest(controller)) {
 			configServer(controller);
 			return ;
@@ -91,9 +88,10 @@ public class CoreInterceptor implements Interceptor {
         
         //非加密验证
         boolean isOk = SignatureCheckKit.me.checkSignature(signature, timestamp, nonce);
-        
-		if (isOk)
+		if (isOk){
+			log.info("验证成功，解密后的echostr:"+echostr);
 			c.renderText(echostr);
+		}
 		else
 			log.error("验证失败：configServer");
 	}
