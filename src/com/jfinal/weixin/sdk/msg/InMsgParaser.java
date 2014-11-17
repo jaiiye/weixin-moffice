@@ -180,7 +180,7 @@ public class InMsgParaser {
 		}
 		
 		// 扫码推事件
-		if ("scancode_push".equals(event)) {
+		if ("scancode_push".equals(event) || "scancode_waitmsg".equals(event)) {
 			InQrCodeEvent e = new InQrCodeEvent(toUserName, fromUserName, createTime, msgType);
 			e.setEvent(event);
 			e.setEventKey(eventKey);
@@ -191,6 +191,7 @@ public class InMsgParaser {
 			e.setScanCodeInfo(scanCodeInfo);
 			return e;
 		}
+		
 		throw new RuntimeException("无法识别的事件类型，请查阅微信公众平台开发文档");
 	}
 	
