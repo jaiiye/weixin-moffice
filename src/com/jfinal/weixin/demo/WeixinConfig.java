@@ -32,7 +32,6 @@ public class WeixinConfig extends JFinalConfig {
 	}
 	
 	public void configRoute(Routes me) {
-		me.add("/gz", GzController.class);
 		me.add("/qy", QyController.class);
 		me.add("/api", ApiController.class);
 		me.add("/user", UserController.class);

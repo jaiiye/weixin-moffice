@@ -15,7 +15,6 @@ import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
 import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.weixin.demo.ApiController;
-import com.jfinal.weixin.demo.GzController;
 import com.jfinal.weixin.demo.QyController;
 import com.jfinal.weixin.demo.TestController;
 import com.jfinal.weixin.demo.UserController;
@@ -35,7 +34,6 @@ public class QyConfig extends JFinalConfig {
 	}
 	
 	public void configRoute(Routes me) {
-		me.add("/gz", GzController.class);
 		me.add("/qy", QyController.class);
 		me.add("/api", ApiController.class);
 		me.add("/user", UserController.class);

@@ -128,6 +128,7 @@ public class InMsgParaser {
 		String event = root.elementText("Event");
 		String eventKey = root.elementText("EventKey");
 		
+				
 		// 关注/取消关注事件（包括二维码扫描关注，二维码扫描关注事件与扫描带参数二维码事件是两回事）
 		if (("subscribe".equals(event) || "unsubscribe".equals(event)) && StrKit.isBlank(eventKey)) {
 			InFollowEvent e = new InFollowEvent(toUserName, fromUserName, createTime, msgType);
@@ -178,6 +179,18 @@ public class InMsgParaser {
 			return e;
 		}
 		
+		// 扫码推事件
+		if ("scancode_push".equals(event)) {
+			InQrCodeEvent e = new InQrCodeEvent(toUserName, fromUserName, createTime, msgType);
+			e.setEvent(event);
+			e.setEventKey(eventKey);
+			e.setTicket(ticket);
+			
+			Element elem = root.element("ScanCodeInfo").element("ScanResult");
+			String scanCodeInfo = elem.getText();
+			e.setScanCodeInfo(scanCodeInfo);
+			return e;
+		}
 		throw new RuntimeException("无法识别的事件类型，请查阅微信公众平台开发文档");
 	}
 	

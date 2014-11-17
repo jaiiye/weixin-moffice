@@ -34,6 +34,8 @@ public class QyTestCase extends ControllerTestCase<WeixinConfig> {
 	String msg_signature="c4eb00b041686352e79086a41431eebe60b682c0";
 	String echostr="PPlWjtSU58hBx/LjqqC+sGp3vYw3pvj+s5piC9IcwLrXMoATImSOX9+0Mo8eCW80UDEEUOX21WWVHZf6dtNfQw==";
 	
+	String tpl="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName>\n<Encrypt><![CDATA[%1$s]]></Encrypt>\n<AgentID><![CDATA[10]]></AgentID>\n</xml>";
+	
 	/*
 	 * 测试验证
 	 * 1.目前用WxCryptUtil加密的结果和微信的结果不一致，但能验证通过，奇怪！
@@ -86,14 +88,11 @@ public class QyTestCase extends ControllerTestCase<WeixinConfig> {
 	public void testGetMsg() {
     	WxCryptUtil wcu= this.getWxCryptUtil();
     	
-    	String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416190315</CreateTime><Content><![CDATA[";
-    	xml+="123";
-    	xml+="]]></Content><MsgType><![CDATA[text]]></MsgType><MsgId>4587033601933049922</MsgId><AgentID>10</AgentID></xml>";
+    	String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416190315</CreateTime><Content><![CDATA[123]]></Content><MsgType><![CDATA[text]]></MsgType><MsgId>4587033601933049922</MsgId><AgentID>10</AgentID></xml>";
     	
-    	String body="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName>\n<Encrypt><![CDATA[";
     	String secretXml=wcu.encrypt(nonce,xml);
-    	body +=secretXml; 
-    	body += "]]></Encrypt>\n<AgentID><![CDATA[10]]></AgentID>\n</xml>";
+    	String body=String.format(tpl, secretXml);
+    	msg_signature=wcu.signature(timestamp, nonce, secretXml);
     	
     	msg_signature=wcu.signature(timestamp, nonce, secretXml);
     	
@@ -105,11 +104,19 @@ public class QyTestCase extends ControllerTestCase<WeixinConfig> {
     
     @Test
     public void testQrCode(){
+    	WxCryptUtil wcu= this.getWxCryptUtil();
+    	String xml="<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[FromUser]]></FromUserName><CreateTime>1408090502</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[scancode_push]]></Event><EventKey><![CDATA[6]]></EventKey><ScanCodeInfo><ScanType><![CDATA[qrcode]]></ScanType><ScanResult><![CDATA[http://www.baidu.com/]]></ScanResult></ScanCodeInfo><AgentID>10</AgentID></xml>";
     	
-    	String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><Encrypt><![CDATA[NQ4iqwUCpkl+/1sU4wF6d37gMLJyLeYiHGRpZB/cAqvET7SIVDOAGzO/bnd5zYHZWLgvOm8BsA6m1Vaq3fL6aBQRQB+EaZgOlEAbX2ARJyR8tnFqOTLqF+4MO0WKJ1IvYGWCw8fROax5AHd5v3iGmIszjqKrRXlL7Oeq547X++l94wUtM+BiZgSeAjUsOmUyOi7mA5DG+LXSoweLVqCIvat53mkoNZdq7uSHtqUrqogskTg8aAc/lW2i/YIluYQKu+RIKbx6rGx/moms+LWMqi+cW8d0WJa3/aZlvNHZMukHV8P3TFNlPa3rwPTvg8zGO4hcN1lGOPLLs40o76ykSmnbhYxjKZe7P5uuUMc7bkAsARSaIfefp+bOTc3Wu06d0HdXvrKga5n4NhOVxBQ8H2j5lRqmYIZ4ZLJwY1MQU1KH7EEj1uOgwJfJMbfKNaQYzGDMuXcRP9WkukzNteoq52U9kBBODNYooAR/eR2Ry06mavuwHL0/ChQWcw6XqRmO1TXyFvYFpf08NxJa3x4QAFlmGRXvbL2cjoUEISBJzQO7Nxh/G/KKsHaCgRDmbFDDAQHM5kQ6o68L34oriGTk3EX4fhX+0bakItJwyvQ6tXtexPUpJkdJExxEm5dGel2QTqw07afMhH5AqjCeAvkcZkItldnkMYuUlnvJzl91npfPki+wS+FdOifP7/Wpa7uKMI78p+p/Ky4znj+LAb+e4ROC8P6yT5ZYZrrXK47GjDgtvadIFewTEQ6W3AJJNif+]]></Encrypt><AgentID><![CDATA[10]]></AgentID></xml>";
+    	
+    	String secretXml=wcu.encrypt(nonce,xml);
+    	String body=String.format(tpl, secretXml);
+    	msg_signature=wcu.signature(timestamp, nonce, secretXml);
+    	
     	String url = String.format("/qy?msg_signature=%1$s&timestamp=%2$s&nonce=%3$s",msg_signature,timestamp,nonce);
-        String resp=  use(url).post(xml).invoke();
+    	String resp=  use(url).post(body).invoke();
+        
         String dest = innerDecrypt(resp);
+        System.out.println("解密结果dest："+dest);
     }   
     
     /*

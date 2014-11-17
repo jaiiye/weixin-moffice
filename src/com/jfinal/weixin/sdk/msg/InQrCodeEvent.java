@@ -15,9 +15,9 @@ package com.jfinal.weixin.sdk.msg;
 		<FromUserName><![CDATA[FromUser]]></FromUserName>
 		<CreateTime>123456789</CreateTime>
 		<MsgType><![CDATA[event]]></MsgType>
-			<Event><![CDATA[subscribe]]></Event>
-			<EventKey><![CDATA[qrscene_123123]]></EventKey>
-			<Ticket><![CDATA[TICKET]]></Ticket>
+		<Event><![CDATA[subscribe]]></Event>
+		<EventKey><![CDATA[qrscene_123123]]></EventKey>
+		<Ticket><![CDATA[TICKET]]></Ticket>
 	</xml>
 	
 	2. 用户已关注时的事件推送
@@ -26,9 +26,9 @@ package com.jfinal.weixin.sdk.msg;
 		<FromUserName><![CDATA[FromUser]]></FromUserName>
 		<CreateTime>123456789</CreateTime>
 		<MsgType><![CDATA[event]]></MsgType>
-			<Event><![CDATA[SCAN]]></Event>
-			<EventKey><![CDATA[SCENE_VALUE]]></EventKey>
-			<Ticket><![CDATA[TICKET]]></Ticket>
+		<Event><![CDATA[SCAN]]></Event>
+		<EventKey><![CDATA[SCENE_VALUE]]></EventKey>
+		<Ticket><![CDATA[TICKET]]></Ticket>
 	</xml>
  */
 public class InQrCodeEvent extends InMsg {
@@ -41,6 +41,9 @@ public class InQrCodeEvent extends InMsg {
 	// 2. 用户已关注时的事件推送： SCENE_VALUE
 	private String eventKey;
 	private String ticket;
+	
+	//扫码结果
+	private String scanCodeInfo;
 	
 	public InQrCodeEvent(String toUserName, String fromUserName, Integer createTime, String msgType) {
 		super(toUserName, fromUserName, createTime, msgType);
@@ -68,6 +71,14 @@ public class InQrCodeEvent extends InMsg {
 	
 	public void setTicket(String ticket) {
 		this.ticket = ticket;
+	}
+
+	public String getScanCodeInfo() {
+		return scanCodeInfo;
+	}
+
+	public void setScanCodeInfo(String scanCodeInfo) {
+		this.scanCodeInfo = scanCodeInfo;
 	}
 }
 

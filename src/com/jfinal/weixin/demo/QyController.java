@@ -142,7 +142,7 @@ public class QyController extends CorpController {
 	 */
 	protected void processInQrCodeEvent(InQrCodeEvent inQrCodeEvent) {
 		OutTextMsg outMsg = new OutTextMsg(inQrCodeEvent);
-		outMsg.setContent("processInQrCodeEvent() 方法测试成功");
+		outMsg.setContent("二维码扫描成功，内容为:\n"+inQrCodeEvent.getScanCodeInfo());
 		render(outMsg);
 	}
 	
