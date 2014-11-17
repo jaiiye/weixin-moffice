@@ -228,11 +228,6 @@ public class HttpKit {
 	public static String readIncommingRequestData(HttpServletRequest request) {
 		BufferedReader br = null;
 		try {
-			System.out.println(request.getContentLength());
-			System.out.println(request.getContextPath());
-			System.out.println(request.getRemoteAddr());
-			System.out.println(request.getQueryString());
-			
 			StringBuilder result = new StringBuilder();
 			br = request.getReader();
 			for (String line=null; (line=br.readLine())!=null;) {

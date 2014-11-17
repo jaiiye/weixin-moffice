@@ -21,7 +21,7 @@ import com.jfinal.weixin.demo.TestController;
 import com.jfinal.weixin.demo.UserController;
 import com.jfinal.weixin.sdk.api.ApiConfig;
 
-public class GzConfig extends JFinalConfig {
+public class QyConfig extends JFinalConfig {
 	
 	public void configConstant(Constants me) {
 

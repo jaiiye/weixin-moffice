@@ -17,6 +17,7 @@ package com.jfinal.weixin.test.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.Collection;
@@ -240,13 +241,20 @@ public class MockHttpRequest implements HttpServletRequest {
     @Override
     public String getQueryString() {
 
-        return null;
+        return "id=test&num=121";
     }
 
+    /*
+     * 满足读取post调用数据 2014.11.17
+     * @see javax.servlet.ServletRequest#getReader()
+     */
     @Override
     public BufferedReader getReader() throws IOException {
 
-        return null;
+    	BufferedReader reader=null;
+    	if(this.body!=null)
+    		reader=new BufferedReader(new StringReader(this.body));
+        return reader;
     }
 
     @Override
@@ -311,8 +319,7 @@ public class MockHttpRequest implements HttpServletRequest {
 
     @Override
     public StringBuffer getRequestURL() {
-
-        return null;
+    	return new  StringBuffer("http://127.0.0.1");
     }
 
     @Override

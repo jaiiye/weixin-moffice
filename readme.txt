@@ -1,3 +1,6 @@
+2014.11.17 
+=============================================================
+1.修改mock相关类，使其满足对getRequestURL，getReader等函数的调用；
 
 JFinal action report -------- 2014-11-16 20:01:40 ------------------------------
 Controller  : com.jfinal.weixin.demo.QiyeController.(QiyeController.java:1)

@@ -3,6 +3,8 @@ package com.jfinal.weixin.test;
 
 import org.junit.Test;
 
+import com.jfinal.weixin.demo.WeixinConfig;
+
 
 /*
  * 所有对Controller的测试必须继承ControllerTestCase,此类中方法说明如下
@@ -12,7 +14,7 @@ import org.junit.Test;
  * invoke	调用url
  * findAttrAfterInvoke	action调用之后getAttr的值
  */
-public class GzTestCase extends ControllerTestCase<GzConfig> {
+public class QyTestCase extends ControllerTestCase<WeixinConfig> {
 	@Test //测试关注
     public void test3() {
         String url = "/qy?msg_signature=92d78117ec30e9e55db25e343111be8a80c1186b&timestamp=1416139301&nonce=1318888434";
