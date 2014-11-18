@@ -132,7 +132,7 @@ public class QyController extends CorpController {
 	 */
 	protected void processInFollowEvent(InFollowEvent inFollowEvent) {
 		OutTextMsg outMsg = new OutTextMsg(inFollowEvent);
-		outMsg.setContent("感谢关注 JFinal Weixin 极速开发，为您节约更多时间，去陪恋人、家人和朋友 :) \n\n\n " + helpStr);
+		outMsg.setContent("感谢关注！\n " + helpStr);
 		// 如果为取消关注事件，将无法接收到传回的信息
 		render(outMsg);
 	}
@@ -142,7 +142,7 @@ public class QyController extends CorpController {
 	 */
 	protected void processInQrCodeEvent(InQrCodeEvent inQrCodeEvent) {
 		OutTextMsg outMsg = new OutTextMsg(inQrCodeEvent);
-		outMsg.setContent("二维码扫描成功，内容为:\n"+inQrCodeEvent.getScanCodeInfo());
+		outMsg.setContent("扫描成功，内容为:\n"+inQrCodeEvent.getScanCodeInfo());
 		render(outMsg);
 	}
 	
