@@ -15,10 +15,10 @@ public class JsonHelper {
 	 * @return mapValue Map<String,String>
 	 * @throws Exception
 	 */
-	public static Map<String, String> getFieldVlaue(Object obj) {
-		Map<String, String> mapValue = new HashMap<String, String>();
+	public static Map<String, Object> getFieldVlaue(Object obj) {
+		Map<String, Object> mapValue = new HashMap<String, Object>();
 		Class<?> cls = obj.getClass();
-		Field[] fields = cls.getDeclaredFields();
+		Field[] fields = cls.getFields();
 		for (Field field : fields) {
 			try {
 				String name = field.getName();

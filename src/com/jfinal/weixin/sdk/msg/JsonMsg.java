@@ -1,6 +1,5 @@
 package com.jfinal.weixin.sdk.msg;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import com.jfinal.kit.JsonKit;
@@ -16,8 +15,7 @@ public class JsonMsg {
 	
 	@Override
 	public  String toString(){
-		Map<String,String> map =new HashMap<String,String>();
-		map=JsonHelper.getFieldVlaue(this);
+		Map<String,Object> map=JsonHelper.getFieldVlaue(this);
  		return JsonKit.toJson(map, 2);
 	}
 }

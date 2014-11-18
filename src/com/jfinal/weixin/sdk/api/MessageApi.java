@@ -7,8 +7,7 @@
 package com.jfinal.weixin.sdk.api;
 
 import com.jfinal.weixin.sdk.kit.HttpKit;
-import com.jfinal.weixin.sdk.msg.OutMsg;
-import com.jfinal.weixin.sdk.msg.OutMsgXmlBuilder;
+import com.jfinal.weixin.sdk.msg.JsonMsg;
 
 /**
  * message api
@@ -19,9 +18,8 @@ public class MessageApi {
 	/**
 	 * 发送消息
 	 */
-	public static ApiResult sendMsg(OutMsg outMsg) {
-		String outMsgXml = OutMsgXmlBuilder.build(outMsg);
-		String data=outMsgXml;
+	public static ApiResult sendMsg(JsonMsg outMsg) {
+		String data=outMsg.toString();
 		String jsonResult = HttpKit.post(msgUrl + AccessTokenApi.getAccessToken().getAccessToken(),data);
 		return new ApiResult(jsonResult);
 	}
