@@ -47,9 +47,6 @@ public class WeixinConfig extends JFinalConfig {
 		me.add(ecp);
 		
 		// 配置C3p0数据库连接池插件
-		System.out.println(getProperty("url"));
-		System.out.println(getProperty("jdbcUrl"));
-		
 		C3p0Plugin c3p0Plugin = new C3p0Plugin(getProperty("jdbcUrl"), getProperty("userName"), getProperty("password").trim());
 		me.add(c3p0Plugin);
 		
