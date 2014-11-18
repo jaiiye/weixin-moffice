@@ -78,7 +78,7 @@ public abstract class TestCase<T extends JFinalConfig> {
     public TestCase() {
         Type genericSuperclass = getClass().getGenericSuperclass();
         Preconditions.checkArgument(genericSuperclass instanceof ParameterizedType,
-                "Your TestCase must have genericType");
+                "Your ControllerTestCase must have genericType");
         config = (Class<? extends JFinalConfig>) ((ParameterizedType) genericSuperclass).getActualTypeArguments()[0];
     }
 

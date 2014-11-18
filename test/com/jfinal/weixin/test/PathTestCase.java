@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import com.jfinal.weixin.test.util.MockServletContext;
 
-public class VewPathTest {
+public class PathTestCase {
 	@SuppressWarnings("rawtypes")
 	@Ignore
 	public void getPath(){
