@@ -6,7 +6,8 @@ import com.jfinal.weixin.model.*;;
 
 public class ShareController extends Controller{
 	public void index() {
-		Page<Share> shares= Share.me.paginate(getParaToInt(0, 1), 10);
-		this.renderJson(shares);
+		Page<Share> shares= Share.me.paginateImage(getParaToInt(0, 1), 10);
+		this.setAttr("shares", shares.getList());
+		this.render("/share/index.htm");
 	}
 }
