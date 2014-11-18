@@ -59,7 +59,7 @@ public class InMsgParaser {
         if ("event".equals(msgType))
         	return parseInEvent(root, toUserName, fromUserName, createTime, msgType);
         
-        throw new RuntimeException("无法识别的消息类型，请查阅微信公众平台开发文档");
+        throw new RuntimeException("无法识别的消息类型【"+msgType+"】，请查阅微信公众平台开发文档");
 	}
 	
 	private static InMsg parseInTextMsg(Element root, String toUserName, String fromUserName, Integer createTime, String msgType) {
@@ -153,6 +153,18 @@ public class InMsgParaser {
 			e.setTicket(ticket);
 			return e;
 		}
+		// 扫码推事件(2014.11.17)
+		if ("scancode_push".equals(event) || "scancode_waitmsg".equals(event)) {
+			InQrCodeEvent e = new InQrCodeEvent(toUserName, fromUserName, createTime, msgType);
+			e.setEvent(event);
+			e.setEventKey(eventKey);
+			e.setTicket(ticket);
+			
+			Element elem = root.element("ScanCodeInfo").element("ScanResult");
+			String scanCodeInfo = elem.getText();
+			e.setScanCodeInfo(scanCodeInfo);
+			return e;
+		}
 		
 		// 上报地理位置事件
 		if ("LOCATION".equals(event)) {
@@ -161,6 +173,17 @@ public class InMsgParaser {
 			e.setLatitude(root.elementText("Latitude"));
 			e.setLongitude(root.elementText("Longitude"));
 			e.setPrecision(root.elementText("Precision"));
+			return e;
+		}
+		// 上报地理位置事件
+		if ("location_select".equals(event)) {
+			InLocationEvent e = new InLocationEvent(toUserName, fromUserName, createTime, msgType);
+			e.setEvent(event);
+			e.setLatitude( root.element("SendLocationInfo").elementText("Location_X"));
+			e.setLongitude(root.element("SendLocationInfo").elementText("Location_Y"));
+			e.setPrecision(root.element("SendLocationInfo").elementText("Scale"));
+			e.setLabel(root.element("SendLocationInfo").elementText("Label"));
+			e.setPoiname(root.element("SendLocationInfo").elementText("Poiname"));
 			return e;
 		}
 		
@@ -179,20 +202,7 @@ public class InMsgParaser {
 			return e;
 		}
 		
-		// 扫码推事件
-		if ("scancode_push".equals(event) || "scancode_waitmsg".equals(event)) {
-			InQrCodeEvent e = new InQrCodeEvent(toUserName, fromUserName, createTime, msgType);
-			e.setEvent(event);
-			e.setEventKey(eventKey);
-			e.setTicket(ticket);
-			
-			Element elem = root.element("ScanCodeInfo").element("ScanResult");
-			String scanCodeInfo = elem.getText();
-			e.setScanCodeInfo(scanCodeInfo);
-			return e;
-		}
-		
-		throw new RuntimeException("无法识别的事件类型，请查阅微信公众平台开发文档");
+		throw new RuntimeException("无法识别的事件类型【"+event+"】，请查阅微信公众平台开发文档");
 	}
 	
 	@SuppressWarnings("unused")

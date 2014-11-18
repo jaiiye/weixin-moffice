@@ -87,7 +87,8 @@ public class QyTestCase extends TestCase<WeixinConfig> {
 	public void testGetMsg() {
     	WxCryptUtil wcu= this.getWxCryptUtil();
     	
-    	String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416190315</CreateTime><Content><![CDATA[123]]></Content><MsgType><![CDATA[text]]></MsgType><MsgId>4587033601933049922</MsgId><AgentID>10</AgentID></xml>";
+    	String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416302569</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[location_select]]></Event><EventKey><![CDATA[rselfmenu_2_0]]></EventKey><SendLocationInfo><Location_X><![CDATA[34]]></Location_X><Location_Y><![CDATA[109]]></Location_Y><Scale><![CDATA[15]]></Scale><Label><![CDATA[陕西省西安市雁塔区西安高新技术产业开发区科技路37号海星城市广场B座0602]]></Label><Poiname><![CDATA[焦点贝贝早教中心]]></Poiname></SendLocationInfo><AgentID>10</AgentID></xml>";
+    	//String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416190315</CreateTime><Content><![CDATA[123]]></Content><MsgType><![CDATA[text]]></MsgType><MsgId>4587033601933049922</MsgId><AgentID>10</AgentID></xml>";
     	
     	String secretXml=wcu.encrypt(nonce,xml);
     	String body=String.format(tpl, secretXml);

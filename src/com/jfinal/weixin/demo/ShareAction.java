@@ -36,6 +36,14 @@ public class ShareAction {
 			share.set("longitude", msg.getLongitude());
 			share.set("latitude", msg.getLatitude());
 			share.set("precision", msg.getPrecision());
+			share.set("label", msg.getLabel());
+			share.set("poiname", msg.getPoiname());
+			share.save();
+		}else if( inmsg instanceof InVideoMsg){
+			InVideoMsg msg = (InVideoMsg) inmsg;
+			share.set("mediaId", msg.getMediaId());
+			share.set("msgId", msg.getMsgId());
+			share.set("thumbMediaId", msg.getThumbMediaId());
 			share.save();
 		}
 	}

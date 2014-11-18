@@ -26,6 +26,8 @@ public class InLocationEvent extends InMsg {
 	private String latitude;
 	private String longitude;
 	private String precision;
+	private String label;
+	private String poiname;
 	
 	public InLocationEvent(String toUserName, String fromUserName, Integer createTime, String msgType) {
 		super(toUserName, fromUserName, createTime, msgType);
@@ -61,6 +63,22 @@ public class InLocationEvent extends InMsg {
 	
 	public void setPrecision(String precision) {
 		this.precision = precision;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public String getPoiname() {
+		return poiname;
+	}
+
+	public void setPoiname(String poiname) {
+		this.poiname = poiname;
 	}
 }
 
