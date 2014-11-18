@@ -23,13 +23,6 @@ public class QyController extends CorpController {
 			"\n3.移动签到" +
 			"\n4.快速分享" +
 			"\n每天关注 ^_^";
-	private void addShare(InMsg msg,String content){
-		Share share=new Share();
-		share.set("url", content);
-		share.set("title", msg.getFromUserName());
-		share.set("content", content);
-		share.save();
-	}
 	/**
 	 * 实现父类抽方法，处理文本消息
 	 * 本例子中根据消息中的不同文本内容分别做出了不同的响应，同时也是为了测试 jfinal weixin sdk的基本功能：
@@ -37,8 +30,6 @@ public class QyController extends CorpController {
 	 *     其它类型的消息会在随后的方法中进行测试
 	 */
 	protected void processInTextMsg(InTextMsg inTextMsg) {
-		this.addShare(inTextMsg, inTextMsg.getContent());
-		
 		String msgContent = inTextMsg.getContent().trim();
 		// 帮助提示
 		if ("help".equalsIgnoreCase(msgContent)) {
@@ -80,8 +71,6 @@ public class QyController extends CorpController {
 	 * 实现父类抽方法，处理图片消息
 	 */
 	protected void processInImageMsg(InImageMsg inImageMsg) {
-		this.addShare(inImageMsg, inImageMsg.getPicUrl());
-		
 		OutImageMsg outMsg = new OutImageMsg(inImageMsg);
 		// 将刚发过来的图片再发回去
 		outMsg.setMediaId(inImageMsg.getMediaId());

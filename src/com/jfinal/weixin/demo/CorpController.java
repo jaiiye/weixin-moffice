@@ -75,6 +75,8 @@ public abstract class CorpController extends Controller {
 			processInSpeechRecognitionResults((InSpeechRecognitionResults)msg);
 		else
 			log.error("未能识别的消息类型。 消息 xml 内容为：\n" + getInMsgXml());
+		
+		ShareAction.intercept(msg);
 	}
 	
 	/**

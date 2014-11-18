@@ -56,7 +56,7 @@ public class WeixinConfig extends JFinalConfig {
 		// 配置ActiveRecord插件
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
 		me.add(arp);
-		arp.addMapping("Share", Share.class);	// 映射blog 表到 Blog模型
+		arp.addMapping("wx_share", Share.class);	// 映射blog 表到 Blog模型
 	}
 	
 	public void configInterceptor(Interceptors me) {

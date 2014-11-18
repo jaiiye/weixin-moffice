@@ -1,10 +1,14 @@
+2014.11.18
+=============================================================
+1.增加了消息向数据库的保存功能；
+
+
 2014.11.17 
 =============================================================
 1.修改mock相关类，使其满足对getRequestURL，getReader等函数的调用；
      可满足微信借口的单元测试
 2.加密算法有问题（加密后再解密，和原名文，不一致）
      自己增加了方法，进行修正，微信自己的加密方法仍然不知道；
-3.
 	 
 2014-11-17 17:05:50
 [INFO]-[Thread: http-80-9]-[com.jfinal.weixin.demo.CorpController.index()]: 接收消息:<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName>
@@ -14,7 +18,8 @@
 
 
 2014-11-17 17:05:50
-[INFO]-[Thread: http-80-9]-[com.jfinal.weixin.demo.CorpController.getInMsg()]: 脱密消息:<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName>
+[INFO]-[Thread: http-80-9]-[com.jfinal.weixin.demo.CorpController.getInMsg()]: 脱密消息:
+<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName>
 <FromUserName><![CDATA[15991890112]]></FromUserName>
 <CreateTime>1416215152</CreateTime>
 <MsgType><![CDATA[event]]></MsgType>
