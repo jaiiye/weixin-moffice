@@ -26,13 +26,15 @@ public class JsonMsgTestCase extends TestCase<WeixinConfig> {
 	
 	@Test
 	public void sendJsonTextMsg(){
+		for(int i=0;i<100;i++){
 		JsonTextMsg msg=new JsonTextMsg(); 
-		msg.touser="15991890112";
-		msg.content="123";
-		msg.msgtype="text";
-		msg.safe="1";
-		msg.agentid="10";
-		ApiResult ret=MessageApi.sendMsg(msg);
-		System.out.println(ret.getErrorMsg());
+			msg.touser="15991890112";
+			msg.content="123"+i;
+			msg.msgtype="text";
+			msg.safe="1";
+			msg.agentid="10";
+			ApiResult ret=MessageApi.sendMsg(msg);
+			System.out.println(ret.getErrorMsg());
+		}
 	}
 }

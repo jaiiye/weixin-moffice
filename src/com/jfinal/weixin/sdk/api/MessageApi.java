@@ -13,7 +13,7 @@ import com.jfinal.weixin.sdk.msg.JsonMsg;
  * message api
  */
 public class MessageApi {
-	private static String msgUrl = "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=ACCESS_TOKEN=";
+	private static String msgUrl = "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=";
 	
 	/**
 	 * 发送消息
