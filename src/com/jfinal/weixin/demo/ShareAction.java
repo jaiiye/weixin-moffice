@@ -8,6 +8,7 @@ package com.jfinal.weixin.demo;
 
 import com.jfinal.weixin.model.Share;
 import com.jfinal.weixin.sdk.msg.InImageMsg;
+import com.jfinal.weixin.sdk.msg.InLocationEvent;
 import com.jfinal.weixin.sdk.msg.InMsg;
 import com.jfinal.weixin.sdk.msg.InTextMsg;
 import com.jfinal.weixin.sdk.msg.InVideoMsg;
@@ -29,6 +30,12 @@ public class ShareAction {
 			share.set("mediaId", msg.getMediaId());
 			share.set("msgId", msg.getMsgId());
 			share.set("picUrl", msg.getPicUrl());
+			share.save();
+		}else if (inmsg instanceof InLocationEvent) {
+			InLocationEvent msg = (InLocationEvent) inmsg;
+			share.set("longitude", msg.getLongitude());
+			share.set("latitude", msg.getLatitude());
+			share.set("precision", msg.getPrecision());
 			share.save();
 		}
 	}
