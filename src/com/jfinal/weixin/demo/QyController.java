@@ -5,8 +5,6 @@
  */
 
 package com.jfinal.weixin.demo;
-
-import com.jfinal.weixin.model.Share;
 import com.jfinal.weixin.sdk.msg.*;
 
 /**

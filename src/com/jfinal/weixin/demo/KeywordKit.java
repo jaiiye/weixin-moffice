@@ -8,6 +8,7 @@ import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.weixin.model.Share;
 import com.jfinal.weixin.model.Stimulate;
 import com.jfinal.weixin.model.User;
+import com.jfinal.weixin.sdk.api.ApiConfig;
 import com.jfinal.weixin.sdk.api.ApiResult;
 import com.jfinal.weixin.sdk.api.UserApi;
 import com.jfinal.weixin.sdk.msg.InTextMsg;
@@ -30,20 +31,25 @@ public class KeywordKit {
 		String content = inMsg.getContent().trim();
 		if (content.equals("0") || content.equals("?")) { // 总监或经理电话
 			outMsg.setContent(HelpTip);
+			
 		} else if (content.equals("1")) { //常用电话
 			Page<User> list = User.me.paginate();
 			String str = processUserList(list);
 			outMsg.setContent(str);
+			
 		} else if (content.equals("11")) {//通讯录
 			Page<User> list = User.me.paginate(1, 100);
 			String str = processUserList(list);
 			outMsg.setContent(str);
+			
 		} else if (content.equals("2")) { //最新公告
 			Page<Stimulate> list = Stimulate.me.paginate(1, 5);
 			return processStimulateList(list, inMsg);
+			
 		} else if (content.equals("3")) { //最新动态
 			Page<Share> list = Share.me.paginateImage(1, 5);
 			return processShareList(list, inMsg);
+			
 		} else if (content.equals("9")) { // 我是谁
 			ApiResult ret = UserApi.getFollows(0);
 			LinkedHashMap<String, Object> map = getByUserId(
@@ -51,6 +57,7 @@ public class KeywordKit {
 			String str = String.format("姓名：%1$s\n电话%2$s\n有异议？",
 					map.get("name"), map.get("userid"));
 			outMsg.setContent(str);
+			
 		} else if (content.equals("01")) { //数据统计
 			ApiResult ret1 = UserApi.getFollows(0);
 			ApiResult ret2 = UserApi.getFollows(1);
@@ -59,6 +66,7 @@ public class KeywordKit {
 					.getList("userlist").size(), ret2.getList("userlist")
 					.size(), ret3.getList().size());
 			outMsg.setContent(str);
+			
 		} else if (content.equals("02")) { //成员同步
 			List<Actor> list = getEmptyList();
 			int count = createUsers(list);
@@ -128,21 +136,22 @@ public class KeywordKit {
 		for (Share m : list.getList()) {
 			outMsg.addNews(m.get("fromUserName").toString(),
 					m.get("fromUserName").toString() + "分享了一张图片",
-					m.get("picUrl").toString(), "#");
+					m.get("picUrl").toString(), m.get("picUrl").toString());
 		}
 		return outMsg;
 	}
 
 	private static OutMsg processStimulateList(Page<Stimulate> list,
 			InTextMsg inMsg) {
+		String url=ApiConfig.getUrl()+"new/?id=";
 		OutNewsMsg outMsg = new OutNewsMsg(inMsg);
 		for (Stimulate m : list.getList()) {
 			outMsg.addNews(m.get("TITLE").toString(),
 					m.get("TITLE").toString(),
 					"http://upload.df.cnhubei.com/2012/1226/1356464487344.jpg",
-					"http://upload.df.cnhubei.com/2012/1226/1356464487344.jpg");
+					url+m.getStr("id"));
 		}
-		return outMsg;
+		return outMsg; 
 	}
 
 	private static String processUserList(Page<User> list) {

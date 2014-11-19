@@ -16,7 +16,6 @@ import com.jfinal.core.JFinal;
 import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.weixin.demo.ApiController;
 import com.jfinal.weixin.demo.QyController;
-import com.jfinal.weixin.demo.TestController;
 import com.jfinal.weixin.sdk.api.ApiConfig;
 
 public class QyConfig extends JFinalConfig {
@@ -35,7 +34,6 @@ public class QyConfig extends JFinalConfig {
 	public void configRoute(Routes me) {
 		me.add("/qy", QyController.class);
 		me.add("/api", ApiController.class);
-		me.add("/test", TestController.class);
 	}
 	
 	public void configPlugin(Plugins me) {
