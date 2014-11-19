@@ -36,55 +36,15 @@
 		<td>菜单测试</td>
 		<td>
 			<textarea id="menu" style="width:700px;height:100px;">
-{
-    "button": [
-        {
-            "name": "扫码", 
-            "sub_button": [
-                {
-                    "type": "scancode_waitmsg", 
-                    "name": "扫码带提示", 
-                    "key": "rselfmenu_0_0", 
-                    "sub_button": [ ]
-                }, 
-                {
-                    "type": "scancode_push", 
-                    "name": "扫码推事件", 
-                    "key": "rselfmenu_0_1", 
-                    "sub_button": [ ]
-                }
-            ]
-        }, 
-        {
-            "name": "发图", 
-            "sub_button": [
-                {
-                    "type": "pic_sysphoto", 
-                    "name": "系统拍照发图", 
-                    "key": "rselfmenu_1_0", 
-                   "sub_button": [ ]
-                 }, 
-                {
-                    "type": "pic_photo_or_album", 
-                    "name": "拍照或者相册发图", 
-                    "key": "rselfmenu_1_1", 
-                    "sub_button": [ ]
-                }, 
-                {
-                    "type": "pic_weixin", 
-                    "name": "微信相册发图", 
-                    "key": "rselfmenu_1_2", 
-                    "sub_button": [ ]
-                }
-            ]
-        }, 
-        {
-            "name": "发送位置", 
-            "type": "location_select", 
-            "key": "rselfmenu_2_0"
-        }
-    ]
-}
+{"button":[
+{"name":"公司动态","sub_button":[{"type":"click","name":"最新动态","key":"2","sub_button":[]},
+{"type":"click","name":"最新分享","key":"3","sub_button":[]},
+{"type":"view","name":"留言表","url":"http://dinglantech.com.cn/weixin/share/commentList","sub_button":[]},
+{"type":"view","name":"签到表","url":"http://dinglantech.com.cn/weixin/share/gpsList","sub_button":[]}
+]},
+{"name":"快速分享","sub_button":[{"type":"pic_photo_or_album","name":"照片分享","key":"rselfmenu_1_1","sub_button":[]},{"type":"scancode_waitmsg","name":"二维码分享","key":"rselfmenu_0_0","sub_button":[]},{"type":"location_select","name":"位置分享","key":"rselfmenu_2_0","sub_button":[]}]},
+{"name":"工具箱","sub_button":[{"type":"click","name":"重要电话","key":"1","sub_button":[]},{"type":"click","name":"通讯录","key":"11","sub_button":[]},{"type":"click","name":"我是谁","key":"9","sub_button":[]}]}
+]}
 			</textarea>
 			<br>
 			<input type="button" value="创建菜单" id="btn4" />

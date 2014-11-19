@@ -16,6 +16,11 @@
 	<h2 class="page_title" style="padding:20px;line-height: 30px;text-align:center">
 		最新签到
 	</h2>
+	
+	<#if shares?size = 0>
+		暂未有人签到，你赶紧占个座呗！
+	</#if>
+	
 	<#list shares as m>
 		<div style="font-size:12px;font-style: italic;">
 	 		${m.fromUserName!}：<script>formatDate(${m.createTime!})</script>

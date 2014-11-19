@@ -131,7 +131,7 @@ public class QyController extends CorpController {
 			OutMsg outMsg=KeywordKit.Process(msg);
 			render(outMsg);
 		}else{
-			renderOutTextMsg("收到菜单事件[key="+key+"]");
+			//renderOutTextMsg("收到菜单事件[key="+key+"]");
 		}
 	}
 	

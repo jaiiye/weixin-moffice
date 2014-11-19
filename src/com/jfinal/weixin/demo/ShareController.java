@@ -24,6 +24,7 @@ public class ShareController extends Controller{
 		this.setAttr("shares", shares.getList());
 		this.render("/share/gpsList.html");
 	}
+	
 	public void commentList() {
 		Page<Share> shares =Share.me.paginateText(1, 50);
 		this.setAttr("shares", shares.getList());
