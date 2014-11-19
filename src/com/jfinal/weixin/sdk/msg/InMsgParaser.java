@@ -125,7 +125,7 @@ public class InMsgParaser {
 	
 	// 解析四种事件
 	private static InMsg parseInEvent(Element root, String toUserName, String fromUserName, Integer createTime, String msgType) {
-		String event = root.elementText("Event");
+		String event = root.elementText("Event").toLowerCase();
 		String eventKey = root.elementText("EventKey");
 		
 				
@@ -146,7 +146,7 @@ public class InMsgParaser {
 			return e;
 		}
 		// 扫描带参数二维码事件之二		2: 用户已关注时的事件推送
-		if ("SCAN".equals(event)) {
+		if ("scan".equals(event)) {
 			InQrCodeEvent e = new InQrCodeEvent(toUserName, fromUserName, createTime, msgType);
 			e.setEvent(event);
 			e.setEventKey(eventKey);
@@ -167,7 +167,7 @@ public class InMsgParaser {
 		}
 		
 		// 上报地理位置事件
-		if ("LOCATION".equals(event)) {
+		if ("location".equals(event)) {
 			InLocationEvent e = new InLocationEvent(toUserName, fromUserName, createTime, msgType);
 			e.setEvent(event);
 			e.setLatitude(root.elementText("Latitude"));
@@ -188,14 +188,14 @@ public class InMsgParaser {
 		}
 		
 		// 自定义菜单事件之一			1：点击菜单拉取消息时的事件推送
-		if ("CLICK".equals(event)) {
+		if ("click".equals(event)) {
 			InMenuEvent e = new InMenuEvent(toUserName, fromUserName, createTime, msgType);
 			e.setEvent(event);
 			e.setEventKey(eventKey);
 			return e;
 		}
 		// 自定义菜单事件之二			2：点击菜单跳转链接时的事件推送
-		if ("VIEW".equals(event)) {
+		if ("view".equals(event)) {
 			InMenuEvent e = new InMenuEvent(toUserName, fromUserName, createTime, msgType);
 			e.setEvent(event);
 			e.setEventKey(eventKey);

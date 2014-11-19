@@ -76,6 +76,8 @@ public class QyTestCase extends TestCase<WeixinConfig> {
 		
 		String src=String.valueOf(new Date().getTime());
 		String randomStr="1766739666";
+		
+		//先加密再解密
 		String dest =cryptUtil.decrypt(cryptUtil.encrypt(randomStr, src));
 		Assert.assertEquals( src, dest);
 	}
@@ -84,12 +86,30 @@ public class QyTestCase extends TestCase<WeixinConfig> {
 	 * 接收文本消息
 	 */ 
     @Test
-	public void testGetMsg() {
+	public void testTextMsg() {
+    	//this.processTextMsg("1");
+    	//this.processTextMsg("11");
+    	//this.processTextMsg("2");
+    }  
+    
+    /*
+	 * 接收XML消息
+	 */
+    @Test
+    public void testXmlMsg(){
+    	//String xml="<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[FromUser]]></FromUserName><CreateTime>1408090502</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[scancode_push]]></Event><EventKey><![CDATA[6]]></EventKey><ScanCodeInfo><ScanType><![CDATA[qrcode]]></ScanType><ScanResult><![CDATA[http://www.baidu.com/]]></ScanResult></ScanCodeInfo><AgentID>10</AgentID></xml>";
+    	//String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416367972</CreateTime><MsgType><![CDATA[video]]></MsgType><MediaId><![CDATA[1ikq1zsvYs4mCTc1FCCY3J444CHIdEbY-TYRgQnHubO4dM2d933eHbGOgfGsqHoX37ZK8clIVrhR9jGIK47LeBg]]></MediaId><ThumbMediaId><![CDATA[1gQ3-zyIfS0ggXiyL6MFQjtOakZEsB932xv9P4Zt5TQ8vvQAx8IN7x2JRPydCAKqy]]></ThumbMediaId><MsgId>4587033601933050021</MsgId><AgentID>10</AgentID></xml>";
+    	String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416372754</CreateTime><MsgType><![CDATA[event]]></MsgType><AgentID>10</AgentID><Event><![CDATA[click]]></Event><EventKey><![CDATA[1]]></EventKey></xml>";
+    	this.processXmlMsg(xml);
+    }  
+    
+    private void processTextMsg(String text) {
+    	String tpl="<xml><Content><![CDATA[%1$s]]></Content><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416190315</CreateTime><MsgType><![CDATA[text]]></MsgType><MsgId>4587033601933049922</MsgId><AgentID>10</AgentID></xml>";
+    	String xml=String.format(tpl,text);
+    	this.processXmlMsg(xml);
+    }
+    private void processXmlMsg(String xml) {
     	WxCryptUtil wcu= this.getWxCryptUtil();
-    	
-    	String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416302569</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[location_select]]></Event><EventKey><![CDATA[rselfmenu_2_0]]></EventKey><SendLocationInfo><Location_X><![CDATA[34]]></Location_X><Location_Y><![CDATA[109]]></Location_Y><Scale><![CDATA[15]]></Scale><Label><![CDATA[陕西省西安市雁塔区西安高新技术产业开发区科技路37号海星城市广场B座0602]]></Label><Poiname><![CDATA[焦点贝贝早教中心]]></Poiname></SendLocationInfo><AgentID>10</AgentID></xml>";
-    	//String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416190315</CreateTime><Content><![CDATA[123]]></Content><MsgType><![CDATA[text]]></MsgType><MsgId>4587033601933049922</MsgId><AgentID>10</AgentID></xml>";
-    	
     	String secretXml=wcu.encrypt(nonce,xml);
     	String body=String.format(tpl, secretXml);
     	msg_signature=wcu.signature(timestamp, nonce, secretXml);
@@ -100,24 +120,7 @@ public class QyTestCase extends TestCase<WeixinConfig> {
         String resp=  use(url).post(body).invoke();
         String dest = innerDecrypt(resp);
         System.out.println("解密结果dest："+dest);
-    }  
-    
-    @Test
-    public void testQrCode(){
-    	WxCryptUtil wcu= this.getWxCryptUtil();
-    	String xml="<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[FromUser]]></FromUserName><CreateTime>1408090502</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[scancode_push]]></Event><EventKey><![CDATA[6]]></EventKey><ScanCodeInfo><ScanType><![CDATA[qrcode]]></ScanType><ScanResult><![CDATA[http://www.baidu.com/]]></ScanResult></ScanCodeInfo><AgentID>10</AgentID></xml>";
-    	
-    	
-    	String secretXml=wcu.encrypt(nonce,xml);
-    	String body=String.format(tpl, secretXml);
-    	msg_signature=wcu.signature(timestamp, nonce, secretXml);
-    	
-    	String url = String.format("/qy?msg_signature=%1$s&timestamp=%2$s&nonce=%3$s",msg_signature,timestamp,nonce);
-    	String resp=  use(url).post(body).invoke();
-        
-        String dest = innerDecrypt(resp);
-        System.out.println("解密结果dest："+dest);
-    }   
+    }
     
     /*
      * 内部验证解密

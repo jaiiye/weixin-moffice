@@ -125,7 +125,19 @@ public class QyController extends CorpController {
 	 * 实现父类抽方法，处理自定义菜单事件
 	 */
 	protected void processInMenuEvent(InMenuEvent inMenuEvent) {
-		renderOutTextMsg("processInMenuEvent() 方法测试成功");
+		//String toUserName, String fromUserName, Integer createTime, String msgType
+		InTextMsg msg=new InTextMsg(inMenuEvent.getToUserName(),inMenuEvent.getFromUserName(),inMenuEvent.getCreateTime(),"text");
+		if(inMenuEvent.getEventKey().equals("1")
+			|| inMenuEvent.getEventKey().equals("11")
+			|| inMenuEvent.getEventKey().equals("2")
+			|| inMenuEvent.getEventKey().equals("3")
+			){
+			msg.setContent(inMenuEvent.getEventKey());
+			OutMsg outMsg=KeywordKit.Process(msg);
+			render(outMsg);
+		}else{
+			renderOutTextMsg("processInMenuEvent() 方法测试成功");
+		}
 	}
 	
 	/**
