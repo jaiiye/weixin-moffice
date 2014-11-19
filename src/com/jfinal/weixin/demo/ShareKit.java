@@ -8,7 +8,9 @@ package com.jfinal.weixin.demo;
 
 import com.jfinal.weixin.model.Share;
 import com.jfinal.weixin.sdk.msg.InImageMsg;
+import com.jfinal.weixin.sdk.msg.InLinkMsg;
 import com.jfinal.weixin.sdk.msg.InLocationEvent;
+import com.jfinal.weixin.sdk.msg.InLocationMsg;
 import com.jfinal.weixin.sdk.msg.InMsg;
 import com.jfinal.weixin.sdk.msg.InTextMsg;
 import com.jfinal.weixin.sdk.msg.InVideoMsg;
@@ -17,8 +19,8 @@ import com.jfinal.weixin.sdk.msg.InVoiceMsg;
 /**
  * ShareAction
  */
-public class ShareAction {
-	public static void intercept(InMsg inmsg) {
+public class ShareKit {
+	public static void process(InMsg inmsg) {
 		Share share = new Share();
 		initMsg(share, inmsg);
 		if (inmsg instanceof InTextMsg) {
@@ -31,6 +33,17 @@ public class ShareAction {
 			share.set("msgId", msg.getMsgId());
 			share.set("picUrl", msg.getPicUrl());
 			share.save();
+		}else if( inmsg instanceof InVoiceMsg){
+			InVoiceMsg msg = (InVoiceMsg) inmsg;
+			share.set("mediaId", msg.getMediaId());
+			share.set("msgId", msg.getMsgId());
+			share.save();
+		}
+		else if( inmsg instanceof InLinkMsg){
+			InLinkMsg msg = (InLinkMsg) inmsg;
+			share.set("url", msg.getUrl());
+			share.set("description", msg.getDescription());
+			share.save();
 		}else if (inmsg instanceof InLocationEvent) {
 			InLocationEvent msg = (InLocationEvent) inmsg;
 			share.set("longitude", msg.getLongitude());
@@ -38,6 +51,14 @@ public class ShareAction {
 			share.set("precision", msg.getPrecision());
 			share.set("label", msg.getLabel());
 			share.set("poiname", msg.getPoiname());
+			share.save();
+		}else if (inmsg instanceof InLocationMsg) {
+			InLocationMsg msg = (InLocationMsg) inmsg;
+			share.set("longitude", msg.getLocation_X());
+			share.set("latitude", msg.getLocation_Y());
+			share.set("precision", msg.getScale());
+			share.set("label", msg.getLabel());
+			share.set("msgId", msg.getMsgId());
 			share.save();
 		}else if( inmsg instanceof InVideoMsg){
 			InVideoMsg msg = (InVideoMsg) inmsg;
