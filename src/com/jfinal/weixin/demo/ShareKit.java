@@ -69,8 +69,8 @@ public class ShareKit {
 			share.save();
 		}else if( inmsg instanceof InMenuEvent){
 			InMenuEvent msg = (InMenuEvent) inmsg;
-			share.set("envent", msg.getEvent());
-			share.set("enventKey", msg.getEventKey());
+			share.set("event", msg.getEvent());
+			share.set("eventKey", msg.getEventKey());
 			share.save();
 		}
 	}

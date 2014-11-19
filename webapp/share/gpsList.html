@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0050)http://famousthemes.com/gomobile/index_white.html# -->
+<html xmlns="http://www.w3.org/1999/xhtml" class="">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<link type="text/css" rel="stylesheet" href="./css/style.css" />
+	<link type="text/css" rel="stylesheet" href="./css/white.css" />
+	<script language="javascript" src="./css/weixin.js"></script>
+	<title>最新签到</title>
+</head>
+<body>
+	<h2 class="page_title" style="padding:20px;line-height: 30px;text-align:center">
+		最新签到
+	</h2>
+	<#list shares as m>
+		<div style="font-size:12px;font-style: italic;">
+	 		${m.fromUserName!}：<script>formatDate(${m.createTime!})</script>
+	 	</div>
+	 	<span style="font-size:14px;">
+	 		${m.label!}	
+	 	</span>
+	 	<div style="height:1px;border-bottom:dashed 1px #ddd; padding:5px;"></div>
+	</#list>
+</body>
+</html>

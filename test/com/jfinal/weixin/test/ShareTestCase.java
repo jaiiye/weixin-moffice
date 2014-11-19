@@ -8,7 +8,7 @@ import com.jfinal.weixin.demo.WeixinConfig;
 public class ShareTestCase extends TestCase<WeixinConfig> {
 	@Test
 	public void getShares(){
-		String url = "/share";
+		String url = "/share/commentList";
 		String resp=  use(url).post("").invoke();
 		System.out.println(resp);
 	}
