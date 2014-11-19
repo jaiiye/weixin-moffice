@@ -16,21 +16,27 @@ import com.jfinal.weixin.sdk.kit.ParaMap;
 public class UserApi {
 	
 	private static String getUserInfo =  "https://qyapi.weixin.qq.com/cgi-bin/user/get?userid=lisi";
-	private static String getFollowers = "https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?fetch_child=1&status=0&department_id=1";
-	
+	private static String getFollowers = "https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?fetch_child=1&department_id=1&status=";
+	private static String createUser = "https://qyapi.weixin.qq.com/cgi-bin/user/create?access_token=";
+		
 	public static ApiResult getUserInfo(String openId) {
 		ParaMap pm = ParaMap.create("access_token", AccessTokenApi.getAccessToken().getAccessToken()).put("openid", openId).put("lang", "zh_CN");
 		return new ApiResult(HttpKit.get(getUserInfo, pm.getData()));
 	}
 	
-	public static ApiResult getFollowers(String nextOpenid) {
+	public static ApiResult getFollowers(String nextOpenid,int status) {
 		ParaMap pm = ParaMap.create("access_token", AccessTokenApi.getAccessToken().getAccessToken());
 		if (nextOpenid != null)
 			pm.put("next_openid", nextOpenid);
-		return new ApiResult(HttpKit.get(getFollowers, pm.getData()));
+		return new ApiResult(HttpKit.get(getFollowers+status, pm.getData()));
 	}
 	
-	public static ApiResult getFollows() {
-		return getFollowers(null);
+	public static ApiResult getFollows(int status) {
+		return getFollowers(null,status);
+	}
+	
+	public static ApiResult createUser(String user) {
+		String url=createUser+AccessTokenApi.getAccessToken().getAccessToken();
+		return new ApiResult(HttpKit.post(url,user));
 	}
 }

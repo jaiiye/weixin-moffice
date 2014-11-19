@@ -38,8 +38,7 @@ public class ApiController extends Controller {
 	 * 获取公众号关注用户
 	 */
 	public void getFollowers() {
-		ApiResult apiResult = UserApi.getFollows();
-		//用 jackson 解析结果出来
+		ApiResult apiResult = UserApi.getFollows(0);
 		renderText(apiResult.getJson());
 	}
 }

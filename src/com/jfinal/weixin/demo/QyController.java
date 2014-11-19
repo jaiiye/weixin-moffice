@@ -127,16 +127,13 @@ public class QyController extends CorpController {
 	protected void processInMenuEvent(InMenuEvent inMenuEvent) {
 		//String toUserName, String fromUserName, Integer createTime, String msgType
 		InTextMsg msg=new InTextMsg(inMenuEvent.getToUserName(),inMenuEvent.getFromUserName(),inMenuEvent.getCreateTime(),"text");
-		if(inMenuEvent.getEventKey().equals("1")
-			|| inMenuEvent.getEventKey().equals("11")
-			|| inMenuEvent.getEventKey().equals("2")
-			|| inMenuEvent.getEventKey().equals("3")
-			){
+		String key=inMenuEvent.getEventKey().trim().toLowerCase();
+		if(key.length()<3){
 			msg.setContent(inMenuEvent.getEventKey());
 			OutMsg outMsg=KeywordKit.Process(msg);
 			render(outMsg);
 		}else{
-			renderOutTextMsg("processInMenuEvent() 方法测试成功");
+			renderOutTextMsg("收到菜单事件[key="+key+"]");
 		}
 	}
 	

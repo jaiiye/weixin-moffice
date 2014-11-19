@@ -90,6 +90,11 @@ public class QyTestCase extends TestCase<WeixinConfig> {
     	//this.processTextMsg("1");
     	//this.processTextMsg("11");
     	//this.processTextMsg("2");
+    	//this.processTextMsg("11");
+    	//this.processTextMsg("01");
+    	//this.processTextMsg("02");
+    	
+    	this.processTextMsg("9");
     }  
     
     /*
@@ -99,8 +104,8 @@ public class QyTestCase extends TestCase<WeixinConfig> {
     public void testXmlMsg(){
     	//String xml="<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[FromUser]]></FromUserName><CreateTime>1408090502</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[scancode_push]]></Event><EventKey><![CDATA[6]]></EventKey><ScanCodeInfo><ScanType><![CDATA[qrcode]]></ScanType><ScanResult><![CDATA[http://www.baidu.com/]]></ScanResult></ScanCodeInfo><AgentID>10</AgentID></xml>";
     	//String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416367972</CreateTime><MsgType><![CDATA[video]]></MsgType><MediaId><![CDATA[1ikq1zsvYs4mCTc1FCCY3J444CHIdEbY-TYRgQnHubO4dM2d933eHbGOgfGsqHoX37ZK8clIVrhR9jGIK47LeBg]]></MediaId><ThumbMediaId><![CDATA[1gQ3-zyIfS0ggXiyL6MFQjtOakZEsB932xv9P4Zt5TQ8vvQAx8IN7x2JRPydCAKqy]]></ThumbMediaId><MsgId>4587033601933050021</MsgId><AgentID>10</AgentID></xml>";
-    	String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416372754</CreateTime><MsgType><![CDATA[event]]></MsgType><AgentID>10</AgentID><Event><![CDATA[click]]></Event><EventKey><![CDATA[1]]></EventKey></xml>";
-    	this.processXmlMsg(xml);
+    	//String xml="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName><FromUserName><![CDATA[15991890112]]></FromUserName><CreateTime>1416372754</CreateTime><MsgType><![CDATA[event]]></MsgType><AgentID>10</AgentID><Event><![CDATA[click]]></Event><EventKey><![CDATA[1]]></EventKey></xml>";
+    	//this.processXmlMsg(xml);
     }  
     
     private void processTextMsg(String text) {

@@ -5,34 +5,6 @@
 <form action="" method="post"">
 <table>
 	<tr>
-		<td>AppId</td>
-		<td><input type="text" id="AppId" value="${AppId}" /></td>
-	</tr>
-	<tr>
-		<td>AppSecret</td>
-		<td><input type="text" id="AppSecret" value="${AppSecret}"  style="width:250px;"/></td>
-	</tr>
-	<tr>
-		<td>Token</td>
-		<td><input type="text" id="Token" value="${Token}" /></td>
-	</tr>
-	<tr>
-		<td>EncodingAESKey</td>
-		<td><input type="text" id="EncodingAESKey"  style="width:400px;"
-			value="${EncodingAESKey}" /></td>
-	</tr>
-	<tr>
-		<td>回调测试</td>
-		<td><input type="button" value="开始测试" id="btn1" /></td>
-	</tr>
-	<tr>
-		<td>消息测试</td>
-		<td>
-			<input type="button" value="明文测试" id="btn2" />
-			<input type="button" value="密文测试" id="btn3" />
-		</td>
-	</tr>
-	<tr>
 		<td>菜单测试</td>
 		<td>
 			<textarea id="menu" style="width:700px;height:100px;">
@@ -42,16 +14,16 @@
             "name": "公司动态", 
             "sub_button": [
                 {
-                   "type":"view",
-                   "name":"最新分享",
-                   "url":"http://192.168.2.100/weixin/share/", 
-                    "sub_button": [ ]
+                   "type":"click",
+                   "name": "最新动态", 
+                   "key": "2",  
+                   "sub_button": [ ]
                 },
                 {
-                   "type":"view",
-                   "name":"最新动态",
-                   "url":"http://192.168.2.100/weixin/share/", 
-                   "sub_button": [ ]
+                    "type": "click", 
+                    "name": "最新分享", 
+                    "key": "3", 
+                    "sub_button": [ ]
                 }
             ]
         }, 
@@ -79,9 +51,25 @@
             ]
         }, 
         {
-            "name": "通信录", 
-            "type": "location_select", 
-            "key": "rselfmenu_2_0"
+            "name": "工具箱", 
+             "sub_button": [
+                {
+                    "type": "click", 
+                    "name": "重要电话", 
+                    "key": "1", 
+                    "sub_button": [ ]
+                }, {
+                    "type": "click", 
+                    "name": "通讯录", 
+                    "key": "11", 
+                    "sub_button": [ ]
+                }, {
+                     "type": "click", 
+                    "name": "我是谁", 
+                    "key": "9", 
+                    "sub_button": [ ]
+                }
+             }
         }
     ]
 }
