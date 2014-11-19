@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0050)http://famousthemes.com/gomobile/index_white.html# -->
+<html xmlns="http://www.w3.org/1999/xhtml" class="">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<link type="text/css" rel="stylesheet" href="./css/style.css" />
+	<link type="text/css" rel="stylesheet" href="./css/white.css" />
+	<title>最新签到</title>
+	<script>var users=${users!}</script>
+	<style>
+	   ul{font-size:14px;}
+	   ul li,div.all{width: 100px; border:dashed 1px #ddd;padding:2px;margin: 0px 5px 5px 0px;}
+	   ul li{float:left;}
+	   input.btn{padding:5px;font-size:16px; width:200px;}
+	   span.msg{padding:10px;font-size:14px;color:red;}
+	</style>
+</head>
+<body>
+	<h2 class="page_title" style="padding:10px;line-height: 30px;text-align:center;display:none">
+		我要留言
+	</h2>
+	<textarea rows="3" cols="40"></textarea>
+	<br/>
+	<input type="button" class="btn" id="btnSubmit" value="提交" /><span class='msg'></span>
+	<div class="all">
+		<label><input type="checkbox">群发留言</label>
+	</div>
+	<ul>
+		<#list users as m>
+		<li><label><input type="checkbox" value="${m.userid!}">${m.name!}</label></li>
+		</#list>
+	</ul>
+	
+	<script language="javascript" src="./css/jquery.min.js"></script>
+	<script>
+		$("#btnSubmit").click(function(){
+			$(".msg").html("即将开放，敬请期待！");
+		});
+	</script>
+</body>
+</html>
+
