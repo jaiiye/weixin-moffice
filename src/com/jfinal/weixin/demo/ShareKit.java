@@ -11,6 +11,7 @@ import com.jfinal.weixin.sdk.msg.InImageMsg;
 import com.jfinal.weixin.sdk.msg.InLinkMsg;
 import com.jfinal.weixin.sdk.msg.InLocationEvent;
 import com.jfinal.weixin.sdk.msg.InLocationMsg;
+import com.jfinal.weixin.sdk.msg.InMenuEvent;
 import com.jfinal.weixin.sdk.msg.InMsg;
 import com.jfinal.weixin.sdk.msg.InTextMsg;
 import com.jfinal.weixin.sdk.msg.InVideoMsg;
@@ -65,6 +66,11 @@ public class ShareKit {
 			share.set("mediaId", msg.getMediaId());
 			share.set("msgId", msg.getMsgId());
 			share.set("thumbMediaId", msg.getThumbMediaId());
+			share.save();
+		}else if( inmsg instanceof InMenuEvent){
+			InMenuEvent msg = (InMenuEvent) inmsg;
+			share.set("envent", msg.getEvent());
+			share.set("enventKey", msg.getEventKey());
 			share.save();
 		}
 	}

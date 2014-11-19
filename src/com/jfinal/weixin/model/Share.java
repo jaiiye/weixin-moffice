@@ -1,5 +1,6 @@
 package com.jfinal.weixin.model;
 
+import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
 
@@ -11,5 +12,11 @@ public class Share extends Model<Share> {
 	}
 	public Page<Share> paginateImage(int pageNumber, int pageSize) {
 		return paginate(pageNumber, pageSize, "select *", "from wx_share where msgType='image' order by id desc");
+	}
+	public Page<Share> paginateText(int pageNumber, int pageSize) {
+		return paginate(pageNumber, pageSize, "select *", "from wx_share where msgType='text' order by id desc");
+	}
+	public long count(String fromUserName) {
+		return Db.queryLong(String.format("SELECT COUNT(*) FROM wx_share WHERE fromUserName='%1$s'",fromUserName));
 	}
 }

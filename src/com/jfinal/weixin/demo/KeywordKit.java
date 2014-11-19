@@ -50,12 +50,18 @@ public class KeywordKit {
 			Page<Share> list = Share.me.paginateImage(1, 5);
 			return processShareList(list, inMsg);
 			
+		}else if (content.equals("4")) { //最新留言
+			Page<Share> list = Share.me.paginateText(1, 30);
+			return processShareList(list, inMsg);
+			
 		} else if (content.equals("9")) { // 我是谁
 			ApiResult ret = UserApi.getFollows(0);
 			LinkedHashMap<String, Object> map = getByUserId(
 					ret.getList("userlist"), inMsg.getFromUserName());
-			String str = String.format("姓名：%1$s\n电话%2$s\n有异议？",
-					map.get("name"), map.get("userid"));
+			long count=Share.me.count(inMsg.getFromUserName());
+			
+			String str = String.format("姓名：%1$s\n电话：%2$s\n点击数：%3$s\n谚云：众人拾柴火焰高，加油测试啦 ^_^",
+					map.get("name"), map.get("userid"),count);
 			outMsg.setContent(str);
 			
 		} else if (content.equals("01")) { //数据统计
