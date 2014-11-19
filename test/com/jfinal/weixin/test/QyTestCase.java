@@ -93,8 +93,8 @@ public class QyTestCase extends TestCase<WeixinConfig> {
     	//this.processTextMsg("11");
     	//this.processTextMsg("01");
     	//this.processTextMsg("02");
-    	
-    	this.processTextMsg("9");
+    	//this.processTextMsg("9");
+    	this.processTextMsg("2");
     }  
     
     /*

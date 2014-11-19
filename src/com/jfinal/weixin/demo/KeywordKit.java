@@ -143,13 +143,13 @@ public class KeywordKit {
 
 	private static OutMsg processStimulateList(Page<Stimulate> list,
 			InTextMsg inMsg) {
-		String url=ApiConfig.getUrl()+"new/?id=";
+		String url=ApiConfig.getUrl()+"share/getNew?id=";
 		OutNewsMsg outMsg = new OutNewsMsg(inMsg);
 		for (Stimulate m : list.getList()) {
 			outMsg.addNews(m.get("TITLE").toString(),
 					m.get("TITLE").toString(),
 					"http://upload.df.cnhubei.com/2012/1226/1356464487344.jpg",
-					url+m.getStr("id"));
+					url+m.getStr("ID"));
 		}
 		return outMsg; 
 	}
