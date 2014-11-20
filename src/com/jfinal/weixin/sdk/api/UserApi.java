@@ -18,10 +18,16 @@ public class UserApi {
 	private static String getUserInfo =  "https://qyapi.weixin.qq.com/cgi-bin/user/get?userid=lisi";
 	private static String getFollowers = "https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?fetch_child=1&department_id=1&status=";
 	private static String createUser = "https://qyapi.weixin.qq.com/cgi-bin/user/create?access_token=";
+	private static String getUserByCode = "https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?agentid=%1$s&code=%2$s&access_token=%3$s";
 		
 	public static ApiResult getUserInfo(String openId) {
 		ParaMap pm = ParaMap.create("access_token", AccessTokenApi.getAccessToken().getAccessToken()).put("openid", openId).put("lang", "zh_CN");
 		return new ApiResult(HttpKit.get(getUserInfo, pm.getData()));
+	}
+	
+	public static ApiResult getUserByCode(String agentid,String code) {
+		String url=String.format(getUserByCode,agentid,code,AccessTokenApi.getAccessToken().getAccessToken());
+		return new ApiResult(HttpKit.get(url));
 	}
 	
 	public static ApiResult getFollowers(String nextOpenid,int status) {

@@ -1,5 +1,4 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- saved from url=(0050)http://famousthemes.com/gomobile/index_white.html# -->
 <html xmlns="http://www.w3.org/1999/xhtml" class="">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -7,41 +6,63 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<link type="text/css" rel="stylesheet" href="./css/style.css" />
-	<link type="text/css" rel="stylesheet" href="./css/white.css" />
-	<title>最新签到</title>
-	<script>var users=${users!}</script>
-	<style>
-	   ul{}
-	   ul li,div.all{font-size:14px; width: 100px; border:dashed 1px #ddd;padding:2px;margin: 0px 5px 5px 0px;}
-	   ul li{float:left;}
-	   input.btn{padding:5px;font-size:16px; width:200px;}
-	   span.msg{padding:10px;font-size:14px;color:red;}
-	</style>
+	<link type="text/css" rel="stylesheet" href="./css/weixin.css" />
+	<title>我要留言</title>
 </head>
 <body>
-	<h2 class="page_title" style="padding:10px;line-height: 30px;text-align:center;display:none">
+	<h2 class="page-title" style="display:none">
 		我要留言
 	</h2>
-	<textarea rows="3" cols="40"></textarea>
+	<h2 class="comment-title">${user.name!}您好，请输入您的留言：</h2>
+	<textarea id="content" rows="3" cols="40"></textarea>
 	<br/>
+	<input type="hidden" value="${user.phone!}" id="userid"></input>
+	<input type="hidden" value="${user.name!}" id="username"></input>
+	
 	<input type="button" class="btn" id="btnSubmit" value="提交" />
 	<br/>
 	<span class='msg'></span>
 	<div class="all">
-		<label><input type="checkbox">群发留言</label>
+		<label><input id="all" type="checkbox">群发留言</label>
 	</div>
-	<ul>
+	<ul class="chklist">
 		<#list users as m>
-		<li><label><input type="checkbox" value="${m.userid!}">${m.name!}</label></li>
+		<li><label><input name="ids" type="checkbox" value="${m.userid!}">${m.name!}</label></li>
 		</#list>
 	</ul>
 	
 	<script language="javascript" src="./css/jquery.min.js"></script>
 	<script>
 		$("#btnSubmit").click(function(){
-			$(".msg").html("即将开放，敬请期待！");
+			var content=$.trim($("#content").val());
+			if(content.length==0){
+				$(".msg").html("请输入您的留言！");	
+				return ;
+			}
+			var chks =[];
+            $('input[name="ids"]:checked').each(function(){chks.push($(this).val());});
+            
+            if($("#all").is(":checked"))
+            	sendMsg('all',content);
+            else if(chks.length==0)
+            	$(".msg").html("请选择留言对象！");	
+            else
+            	sendMsg(chks.join('|'),content);
 		});
+		
+		function sendMsg(ids,content){
+			var data={touser:ids,content:content,username:$('#username').val()};
+			$(".msg").html("留言发送中...");	
+			$.getJSON('sendMsg',data,function(ret){
+				if(ret.errcode=="0") {
+					$(".msg").html("恭喜您，留言发送成功！");	
+					$("#content").val("");
+				}	
+				else
+					$(".msg").html(ret.errmsg);
+			});
+		}
+		
 	</script>
 </body>
 </html>

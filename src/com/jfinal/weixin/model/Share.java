@@ -1,5 +1,7 @@
 package com.jfinal.weixin.model;
 
+import java.util.List;
+
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;

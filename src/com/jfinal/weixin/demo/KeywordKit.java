@@ -109,7 +109,7 @@ public class KeywordKit {
 		Page<User> pages = User.me.paginate(1, 100);
 		List<Actor> actors = new ArrayList<Actor>();
 		for (User m : pages.getList()) {
-			Actor a = me.new Actor(m.get("PHONE").toString(), m.get("NAME")
+			Actor a = me.new Actor(m.get("phone").toString(), m.get("name")
 					.toString());
 			actors.add(a);
 		}
@@ -163,8 +163,8 @@ public class KeywordKit {
 	private static String processUserList(Page<User> list) {
 		String str = "";
 		for (User user : list.getList()) {
-			str += String.format("%1$s，\t %2$s\n", user.get("NAME"),
-					user.get("PHONE"));
+			str += String.format("%1$s，\t %2$s\n", user.get("name"),
+					user.get("phone"));
 		}
 		return str;
 	}

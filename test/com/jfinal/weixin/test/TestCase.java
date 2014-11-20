@@ -21,6 +21,7 @@ import java.io.StringWriter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
@@ -31,6 +32,7 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
+import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.core.JFinal;
@@ -49,9 +51,18 @@ public abstract class TestCase<T extends JFinalConfig> {
     private static JFinalConfig configInstance;
     private String actionUrl;
     private String bodyData;
+    private Map<String, String> para = Maps.newHashMap();
+    
     private File bodyFile;
     private File responseFile;
     private Class<? extends JFinalConfig> config;
+
+    /*
+     *设置参数
+     */
+    public void setParameter(String key, String val) {
+        para.put(key, val);
+    }
 
     private static void initConfig(Class<JFinal> clazz, JFinal me, ServletContext servletContext, JFinalConfig config) {
     	
@@ -124,10 +135,10 @@ public abstract class TestCase<T extends JFinalConfig> {
             bodyData = Joiner.on("").join(req);
         }
         StringWriter resp = new StringWriter();
-        request = new MockHttpRequest(bodyData);
-        response = new MockHttpResponse(resp);//
-        //response.setContentType(resp);
+        request = new MockHttpRequest(bodyData,para);
         
+        response = new MockHttpResponse(resp);//
+
         Reflect.on(handler).call("handle", getTarget(actionUrl, request), request, response, new boolean[] { true });
         String response = resp.toString();
         if (responseFile != null) {

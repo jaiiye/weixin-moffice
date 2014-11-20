@@ -45,13 +45,14 @@ import com.google.common.collect.Maps;
 //尝试用JBoss Resteasy 代替
 public class MockHttpRequest implements HttpServletRequest {
     private Map<String, Object> attr = Maps.newHashMap();
-
     private Map<String, String> para = Maps.newHashMap();
 
     private String body;
 
-    public MockHttpRequest(String body) {
-        this.body = body;
+    //郝，增加post参数传值
+    public MockHttpRequest(String body,Map<String, String> para) {
+    	this.body=body;
+    	if(para!=null) this.para=para;
     }
 
     @Override
