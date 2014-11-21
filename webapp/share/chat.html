@@ -13,12 +13,10 @@
 	<h2 class="page-title" style="display:none">
 		我要留言
 	</h2>
-	<h2 class="comment-title">${user.name!}您好，请输入您的留言：</h2>
+	<h2 class="comment-title"><span id="username"></span>您好，请输入您的留言：</h2>
 	<textarea id="content" rows="2" cols="25" style="font-size: 20px;line-height: 20px;"></textarea>
 	<br/>
-	<input type="hidden" value="${user.phone!}" id="userid"></input>
-	<input type="hidden" value="${user.name!}" id="username"></input>
-	
+	<input type="hidden" value="" id="userid"></input>
 	<input type="button" class="btn" id="btnSubmit" value="提交" />
 	<br/>
 	<span class='msg'></span>
@@ -33,6 +31,16 @@
 	
 	<script language="javascript" src="./css/jquery.min.js"></script>
 	<script>
+		function getPara(name) {
+		    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+		    var r = window.location.search.substr(1).match(reg);
+		    if (r != null) return unescape(r[2]); return null;
+	    }
+		
+		$.getJSON('getUserByCode',{code:getPara('code')},function(ret){
+			if(ret.name){$("#username").html(ret.name);}
+		});
+		
 		$("#btnSubmit").click(function(){
 			var content=$.trim($("#content").val());
 			if(content.length==0){
@@ -51,7 +59,7 @@
 		});
 		
 		function sendMsg(ids,content){
-			var data={touser:ids,content:content,username:$('#username').val()};
+			var data={touser:ids,content:content,username:$('#username').text()};
 			$(".msg").html("留言发送中...");	
 			$.getJSON('sendMsg',data,function(ret){
 				if(ret.errcode=="0") {
@@ -62,7 +70,6 @@
 					$(".msg").html(ret.errmsg);
 			});
 		}
-		
 	</script>
 </body>
 </html>

@@ -8,7 +8,7 @@ import com.jfinal.weixin.sdk.msg.JsonTextMsg;
 
 import org.junit.Test;
 
-public class JsonMsgTestCase extends TestCase<WeixinConfig> {
+public class JsonMsgTestCase extends BaseTestCase<WeixinConfig> {
 	@Test
 	public void getJsonMsg(){
 		JsonMsg msg=new JsonMsg(); 

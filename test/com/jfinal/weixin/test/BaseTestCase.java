@@ -41,8 +41,8 @@ import com.jfinal.handler.Handler;
 import com.jfinal.log.Logger;
 import com.jfinal.weixin.test.util.*;
 
-public abstract class TestCase<T extends JFinalConfig> {
-    protected static final Logger LOG = Logger.getLogger(TestCase.class);
+public abstract class BaseTestCase<T extends JFinalConfig> {
+    protected static final Logger LOG = Logger.getLogger(BaseTestCase.class);
     protected static ServletContext servletContext ;
     protected static MockHttpRequest request;
     protected static MockHttpResponse response;
@@ -86,7 +86,7 @@ public abstract class TestCase<T extends JFinalConfig> {
     }
 
     @SuppressWarnings("unchecked")
-    public TestCase() {
+    public BaseTestCase() {
         Type genericSuperclass = getClass().getGenericSuperclass();
         Preconditions.checkArgument(genericSuperclass instanceof ParameterizedType,
                 "Your ControllerTestCase must have genericType");
@@ -151,22 +151,22 @@ public abstract class TestCase<T extends JFinalConfig> {
         return response;
     }
 
-    public TestCase<T> post(File bodyFile) {
+    public BaseTestCase<T> post(File bodyFile) {
         this.bodyFile = bodyFile;
         return this;
     }
 
-    public TestCase<T> post(String bodyData) {
+    public BaseTestCase<T> post(String bodyData) {
         this.bodyData = bodyData;
         return this;
     }
 
-    public TestCase<T> use(String actionUrl) {
+    public BaseTestCase<T> use(String actionUrl) {
         this.actionUrl = actionUrl;
         return this;
     }
 
-    public TestCase<T> writeTo(File responseFile) {
+    public BaseTestCase<T> writeTo(File responseFile) {
         this.responseFile = responseFile;
         return this;
     }

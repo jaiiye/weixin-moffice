@@ -13,7 +13,7 @@ import com.jfinal.weixin.sdk.api.UserApi;
 import com.jfinal.weixin.sdk.kit.WxCryptUtil;
 import com.jfinal.weixin.test.util.MockServletContext;
 
-public class CommonTestCase extends TestCase<WeixinConfig> {
+public class CommonTestCase extends BaseTestCase<WeixinConfig> {
 	String timestamp="1416187783";
 	String nonce="1766739666";
 	String msg_signature="c4eb00b041686352e79086a41431eebe60b682c0";

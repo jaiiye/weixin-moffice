@@ -2,14 +2,10 @@ package com.jfinal.weixin.test;
 
 
 import java.io.StringReader;
-import java.util.Date;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -27,7 +23,7 @@ import com.jfinal.weixin.sdk.api.ApiConfig;
  * invoke	调用url
  * findAttrAfterInvoke	action调用之后getAttr的值
  */
-public class QyTestCase extends TestCase<WeixinConfig> {
+public class QyTestCase extends BaseTestCase<WeixinConfig> {
 	
 	String tpl="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName>\n<Encrypt><![CDATA[%1$s]]></Encrypt>\n<AgentID><![CDATA[10]]></AgentID>\n</xml>";
 	
@@ -37,11 +33,11 @@ public class QyTestCase extends TestCase<WeixinConfig> {
 	 */ 
     @Test
 	public void testTextMsg() {
-    	//this.processTextMsg("1");
-    	//this.processTextMsg("11");
-    	//this.processTextMsg("2");
-    	//this.processTextMsg("11");
-    	this.processTextMsg("01");
+    	this.processTextMsg("1");
+    	this.processTextMsg("11");
+    	this.processTextMsg("2");
+    	this.processTextMsg("11");
+    	//this.processTextMsg("01");
     	//this.processTextMsg("02");
     	//this.processTextMsg("9");
     	//this.processTextMsg("2");

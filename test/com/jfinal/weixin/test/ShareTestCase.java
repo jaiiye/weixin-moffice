@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import com.jfinal.weixin.demo.WeixinConfig;
 
-public class ShareTestCase extends TestCase<WeixinConfig> {
+public class ShareTestCase extends BaseTestCase<WeixinConfig> {
 	@Ignore
 	public void getCommitList(){
 		String url = "/share/commentList";
