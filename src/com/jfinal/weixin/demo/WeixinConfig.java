@@ -38,6 +38,7 @@ public class WeixinConfig extends JFinalConfig {
 		me.add("/qy", QyController.class);
 		me.add("/api", ApiController.class);
 		me.add("/share", ShareController.class);
+		me.add("/task", TaskController.class);
 	}
 	
 	public void configPlugin(Plugins me) {

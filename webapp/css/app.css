@@ -1,0 +1,28 @@
+.updated-text {
+  position: absolute;left: 0;right: 0;
+  padding: 10px 0;font-size: 11px;text-align: center;
+}
+
+.table-view-cell .icon {
+  color: #007aff;
+}
+
+label.sub-title{
+	border-bottom:dashed 1px #ddd;
+	margin-left:15px;
+	margin-top:5px;
+	color:#ccc;
+}
+
+.bar .btn.pull-left {min-width: 100px;text-align: left;}
+
+.table-view-cell .view {
+	font-size:14px;
+}
+
+.table-view-cell .time {
+	font-size:12px; color:#ddd;
+}
+.table-view-cell .time span{
+	font-size:14px; color:#444;
+}

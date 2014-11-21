@@ -1,0 +1,46 @@
+ <script>
+ function sendMsg(){
+	 $("#form1").show();
+ }
+ function submitMsg(){
+	 $("#form1").hide();
+ }
+ </script>
+ <header class="bar bar-nav">
+   <a class="btn btn-link pull-left" href="#" href="#" ontouchend="closeWin(this);">关闭</a>
+   <h1 class="title">任务详情</h1>
+ </header>
+ 
+ <div class="content">
+ 		<form id="form1" class="input-group" style="display:none">
+		  <label class="sub-title">反馈内容：</label>
+		  <textarea rows="2"></textarea>
+		  <button ontouchend='submitMsg()' class="btn btn-positive btn-block">提交反馈</button>
+		  <div style="height:1000px;"></div>
+		</form>
+		
+  		<div class="content-padded">
+		  <h4>孙涛指派给李明、邓敏丽</h4>
+		  <p>请加快市场推进，拓展非洲市场</p>
+		  <button class="btn btn-primary" ontouchend='sendMsg()'>及时反馈</button>
+		</div>
+		<ul class="table-view">
+		  <li class="table-view-cell">
+		  	<div class='time'><span>邓敏丽：<span>2014.11.12</div>
+		  	<div class='view'>收到，我会尽快调研！</div>
+		  	<button class="btn">回复</button>
+		  </li>
+		  <li class="table-view-cell">
+		  	<div class='time'><span>李明：<span>2014.11.12</div>
+		  	<div class='view'>收到，我已经约了非洲酋长！</div>
+		  	<button class="btn">回复</button>
+		  </li>
+		  <li class="table-view-cell">
+		  	<div class='time'><span>郝利鹏：<span>2014.11.12</div>
+		  	<div class='view'>谁信啊！</div>
+		  	<button class="btn">回复</button>
+		  </li>
+		</ul>
+		
+		<button class="btn btn-negative btn-block">关闭任务</button>
+ </div>
