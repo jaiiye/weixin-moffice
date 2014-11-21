@@ -1,7 +1,5 @@
 package com.jfinal.weixin.demo;
 
-import java.util.Enumeration;
-
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.weixin.model.*;
@@ -16,18 +14,23 @@ public class ShareController extends Controller{
 		this.setAttr("shares", list.getList().toArray());
 		this.render("/share/index.html");
 	}
+	
+	/*
+	 * 获取当前用户信息
+	 */
+	public void getUserByCode(){
+		ApiResult codes=UserApi.getUserByCode("10", this.getPara("code"));
+		User user = User.me.findByPhone(codes.get("UserId"));
+		if(user==null)
+			this.renderJson("{}");
+		else
+			this.renderJson(user);
+	}
 	/*
 	 * 留言 
 	 */
 	public void chat() {
 		ApiResult ret = UserApi.getFollows(1);
-		ApiResult codes=UserApi.getUserByCode("10", this.getPara("code"));
-		
-		User user = User.me.findByPhone(codes.get("UserId"));
-		if(user==null) user=new User();
-		
-		this.setAttr("user", user);
-		
 		this.setAttr("users",ret.getList("userlist"));
 		this.render("/share/chat.html");
 	}

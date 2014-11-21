@@ -68,7 +68,7 @@ public class KeywordKit {
 			ApiResult ret1 = UserApi.getFollows(0);
 			ApiResult ret2 = UserApi.getFollows(1);
 			Page<User> ret3 = User.me.paginate(1, 100);
-			String str = String.format("成员数：%1$s\n 关注数：%2$s\n 员工数：%3$s", ret1
+			String str = String.format("成员数：%1$s\n关注数：%2$s\n员工数：%3$s", ret1
 					.getList("userlist").size(), ret2.getList("userlist")
 					.size(), ret3.getList().size());
 			outMsg.setContent(str);
@@ -76,7 +76,7 @@ public class KeywordKit {
 		} else if (content.equals("02")) { //成员同步
 			List<Actor> list = getEmptyList();
 			int count = createUsers(list);
-			String str=String.format("需要同步%1$s\n 实际同步%2$s",list.size(),count);
+			String str=String.format("需要同步%1$s\n实际同步%2$s",list.size(),count);
 			outMsg.setContent(str);
 		}
 		return outMsg;
