@@ -8,10 +8,13 @@ import java.util.Map;
 import com.dinglan.moffice.model.Actor;
 import com.dinglan.moffice.model.CacheHelper;
 import com.dinglan.moffice.model.Contact;
+import com.dinglan.moffice.model.Notice;
 import com.dinglan.moffice.model.Task;
 import com.dinglan.moffice.model.TaskDetail;
+import com.dinglan.weixin.api.ApiConfig;
 import com.dinglan.weixin.api.ApiResult;
 import com.dinglan.weixin.api.UserApi;
+import com.dinglan.weixin.msg.*;
 
 public class TaskController extends com.jfinal.core.Controller {
 	public void index(){
@@ -67,11 +70,11 @@ public class TaskController extends com.jfinal.core.Controller {
 		}
 		Task model=Task.me.create(actor,actors,content,content);
 		this.renderJson(model);
+		this.notify(model);//通知相关人
 	}
 	
 	public void stopTask(){
 		//Actor actor=this.current();
-		
 		String id=this.getPara("id");
 		Task model= Task.me.findById(id);
 		if(!model.equals(null)){
@@ -80,6 +83,7 @@ public class TaskController extends com.jfinal.core.Controller {
 		}
 		this.renderJson(model);
 	}
+	
 	public void createDetail(){
 		Actor actor=this.current();
 		String taskId=this.getPara("taskId");
@@ -88,7 +92,46 @@ public class TaskController extends com.jfinal.core.Controller {
 		String content=this.getPara("content");
 		TaskDetail detail = TaskDetail.me.create(taskId,fromUserId, toUserId, content, content);
 		this.renderJson(detail);
+		
+		this.notify(detail);//通知相关人
 	}
+	
+	/*
+	 * 将通知任务记录到数据库中，异步发送
+	 */
+	private void notify(Task task){
+		String id=String.valueOf(task.getStr("id"));
+		List<Task> list=Task.me.listByParentId(id);
+		for(Task t : list){
+			JsonTextMsg msg=new JsonTextMsg();
+			msg.agentid=ApiConfig.getAgentId();
+			msg.touser=task.getStr("toUserId");
+			msg.safe="0";
+			msg.content=String.format("[%1$s]给您指派了任务，内容为：%2$s",t.get("fromUserName"),t.get("content"));
+			Notice model=new Notice();
+			model.set("content", msg.toString());
+			model.save();
+		}
+	}
+	/*
+	 * 将通知任务记录到数据库中，异步发送
+	 */
+	private void notify(TaskDetail detail){
+		JsonTextMsg msg=new JsonTextMsg();
+		msg.agentid=ApiConfig.getAgentId();
+		msg.touser=detail.getStr("toUserId");
+		msg.safe="0";
+		msg.content=String.format("[%1$s]对您的任务做了反馈，内容为：%2$s",
+		CacheHelper.getActorById(detail.getStr("fromUserId")),detail.get("content"));		
+		
+		Notice model=new Notice();
+		model.set("content", msg.toString());
+		model.save();
+	} 
+	
+	/*
+	 * 个人任务统计
+	 */
 	public void count(){
 		Actor actor=this.current();
 		Task model= Task.me.getCountById(actor.id);

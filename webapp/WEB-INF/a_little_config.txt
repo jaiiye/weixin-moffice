@@ -17,5 +17,7 @@ appId=wxb21adacab9c87404
 appSecret=Hvix3QfnYy690tvDdsJN7NkoEhj485X98H9Gpn8grU7VUxLOsFaAOGPrx9gTPF0s
 agentId=10
 
-#appId=wx1d06e4106d12ef28
-#appSecret=343212d84c7530509ec6ba768e42fceb
+#调度任务
+WeiXinTask.enable=true
+WeiXinTask.cron=* * * * *
+

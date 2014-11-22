@@ -46,7 +46,7 @@
     	function pullCount(){
     		$.getJSON('/task/count?token='+token,{},function(ret){
     			refresh(ret);
-    			//setTimeout(pullCount,5000);  //自动刷新  
+    			setTimeout(pullCount,5000);  //自动刷新  
     		});
     	};
     </script>

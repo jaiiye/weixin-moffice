@@ -33,14 +33,15 @@ public class QyTestCase extends BaseTestCase<WeixinConfig> {
 	 */ 
     @Test
 	public void testTextMsg() {
-    	this.processTextMsg("1");
-    	this.processTextMsg("11");
+    	//this.processTextMsg("1");
+    	//this.processTextMsg("11");
     	//this.processTextMsg("2");
-    	this.processTextMsg("11");
-    	this.processTextMsg("01");
-    	this.processTextMsg("02");
+    	//this.processTextMsg("11");
+    	//this.processTextMsg("01");
+    	//this.processTextMsg("02");
+    	
     	this.processTextMsg("9");
-    	this.processTextMsg("2");
+    	this.processTextMsg("91");
     }  
     
     /*

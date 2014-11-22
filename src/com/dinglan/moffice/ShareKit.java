@@ -66,6 +66,9 @@ public class ShareKit {
 			share.set("event", msg.getEvent());
 			share.set("eventKey", msg.getEventKey());
 			share.save();
+			
+			//保持菜单点击用户 彭2014.11.21
+			ActorKit.CURENT=inmsg.getFromUserName();
 		}
 	}
 

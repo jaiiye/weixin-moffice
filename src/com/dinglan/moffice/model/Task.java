@@ -50,6 +50,12 @@ public class Task extends Model<Task> {
 		return model;
 	}
 	
+	public List<Task> listByParentId(String id){
+		String sql="from wx_task where parentId='"+id+"'";
+		Page<Task> pages = paginate(1, 1000, "select *",sql+" order by id desc" );
+		return wrapList(pages);
+	}
+	
 	public List<Task> list(int pageNumber, int pageSize,String id, String sign) {
 		String sql="from wx_task ";
 		if(sign.equals("all"))  sql+=" where state=0 and toUserId='"+id+"'";
@@ -64,6 +70,7 @@ public class Task extends Model<Task> {
 		List<Task> list=pages.getList();
 		for(Task m : list){
 			m.put("fromUserName",CacheHelper.getActorById(m.getStr("fromUserId")).name);
+			m.put("toUserName",CacheHelper.getActorById(m.getStr("toUserId")).name);
 			m.put("createDate", CacheHelper.toDate(m.get("createTime")));
 		}
 		return list;

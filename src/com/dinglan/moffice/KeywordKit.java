@@ -3,9 +3,11 @@ package com.dinglan.moffice;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.dinglan.moffice.model.Share;
 import com.dinglan.moffice.model.Stimulate;
+import com.dinglan.moffice.model.Task;
 import com.dinglan.moffice.model.User;
 import com.dinglan.weixin.api.ApiConfig;
 import com.dinglan.weixin.api.ApiResult;
@@ -56,14 +58,19 @@ public class KeywordKit {
 			
 		} else if (content.equals("9")) { // 我是谁
 			ApiResult ret = UserApi.getFollows(0);
-			LinkedHashMap<String, Object> map = getByUserId(
+			Map<String, Object> map = getByUserId(
 					ret.getList("userlist"), inMsg.getFromUserName());
 			long count=Share.me.count(inMsg.getFromUserName());
 			
 			String str = String.format("姓名：%1$s\n电话：%2$s\n点击数：%3$s\n谚云：众人拾柴火焰高，加油测试啦 ^_^",
 					map.get("name"), map.get("userid"),count);
 			outMsg.setContent(str);
-			
+		} else if (content.equals("91")) { //我的任务单统计
+			String id=inMsg.getFromUserName();
+			Task model= Task.me.getCountById(id);
+			String str=String.format("您的任务单统计：\n派遣中的任务:%1$s\n待完成的任务%2$s",
+					model.get("fromUser"),model.get("toUser"));
+			outMsg.setContent(str);
 		} else if (content.equals("01")) { //数据统计
 			ApiResult ret1 = UserApi.getFollows(0);
 			ApiResult ret2 = UserApi.getFollows(1);
@@ -126,7 +133,7 @@ public class KeywordKit {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static LinkedHashMap<String, Object> getByUserId(
+	private static Map<String, Object> getByUserId(
 			ArrayList<Object> list, String userid) {
 		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
 		for (Object obj : list) {

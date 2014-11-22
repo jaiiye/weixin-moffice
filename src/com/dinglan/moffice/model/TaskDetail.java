@@ -32,6 +32,4 @@ public class TaskDetail extends Model<TaskDetail> {
 		}
 		return list;
 	}
-	
-	
 }
