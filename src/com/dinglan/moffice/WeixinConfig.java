@@ -1,9 +1,3 @@
-/**
- * Copyright (c) 2011-2014, James Zhan 詹波 (jfinal@126.com).
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
-
 package com.dinglan.moffice;
 
 import com.dinglan.moffice.model.Contact;
@@ -36,6 +30,7 @@ public class WeixinConfig extends JFinalConfig {
 		ApiConfig.setToken(getProperty("token"));
 		ApiConfig.setAppId(getProperty("appId"));
 		ApiConfig.setAppSecret(getProperty("appSecret"));
+		ApiConfig.setAgentId(getProperty("agentId"));
 		ApiConfig.setEncodingAESKey(getProperty("encodingAESKey"));
 	}
 	
@@ -76,6 +71,5 @@ public class WeixinConfig extends JFinalConfig {
 	
 	public static void main(String[] args) {
 		JFinal.start("webapp", 80, "/", 5);
-		
 	}
 }

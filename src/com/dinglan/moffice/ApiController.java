@@ -19,7 +19,7 @@ public class ApiController extends Controller {
 	 * 获取公众号菜单
 	 */
 	public void getMenu() {
-		ApiResult apiResult = MenuApi.getMenu();
+		ApiResult apiResult = MenuApi.getMenu(ApiConfig.getAgentId());
 		if (apiResult.isSucceed())
 			renderText(apiResult.getJson());
 		else
@@ -31,7 +31,7 @@ public class ApiController extends Controller {
 	 */
 	public void createMenu() {
 		String jsonStr=this.getPara("menu");
-		ApiResult apiResult = MenuApi.createMenu(jsonStr);
+		ApiResult apiResult = MenuApi.createMenu(ApiConfig.getAgentId(),jsonStr);
 		if (apiResult.isSucceed())
 			renderText(apiResult.getJson());
 		else

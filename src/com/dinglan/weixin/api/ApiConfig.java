@@ -1,9 +1,3 @@
-/**
- * Copyright (c) 2011-2014, James Zhan 詹波 (jfinal@126.com).
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
-
 package com.dinglan.weixin.api;
 
 public class ApiConfig {
@@ -12,6 +6,7 @@ public class ApiConfig {
 	private static String token = null;
 	private static String appId = null;
 	private static String appSecret = null;
+	private static String agentId = null;
 	private static String encodingAESKey = null;
 	
 	// 开发模式将输出消息交互 xml 到控制台
@@ -85,6 +80,17 @@ public class ApiConfig {
 		ApiConfig.appSecret = appSecret;
 	}
 	
+	public static void setAgentId(String agentId) {
+		if (agentId == null)
+			throw new IllegalArgumentException("agentId can not be null");
+		ApiConfig.agentId = agentId;
+	}
+
+	public static String getAgentId() {
+		if (agentId == null)
+			throw new RuntimeException("init ApiConfig.setAgentId(...) first");
+		return agentId;
+	}
 	public static String getEncodingAESKey() {
 		if (encodingAESKey == null)
 			throw new IllegalArgumentException("encodingAESKey can not be null");

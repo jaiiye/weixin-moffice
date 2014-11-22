@@ -1,9 +1,3 @@
-/**
- * Copyright (c) 2011-2014, James Zhan 詹波 (jfinal@126.com).
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
-
 package com.dinglan.weixin.api;
 
 import com.dinglan.weixin.kit.HttpKit;
@@ -12,25 +6,24 @@ import com.dinglan.weixin.kit.HttpKit;
  * menu api
  */
 public class MenuApi {
-	
-	//private static String getMenu = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=";
-	//private static String createMenu = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
-	private static String getMenu = "https://qyapi.weixin.qq.com/cgi-bin/menu/get?agentid=10&access_token=";
-	private static String createMenu = "https://qyapi.weixin.qq.com/cgi-bin/menu/create?agentid=10&access_token=";
+	private static String getMenu = "https://qyapi.weixin.qq.com/cgi-bin/menu/get?agentid=%1$s&access_token=%2$s";
+	private static String createMenu = "https://qyapi.weixin.qq.com/cgi-bin/menu/create?agentid=%1$s&access_token=%2$s";
 	
 	/**
 	 * 查询菜单
 	 */
-	public static ApiResult getMenu() {
-		String jsonResult = HttpKit.get(getMenu + AccessTokenApi.getAccessToken().getAccessToken());
+	public static ApiResult getMenu(String agentId) {
+		String token=AccessTokenApi.getAccessToken().getAccessToken();
+		String jsonResult = HttpKit.get(String.format(getMenu,agentId,token));
 		return new ApiResult(jsonResult);
 	}
 	
 	/**
 	 * 创建菜单
 	 */
-	public static ApiResult createMenu(String jsonStr) {
-		String jsonResult = HttpKit.post(createMenu + AccessTokenApi.getAccessToken().getAccessToken(), jsonStr);
+	public static ApiResult createMenu(String agentId,String jsonStr) {
+		String token=AccessTokenApi.getAccessToken().getAccessToken();
+		String jsonResult = HttpKit.get(String.format(createMenu,agentId,token));
 		return new ApiResult(jsonResult);
 	}
 }
