@@ -68,7 +68,7 @@ public class WeixinConfig extends JFinalConfig {
 		arp.addMapping("wx_contact", Contact.class);
 		arp.addMapping("wx_task", Task.class);
 		arp.addMapping("wx_taskDetail", TaskDetail.class);
-		arp.addMapping("wx_schedule", Notice.class);
+		arp.addMapping("wx_notice", Notice.class);
 	}
 	
 	public void configInterceptor(Interceptors me) {

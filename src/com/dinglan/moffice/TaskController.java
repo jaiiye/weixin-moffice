@@ -100,7 +100,7 @@ public class TaskController extends com.jfinal.core.Controller {
 	 * 将通知任务记录到数据库中，异步发送
 	 */
 	private void notify(Task task){
-		String id=String.valueOf(task.getStr("id"));
+		String id=String.valueOf(task.get("id"));
 		List<Task> list=Task.me.listByParentId(id);
 		for(Task t : list){
 			JsonTextMsg msg=new JsonTextMsg();
