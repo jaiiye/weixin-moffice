@@ -12,14 +12,43 @@
     <script src="../js/ratchet.js"></script>
     <script src="../js/jquery.min.js"></script>
     <script>
-    	function openWin(obj,url){
+    	var token="15991890112";
+    	function openWin(obj,url,msg){
+    		if(url.indexOf("?")==-1) url+="?t=1";
+    		url+="&token="+token;
+
     		$.get(url,function(ret){
-    	    	$("#content").html(ret).addClass('active');
+    	    	$("#mainfrm").html(ret).addClass('active');
+    	    	if(msg) showMsg(msg);//是否提示
     		});
-    	}
+    	};
     	function closeWin(obj){
-    		$("#content").removeClass('active');
-    	}
+    		$("#mainfrm").removeClass('active');
+    	};
+    	
+    	function showMsg(msg){
+     		$(".bar-nav .title").html(msg);
+    	};
+    	
+    	//更新统计数据
+    	function refresh(ret){
+    		$("#count1").html(ret.fromUser);
+    		$("#count2").html(ret.toUser);
+			
+			$("#msg").html("更新成功..."+new Date().format("hh:mm:ss"));
+    	};
+    	function updateCount(){
+    		$("#msg").html("更新中...");
+    		$.getJSON('/task/count?token='+token,{},function(ret){
+    			refresh(ret);
+    		});
+    	};
+    	function pullCount(){
+    		$.getJSON('/task/count?token='+token,{},function(ret){
+    			refresh(ret);
+    			//setTimeout(pullCount,5000);  //自动刷新  
+    		});
+    	};
     </script>
   </head>
   <body>
@@ -30,35 +59,35 @@
     </header>
 
     <div class="bar bar-footer">
-      <a class="icon icon-refresh pull-left"></a>
-      <small class="updated-text">刚刚更新...</small>
-      <a class="icon icon-compose pull-right" href="#" ontouchend='openWin(this,"create.html")' data-ignore="push"></a>
+      <a class="icon icon-refresh pull-left" href="#" ontouchend='updateCount(this)' data-ignore="push"></a>
+      <small class="updated-text" id="msg">...</small>
+      <a class="icon icon-compose pull-right" href="#" ontouchend='openWin(this,"create")' data-ignore="push"></a>
     </div>
 
     <div class="content" style="padding-top: 0px;">
       <ul class="table-view">
         <li class="table-view-cell media">
-          <a class="navigate-right" href="#" ontouchend='openWin(this,"list.html")' data-ignore="push" data-transition="slide-in">
+          <a class="navigate-right" href="#" ontouchend='openWin(this,"list?type=all")' data-ignore="push">
             <span class="media-object icon icon-list pull-left"></span>
             <div class="media-body">所有相关任务</div>
           </a>
         </li>
         <li class="table-view-cell media">
-          <a class="navigate-right" href="#" ontouchend='openWin(this,"list.html")' data-ignore="push"  data-transition="slide-in">
+          <a class="navigate-right" href="#" ontouchend='openWin(this,"list?type=from")' data-ignore="push">
             <span class="media-object icon icon-pages pull-left"></span>
             <div class="media-body">派遣中任务</div>
-            <span class="badge badge-primary">5</span>
+            <span class="badge badge-primary" id="count1">...</span>
           </a>
         </li>
         <li class="table-view-cell media">
-          <a class="navigate-right" href="#" ontouchend='openWin(this,"list.html")' data-ignore="push"  data-transition="slide-in">
+          <a class="navigate-right" href="#" ontouchend='openWin(this,"list?type=to")' data-ignore="push">
             <span class="media-object icon icon-play pull-left"></span>
             <div class="media-body">待完成任务</div>
-            <span class="badge badge-negative">3</span>
+            <span class="badge badge-negative" id="count2">...</span>
           </a>
         </li>
         <li class="table-view-cell media">
-          <a class="navigate-right" href="#" ontouchend='openWin(this,"list.html")' data-ignore="push"  data-transition="slide-in">
+          <a class="navigate-right" href="#" ontouchend='openWin(this,"list?type=stop")' data-ignore="push">
             <span class="media-object icon icon-stop pull-left"></span>
             <div class="media-body">关闭的任务</div>
           </a>
@@ -67,15 +96,15 @@
 
       <h5 class="content-padded">联系人设置</h5>
       <ul class="table-view">
-        <li class="table-view-cell media">
-          <a class="navigate-right" href="#contacts"" ontouchend='openWin(this,"contact.html")' data-ignore="push" data-transition="slide-in">
+        <li class="table-view-cell media" ontouchend='openWin(this,"contact?type=stop")'  data-ignore="push">
+           <a class="navigate-right" href="#" >
             <span class="media-object icon icon-person pull-left"></span>
             <div class="media-body">常用联系人</div>
           </a>
         </li>
       </ul>
     </div><!-- /.content -->
-    
-    <div id="content" class="modal"></div>
+    <div id="mainfrm" class="modal"></div>
+    <script>pullCount();</script>
   </body>
 </html>

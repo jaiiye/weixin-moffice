@@ -1,26 +1,53 @@
+<script>
+//提交表单
+function submitForm(){
+	var content=$.trim($("#content").val());
+	var ids=[];
+	$(".input-group div.toggle").each(function(i){
+		if($(this).hasClass('active')) 
+			ids.push($(this).attr('rel'));
+	});
+	if(content.length==0) {
+		showMsg('请输入任务内容！');
+		return;
+	};
+	
+	if(ids.length==0) {
+		showMsg('请选择接收人！');
+		return;
+	};
+	
+	showMsg('数据提交中...')
+	var data={'ids':ids,'content':content};
+	$.getJSON('createTask?token='+token,data,function(ret){
+		if(ret.id){
+			openWin(this,"detail?id="+ret.id,"指派任务成功！");
+		}
+	});
+};
+</script>
 <header class="bar bar-nav">
-	 <a class="btn btn-link pull-left" href="#" href="#" ontouchend="closeWin(this);">取消</a>
-	 <a class="btn btn-link pull-right" href="#composeModal"><strong>发送</strong></a>
+	 <a class="btn btn-link pull-left" href="#"  ontouchend="closeWin(this);">取消</a>
+	 <a class="btn btn-link pull-right" href="#" ontouchend="submitForm(this);"><strong>发送</strong></a>
      <h1 class="title">新建任务单</h1>
 </header>
 
 <div class="content">
      <form class="input-group">
      	 <label class="sub-title">任务内容：</label>
-		<textarea rows="3"></textarea>
+		<textarea id="content" rows="3"></textarea>
 		<ul class="table-view">
+		 <#list list as m>
 	 	  <li class="table-view-cell">
-		          马虎林<div class="toggle"><div class="toggle-handle"></div></div>
+		    ${m.toUserName!}
+		    <div class="toggle" rel="${m.toUserId}"><div class="toggle-handle"></div></div>
 		  </li>
-		  <li class="table-view-cell">
-		          李明<div class="toggle"><div class="toggle-handle"></div></div>
-		  </li>
-		  <li class="table-view-cell">
-		          邓敏丽<div class="toggle"><div class="toggle-handle"></div></div>
-		  </li>
-		  <li class="table-view-cell">
-		          郝利鹏<div class="toggle"><div class="toggle-handle"></div></div>
-		  </li>
+		 </#list>
+		 <#if list?size = 0>
+	    	<li class="table-view-cell">
+				没常用联系人！请先设置！
+			</li>
+		</#if>
 		</ul>	  
 	</form>
 </div>

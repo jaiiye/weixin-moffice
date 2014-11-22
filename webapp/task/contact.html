@@ -1,31 +1,25 @@
-      <header class="bar bar-nav">
-        <a class="btn btn-link pull-left" href="#" ontouchend="closeWin(this);">关闭</a>
-        <h1 class="title">联系人设置</h1>
-      </header>
+<header class="bar bar-nav">
+   <a class="btn btn-link pull-left" href="#" ontouchend="closeWin(this);">关闭</a>
+   <h1 class="title">联系人设置</h1>
+</header>
+<div class="content">
+     <ul class="table-view">
+     	 <#list list as m>
+	 	 <li class="table-view-cell" >
+	          ${m.name!}
+	          <div ontouchend='setContact(this)' class="toggle <#if m.state == "1">active</#if> " rel="${m.id!}">
+	          	<div class="toggle-handle"></div>
+	          </div>
+		  </li>
+	    </#list>
+	</ul>
+</div>	
 
-      <div class="content">
-          <!-- 联系人设置 -->
-	      <ul class="table-view">
-		 	 <li class="table-view-cell">
-			          马虎林<div class="toggle active"><div class="toggle-handle"></div></div>
-			  </li>
-			  <li class="table-view-cell">
-			          李明<div class="toggle active"><div class="toggle-handle"></div></div>
-			  </li>
-			  <li class="table-view-cell">
-			          邓敏丽<div class="toggle"><div class="toggle-handle"></div></div>
-			  </li>
-			  <li class="table-view-cell">
-			          郝利鹏<div class="toggle active"><div class="toggle-handle"></div></div>
-			  </li>
-			  <li class="table-view-cell">
-			          李明<div class="toggle"><div class="toggle-handle"></div></div>
-			  </li>
-			  <li class="table-view-cell">
-			          邓敏丽<div class="toggle"><div class="toggle-handle"></div></div>
-			  </li>
-			  <li class="table-view-cell">
-			          郝利鹏<div class="toggle"><div class="toggle-handle"></div></div>
-			  </li>
-			</ul>
-		</div>	
+<script>
+function setContact(obj){
+	var li=$(obj);
+	var state=li.hasClass('active')?"0":"1";
+	var data={'toUserId':li.attr('rel'),'state':state}
+	$.getJSON('setContact?token='+token,data,function(ret){});
+}
+</script>

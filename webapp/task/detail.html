@@ -1,9 +1,40 @@
  <script>
- function sendMsg(){
+ var taskId="${model.id!}";
+ var toUserId="${model.fromUserId!}"
+ 
+//显示表单；
+ function sendMsg(id){
+	 toUserId=id;
 	 $("#form1").show();
- }
+ };
+
+ //提交反馈；
  function submitMsg(){
-	 $("#form1").hide();
+    var content=$.trim($("#content").val());
+	if(content.length==0) {
+		showMsg('请输入任务内容！');
+		return;
+	}
+	if(toUserId.length==0) {
+		showMsg('请选择接收人！');
+		return;
+	};
+	
+	showMsg('数据提交中...')
+	var data={'taskId':taskId,'toUserId':toUserId,'content':content};
+	$.getJSON('createDetail?token='+token,data,function(ret){
+		if(ret.id) openWin(this,"detail?id="+taskId,"反馈留言成功！");
+	});
+ };
+ 
+ function stopTask(id){
+	showMsg('数据提交中...')
+	var data={'id':taskId};
+	$.getJSON('stopTask?token='+token,data,function(ret){
+		if(ret.id){
+			openWin(this,"list?type=from",'关闭任务成功！');
+		}
+	}); 
  }
  </script>
  <header class="bar bar-nav">
@@ -14,33 +45,38 @@
  <div class="content">
  		<form id="form1" class="input-group" style="display:none">
 		  <label class="sub-title">反馈内容：</label>
-		  <textarea rows="2"></textarea>
+		  <textarea id="content" rows="2"></textarea>
 		  <button ontouchend='submitMsg()' class="btn btn-positive btn-block">提交反馈</button>
 		  <div style="height:1000px;"></div>
 		</form>
 		
   		<div class="content-padded">
-		  <h4>孙涛指派给李明、邓敏丽</h4>
-		  <p>请加快市场推进，拓展非洲市场</p>
-		  <button class="btn btn-primary" ontouchend='sendMsg()'>及时反馈</button>
+		  <p>
+		  [${model.createDate?string("MM-dd HH:mm")}]
+		  &nbsp;${model.fromUserName!}
+		  &nbsp;指派给
+		  &nbsp;${model.toUsers}
+		  </p>
+		  <h4>${model.content!}</h4>
+		  <button class="btn btn-primary" ontouchend='sendMsg("${model.fromUserId!}")'>及时反馈</button>
 		</div>
 		<ul class="table-view">
+		 <#if list?size = 0>
+    		<li class="table-view-cell">暂时没有反馈！</li>
+		 </#if>
+		 <#list list as m>	
 		  <li class="table-view-cell">
-		  	<div class='time'><span>邓敏丽：<span>2014.11.12</div>
-		  	<div class='view'>收到，我会尽快调研！</div>
-		  	<button class="btn">回复</button>
+		  	<div class='time'>
+		  		<span>${m.fromUserName!} &nbsp;@&nbsp; ${m.toUserName!} </span>
+		  		${m.createDate?string("MM-dd HH:mm")}
+		  	</div>
+		  	<div class='view'>${m.content!}</div>
+		  	<button class="btn" ontouchend='sendMsg("${m.fromUserId!}")'>回复</button>
 		  </li>
-		  <li class="table-view-cell">
-		  	<div class='time'><span>李明：<span>2014.11.12</div>
-		  	<div class='view'>收到，我已经约了非洲酋长！</div>
-		  	<button class="btn">回复</button>
-		  </li>
-		  <li class="table-view-cell">
-		  	<div class='time'><span>郝利鹏：<span>2014.11.12</div>
-		  	<div class='view'>谁信啊！</div>
-		  	<button class="btn">回复</button>
-		  </li>
+		 </#list> 
 		</ul>
 		
-		<button class="btn btn-negative btn-block">关闭任务</button>
+		<#if model.own??>
+			<button class="btn btn-negative btn-block" ontouchend='stopTask()'>关闭任务</button>
+		</#if>
  </div>
