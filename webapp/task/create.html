@@ -18,7 +18,7 @@ function submitForm(){
 	};
 	
 	showMsg('数据提交中...')
-	var data={'ids':ids,'content':content};
+	var data={'ids':ids.join('|'),'content':content};
 	$.getJSON('createTask?token='+token,data,function(ret){
 		if(ret.id){
 			openWin(this,"detail?id="+ret.id,"指派任务成功！");
@@ -40,7 +40,9 @@ function submitForm(){
 		 <#list list as m>
 	 	  <li class="table-view-cell">
 		    ${m.toUserName!}
-		    <div class="toggle" rel="${m.toUserId}"><div class="toggle-handle"></div></div>
+		    <div class="toggle" rel="${m.toUserId}">
+		    	<div class="toggle-handle"></div>
+		    </div>
 		  </li>
 		 </#list>
 		 <#if list?size = 0>

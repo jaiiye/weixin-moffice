@@ -13,7 +13,20 @@
     <script src="../js/jquery.min.js"></script>
     <script>
     	var token="15991890112";
+    	
+    	var nStartX=0,nStartY=0;
+    	window.addEventListener('touchstart', function (e) {
+    		nStartX = e.targetTouches[0].pageX;
+    		nStartY = e.targetTouches[0].pageY;
+        });
+    	window.addEventListener('touchend', function (e) {
+    		var nChangX = e.changedTouches[0].pageX;
+    		var nChangY = e.changedTouches[0].pageY;
+    	});
     	function openWin(obj,url,msg){
+    		//是否滑动事件
+    		if(isMoveEvent()) return false;
+    		
     		if(url.indexOf("?")==-1) url+="?t=1";
     		url+="&token="+token;
 
@@ -22,32 +35,23 @@
     	    	if(msg) showMsg(msg);//是否提示
     		});
     	};
+    	//是否滑动事件
+    	function isMoveEvent(){
+    		if(!window.event || !window.event.changedTouches) return false;
+    		
+    		var target=window.event.changedTouches[0];
+    		var nChangX = Math.abs(target.pageX-nStartX);
+    		var nChangY = Math.abs(target.pageY-nStartY);
+    		var nMax= nChangX>nChangY?nChangX:nChangY;
+    		return nMax>10;
+    	}
+    	
     	function closeWin(obj){
     		$("#mainfrm").removeClass('active');
     	};
     	
     	function showMsg(msg){
-     		$(".bar-nav .title").html(msg);
-    	};
-    	
-    	//更新统计数据
-    	function refresh(ret){
-    		$("#count1").html(ret.fromUser);
-    		$("#count2").html(ret.toUser);
-			
-			$("#msg").html("更新成功..."+new Date().format("hh:mm:ss"));
-    	};
-    	function updateCount(){
-    		$("#msg").html("更新中...");
-    		$.getJSON('/task/count?token='+token,{},function(ret){
-    			refresh(ret);
-    		});
-    	};
-    	function pullCount(){
-    		$.getJSON('/task/count?token='+token,{},function(ret){
-    			refresh(ret);
-    			setTimeout(pullCount,5000);  //自动刷新  
-    		});
+     		$(".bar-nav .title").html(msg).css('color','red');
     	};
     </script>
   </head>
@@ -105,6 +109,27 @@
       </ul>
     </div><!-- /.content -->
     <div id="mainfrm" class="modal"></div>
-    <script>pullCount();</script>
+    <script>
+  //更新统计数据
+	function refresh(ret){
+		$("#count1").html(ret.fromUser);
+		$("#count2").html(ret.toUser);
+		
+		$("#msg").html("更新成功..."+new Date().format("hh:mm:ss"));
+	};
+	function updateCount(){
+		$("#msg").html("更新中...");
+		$.getJSON('/task/count?token='+token,{},function(ret){
+			refresh(ret);
+		});
+	};
+	function pullCount(){
+		$.getJSON('/task/count?token='+token,{},function(ret){
+			refresh(ret);
+			//setTimeout(pullCount,5000);  //自动刷新  
+		});
+	};
+	pullCount();
+    </script>
   </body>
 </html>

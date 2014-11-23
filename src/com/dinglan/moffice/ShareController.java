@@ -1,5 +1,7 @@
 package com.dinglan.moffice;
 
+import java.util.List;
+
 import com.dinglan.moffice.model.Share;
 import com.dinglan.moffice.model.Stimulate;
 import com.dinglan.moffice.model.User;
@@ -11,12 +13,18 @@ import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
 
 public class ShareController extends Controller{
+	
 	public void index() {
 		Page<Share> list =Share.me.paginateImage(1,20);
 		this.setAttr("shares", list.getList().toArray());
 		this.render("/share/index.html");
 	}
 	
+	public void imageList(){
+		Page<Share> list =Share.me.paginateImage(1,20);
+		this.setAttr("list", list.getList().toArray());
+		this.render("/share/imageList.html");
+	}
 	/*
 	 * 获取当前用户信息
 	 */
@@ -59,6 +67,14 @@ public class ShareController extends Controller{
 	/*
 	 * 取得公告
 	 */
+	public void newList() {
+		List<Stimulate> list =Stimulate.me.list(1,40);
+		this.setAttr("list", list);
+		this.render("/share/new.html");
+	}
+	/*
+	 * 取得公告
+	 */
 	public void getNew() {
 		String id=this.getPara("id");
 		Stimulate model =Stimulate.me.findById(id);
@@ -76,9 +92,9 @@ public class ShareController extends Controller{
 	/*
 	 * 留言列表
 	 */
-	public void commentList() {
+	public void textList() {
 		Page<Share> shares =Share.me.paginateText(1, 50);
 		this.setAttr("shares", shares.getList());
-		this.render("/share/commentList.html");
+		this.render("/share/textList.html");
 	}
 }

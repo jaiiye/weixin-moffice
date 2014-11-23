@@ -38,7 +38,7 @@
  }
  </script>
  <header class="bar bar-nav">
-   <a class="btn btn-link pull-left" href="#" href="#" ontouchend="closeWin(this);">关闭</a>
+   <a class="btn btn-link pull-left" href="#" ontouchend="closeWin(this);">关闭</a>
    <h1 class="title">任务详情</h1>
  </header>
  
@@ -58,7 +58,9 @@
 		  &nbsp;${model.toUsers}
 		  </p>
 		  <h4>${model.content!}</h4>
+		  <#if model.state == 0>
 		  <button class="btn btn-primary" ontouchend='sendMsg("${model.fromUserId!}")'>及时反馈</button>
+		  </#if>
 		</div>
 		<ul class="table-view">
 		 <#if list?size = 0>
@@ -76,7 +78,7 @@
 		 </#list> 
 		</ul>
 		
-		<#if model.own??>
+		<#if model.own =='true' && model.state == 0>
 			<button class="btn btn-negative btn-block" ontouchend='stopTask()'>关闭任务</button>
 		</#if>
  </div>

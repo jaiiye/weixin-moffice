@@ -1,16 +1,16 @@
 <div class="content">
     <ul class="table-view">
 	<#if shares?size = 0>
-		暂未有人签到，你赶紧占个座呗！
+		暂未有人留言，你赶紧占个座呗！
 	</#if>
 	<#list shares as m>
-	 	 <li class="table-view-cell">
+	 <li class="table-view-cell">
 	          <a class="navigate-right" href="#">
 	            <p>
 	            	[${m.createDate?string("yyyy-MM-dd HH:mm")}]
 	            	&nbsp;${m.fromNickName}
 	            </p>
-	            ${m.label!}	
+	            ${m.content!}	
 	          </a>
          </li>
 	</#list>

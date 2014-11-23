@@ -1,36 +1,39 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" class="">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<link type="text/css" rel="stylesheet" href="./css/weixin.css" />
-	<title>我要留言</title>
-</head>
-<body>
-	<h2 class="page-title" style="display:none">
-		我要留言
-	</h2>
-	<h2 class="comment-title"><span id="username"></span>您好，请输入您的留言：</h2>
-	<textarea id="content" rows="2" cols="25" style="font-size: 20px;line-height: 20px;"></textarea>
-	<br/>
-	<input type="hidden" value="" id="userid"></input>
-	<input type="button" class="btn" id="btnSubmit" value="提交" />
-	<br/>
-	<span class='msg'></span>
-	<div class="all">
-		<label><input id="all" type="checkbox">群发留言</label>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>快速留言</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <link rel="stylesheet" href="../css/ratchet.css" />
+    <link rel="stylesheet" href="../css/app.css"/>
+    <script src="../js/ratchet.js"></script>
+    <script src="../js/jquery.min.js"></script>
+  </head>
+  <body>
+  	<header class="bar bar-nav">
+      <h1 class="title">快速留言</h1>
+      <a class="btn btn-link pull-right" href="#" id="btnSubmit">发送</a>
+    </header>
+	<div  class="content">
+		<textarea id="content" rows="2" cols="25" style="margin:0px;font-size: 20px;line-height: 20px;"></textarea>
+		<input type="hidden" value="" id="userid"></input>
+		<ul class="chklist">
+			<li><label><input type="checkbox" value="all">群发</label></li>
+			<#list users as m>
+			<li><label><input name="ids" type="checkbox" value="${m.userid!}">${m.name!}</label></li>
+			</#list>
+		</ul>
 	</div>
-	<ul class="chklist">
-		<#list users as m>
-		<li><label><input name="ids" type="checkbox" value="${m.userid!}">${m.name!}</label></li>
-		</#list>
-	</ul>
 	
-	<script language="javascript" src="./css/jquery.min.js"></script>
 	<script>
+		function showMsg(msg){
+			var obj=$(".bar-nav .title");
+			obj.html("");
+	 		obj.html(msg).css('color','red');
+		};
+		
 		function getPara(name) {
 		    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 		    var r = window.location.search.substr(1).match(reg);
@@ -44,7 +47,7 @@
 		$("#btnSubmit").click(function(){
 			var content=$.trim($("#content").val());
 			if(content.length==0){
-				$(".msg").html("请输入您的留言！");	
+				showMsg("请输入您的留言！");	
 				return ;
 			}
 			var chks =[];
@@ -53,7 +56,7 @@
             if($("#all").is(":checked"))
             	sendMsg('all',content);
             else if(chks.length==0)
-            	$(".msg").html("请选择留言对象！");	
+            	showMsg("请选择留言对象！");	
             else
             	sendMsg(chks.join('|'),content);
 		});
@@ -63,11 +66,11 @@
 			$(".msg").html("留言发送中...");	
 			$.getJSON('sendMsg',data,function(ret){
 				if(ret.errcode=="0") {
-					$(".msg").html("恭喜您，留言发送成功！");	
+					showMsg("恭喜您，留言发送成功！");	
 					$("#content").val("");
 				}	
 				else
-					$(".msg").html(ret.errmsg);
+					showMsg(ret.errmsg);
 			});
 		}
 	</script>

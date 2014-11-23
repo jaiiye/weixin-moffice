@@ -1,0 +1,13 @@
+<div class="content">
+    <ul class="table-view">
+	<#list list as m>
+	 	<li class="table-view-cell">
+	 		  <p>
+            	[${m.createDate?string("yyyy-MM-dd HH:mm")}]
+            	&nbsp;${m.fromNickName}
+	          </p>
+			  <img  src="${m.picUrl!}" width='200' height='200' border="0"></a>
+		</li>
+	</#list>
+</ul>
+</div>

@@ -26,3 +26,9 @@ label.sub-title{
 .table-view-cell .time span{
 	font-size:14px; color:#444;
 }
+
+
+ul.chklist {-webkit-padding-start: 0px;}
+ul.chklist li{font-size:14px; width: 80px; border:dashed 1px #ddd;padding:2px;margin: 0px 5px 5px 0px;}
+ul.chklist li{float:left;list-style:none;}
+div.line-bottom{height:1px;border-bottom:dashed 1px #ddd; padding:5px;}

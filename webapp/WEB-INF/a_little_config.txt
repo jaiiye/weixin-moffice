@@ -18,6 +18,6 @@ appSecret=Hvix3QfnYy690tvDdsJN7NkoEhj485X98H9Gpn8grU7VUxLOsFaAOGPrx9gTPF0s
 agentId=10
 
 #调度任务
-WeiXinTask.enable=true
+WeiXinTask.enable=false
 WeiXinTask.cron=* * * * *
 

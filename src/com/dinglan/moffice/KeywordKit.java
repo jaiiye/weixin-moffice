@@ -45,7 +45,7 @@ public class KeywordKit {
 			outMsg.setContent(str);
 			
 		} else if (content.equals("2")) { //最新公告
-			Page<Stimulate> list = Stimulate.me.paginate(1, 5);
+			List<Stimulate> list = Stimulate.me.list(1, 5);
 			return processStimulateList(list, inMsg);
 			
 		} else if (content.equals("3")) { //最新动态
@@ -154,15 +154,15 @@ public class KeywordKit {
 		return outMsg;
 	}
 
-	private static OutMsg processStimulateList(Page<Stimulate> list,
+	private static OutMsg processStimulateList(List<Stimulate> list,
 			InTextMsg inMsg) {
 		String url=ApiConfig.getUrl()+"share/getNew?id=";
 		OutNewsMsg outMsg = new OutNewsMsg(inMsg);
-		for (Stimulate m : list.getList()) {
-			outMsg.addNews(m.get("TITLE").toString(),
-					m.get("TITLE").toString(),
+		for (Stimulate m : list) {
+			outMsg.addNews(m.get("title").toString(),
+					m.get("title").toString(),
 					"http://upload.df.cnhubei.com/2012/1226/1356464487344.jpg",
-					url+m.getStr("ID"));
+					url+m.getStr("id"));
 		}
 		return outMsg; 
 	}

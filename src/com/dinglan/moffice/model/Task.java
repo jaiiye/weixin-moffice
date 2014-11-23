@@ -78,5 +78,19 @@ public class Task extends Model<Task> {
 	public Task getCountById(String id){
 		return this.findFirst(String.format(sqlCount,id));
 	}
+	
+	public Task stop(String id){
+		Task model= Task.me.findById(id);
+		if(model != null){
+			List<Task> list =listByParentId(id);
+			for(Task sub : list){
+				sub.set("state", 1);
+				sub.update();
+			}
+			model.set("state", 1);
+			model.update();
+		}
+		return model;
+	}
 }
 

@@ -31,9 +31,9 @@ public class TaskController extends com.jfinal.core.Controller {
 		String id=this.getPara("id");
 		Actor actor=this.current();
 		Task model= Task.me.findById(id);
-		if(model.get("fromUserId").equals(actor.id)) model.put("own","true");
-		if(model.get("state").equals(1)) model.put("stop","true");
-			
+		boolean own=model.get("fromUserId").equals(actor.id);
+		model.put("own",own?"true":"false");
+		
 		List<TaskDetail> list= TaskDetail.me.list(model.get("id").toString());
 		
 		this.setAttr("model", model);
@@ -76,11 +76,7 @@ public class TaskController extends com.jfinal.core.Controller {
 	public void stopTask(){
 		//Actor actor=this.current();
 		String id=this.getPara("id");
-		Task model= Task.me.findById(id);
-		if(!model.equals(null)){
-			model.set("state", 1);
-			model.update();
-		}
+		Task model= Task.me.stop(id);
 		this.renderJson(model);
 	}
 	
@@ -117,12 +113,13 @@ public class TaskController extends com.jfinal.core.Controller {
 	 * 将通知任务记录到数据库中，异步发送
 	 */
 	private void notify(TaskDetail detail){
+		Actor actor=CacheHelper.getActorById(detail.getStr("fromUserId"));
 		JsonTextMsg msg=new JsonTextMsg();
 		msg.agentid=ApiConfig.getAgentId();
 		msg.touser=detail.getStr("toUserId");
 		msg.safe="0";
 		msg.content=String.format("[%1$s]对您的任务做了反馈，内容为：%2$s",
-		CacheHelper.getActorById(detail.getStr("fromUserId")),detail.get("content"));		
+		actor.name,detail.get("content"));		
 		
 		Notice model=new Notice();
 		model.set("content", msg.toString());
