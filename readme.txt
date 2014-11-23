@@ -2,6 +2,9 @@
 =============================================================
 1.对包名进展整理，将业务和微信sdk进行分离；
 2.将企业号agentid独立成配置选项；
+3.首页实现根据movestart,moveend实现虚拟click;
+4.将留言也没重构为ratchet模板；
+5.将validate提示颜色设置为red,更友好一点；
 
 2014.11.20
 =============================================================
@@ -44,15 +47,76 @@ SELECT * FROM core_employee WHERE stateType=0 AND (job LIKE '%经理%' OR job LI
 2.加密算法有问题（加密后再解密，和原名文，不一致）
      自己增加了方法，进行修正，微信自己的加密方法仍然不知道；
 	 
-2014-11-17 17:05:50
-<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName>
-<FromUserName><![CDATA[15991890112]]></FromUserName>
-<CreateTime>1416304944</CreateTime>
-<MsgType><![CDATA[location]]></MsgType>
-<Location_X>34.233128</Location_X>
-<Location_Y>108.902191</Location_Y>
-<Scale>15</Scale>
-<Label><![CDATA[陕西省西安市雁塔区科技路37号海星城市广场A座(科技路金鹰购物中心东侧、世纪金花西侧)]]></Label>
-<MsgId>4587033601933049999</MsgId>
-<AgentID>10</AgentID>
-</xml>
+/*
+SQLyog 企业版 - MySQL GUI v8.14 
+MySQL - 5.0.90-community-nt : Database - jfinaluib
+*********************************************************************
+*/
+
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`jfinaluib` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `jfinaluib`;
+
+/*Table structure for table `wx_notice` */
+
+DROP TABLE IF EXISTS `wx_notice`;
+
+CREATE TABLE `wx_notice` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(20) default NULL,
+  `content` varchar(4000) default NULL,
+  `createId` varchar(20) default NULL,
+  `createTime` bigint(20) default NULL,
+  `startTime` bigint(20) default NULL,
+  `endTime` bigint(20) default NULL,
+  `state` int(11) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `wx_task` */
+
+DROP TABLE IF EXISTS `wx_task`;
+
+CREATE TABLE `wx_task` (
+  `id` int(11) NOT NULL auto_increment,
+  `fromUserId` varchar(20) default NULL,
+  `toUserId` varchar(20) default NULL,
+  `title` varchar(200) default NULL,
+  `content` varchar(400) default NULL,
+  `createTime` bigint(20) NOT NULL,
+  `state` int(11) NOT NULL,
+  `toUsers` varchar(400) default NULL,
+  `parentId` int(11) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `wx_taskdetail` */
+
+DROP TABLE IF EXISTS `wx_taskdetail`;
+
+CREATE TABLE `wx_taskdetail` (
+  `id` int(11) NOT NULL auto_increment,
+  `taskId` int(11) NOT NULL,
+  `fromUserId` varchar(20) NOT NULL,
+  `toUserId` varchar(20) NOT NULL,
+  `title` varchar(200) default NULL,
+  `content` varchar(400) default NULL,
+  `createTime` bigint(20) NOT NULL,
+  PRIMARY KEY  (`id`,`taskId`,`fromUserId`,`toUserId`,`createTime`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+	 
