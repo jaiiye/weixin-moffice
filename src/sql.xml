@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlGroup name="task" >
+      <sql id="count" para1="id"><![CDATA[
+      SELECT SUM(fromUser) AS fromUser,SUM(toUSer) AS toUser FROM(
+	   SELECT 'actor', COUNT(*) AS fromUser,0 AS toUser FROM wx_task WHERE State=0 AND parentId=0 AND toUserId='%1$s' UNION 
+	   SELECT 'actor',0 AS fromUSer, COUNT(*) AS toUser FROM wx_task WHERE State=0 AND parentId>0 AND toUserId='%1$s' 
+	 )xxx GROUP BY 'actor' 
+	  ]]></sql>
+</sqlGroup>

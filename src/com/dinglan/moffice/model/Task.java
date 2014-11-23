@@ -2,15 +2,13 @@ package com.dinglan.moffice.model;
 
 import java.util.Date;
 import java.util.List;
+import com.jfinal.ext.plugin.sqlinxml.SqlKit;
 
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
 
 @SuppressWarnings("serial")
 public class Task extends Model<Task> {
-	private String sqlCount="SELECT SUM(fromUser) AS fromUser,SUM(toUSer) AS toUser FROM("
-+" SELECT 'actor', COUNT(*) AS fromUser,0 AS toUser FROM wx_task WHERE State=0 AND parentId=0 AND toUserId='%1$s' UNION " 
-+" SELECT 'actor',0 AS fromUSer, COUNT(*) AS toUser FROM wx_task WHERE State=0 AND parentId>0 AND toUserId='%1$s' )xxx GROUP BY 'actor' ";
 	public static final Task me = new Task();
 	
 	public Task create(Actor from,List<Actor> actors,String title,String content)
@@ -76,7 +74,7 @@ public class Task extends Model<Task> {
 		return list;
 	}
 	public Task getCountById(String id){
-		return this.findFirst(String.format(sqlCount,id));
+		return this.findFirst(String.format(SqlKit.sql("task.count"),id));
 	}
 	
 	public Task stop(String id){

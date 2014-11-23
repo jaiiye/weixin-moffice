@@ -15,10 +15,13 @@ import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
-import com.jfinal.plugin.Cron4jPlugIn;
+import com.jfinal.ext.plugin.cron.Cron4jPlugin;
 import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
+import com.jfinal.ext.plugin.sqlinxml.SqlInXmlPlugin;
+import com.jfinal.ext.plugin.tablebind.AutoTableBindPlugin;
+import com.jfinal.ext.route.AutoBindRoutes;
 
 public class WeixinConfig extends JFinalConfig {
 	
@@ -37,10 +40,13 @@ public class WeixinConfig extends JFinalConfig {
 	}
 	
 	public void configRoute(Routes me) {
+		//me.add(new AutoBindRoutes());	//自动扫描
+		
 		me.add("/qy", QyController.class);
 		me.add("/api", ApiController.class);
 		me.add("/share", ShareController.class);
 		me.add("/task", TaskController.class);
+		
 	}
 	
 	public void configPlugin(Plugins me) {
@@ -52,15 +58,12 @@ public class WeixinConfig extends JFinalConfig {
 		C3p0Plugin c3p0Plugin = new C3p0Plugin(getProperty("jdbcUrl"), getProperty("userName"), getProperty("password").trim());
 		me.add(c3p0Plugin);
 		
-		//配置任务
-		Cron4jPlugIn cron4jPlugIn = new Cron4jPlugIn();
-	    if (getPropertyToBoolean("WeiXinTask.enable") == true)
-	        cron4jPlugIn.addTask(getProperty("WeiXinTask.cron"), new NoticeTask());
-	    me.add(cron4jPlugIn);
-	    
+		
+		
 		// 配置ActiveRecord插件
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
 		me.add(arp);
+		
 		arp.addMapping("core_employee", User.class);
 		arp.addMapping("core_stimulate", Stimulate.class);
 		
@@ -69,6 +72,22 @@ public class WeixinConfig extends JFinalConfig {
 		arp.addMapping("wx_task", Task.class);
 		arp.addMapping("wx_taskDetail", TaskDetail.class);
 		arp.addMapping("wx_notice", Notice.class);
+		
+		
+		/*
+		AutoTableBindPlugin atbp = new AutoTableBindPlugin(c3p0Plugin);   
+		atbp.autoScan(false);
+		me.add(atbp);
+		*/
+		
+		//配置任务
+		Cron4jPlugin cron4jPlugIn = new Cron4jPlugin();
+	    me.add(cron4jPlugIn);
+	    
+	    //sqlXml
+	    SqlInXmlPlugin sqlInXmlPlugin = new SqlInXmlPlugin();
+	    me.add(sqlInXmlPlugin);
+	    
 	}
 	
 	public void configInterceptor(Interceptors me) {
