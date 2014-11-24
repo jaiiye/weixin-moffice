@@ -68,7 +68,7 @@ public class KeywordKit {
 		} else if (content.equals("91")) { //我的任务单统计
 			String id=inMsg.getFromUserName();
 			Task model= Task.me.getCountById(id);
-			String str=String.format("您的任务单统计：\n派遣中的任务:%1$s\n待完成的任务%2$s",
+			String str=String.format("您的任务单统计：\n派遣中的任务：%1$s\n待完成的任务：%2$s",
 					model.get("fromUser"),model.get("toUser"));
 			outMsg.setContent(str);
 		} else if (content.equals("01")) { //数据统计

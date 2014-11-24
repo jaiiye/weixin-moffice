@@ -32,6 +32,7 @@ public class ApiController extends Controller {
 	public void createMenu() {
 		String jsonStr=this.getPara("menu");
 		ApiResult apiResult = MenuApi.createMenu(ApiConfig.getAgentId(),jsonStr);
+		System.out.println(apiResult);
 		if (apiResult.isSucceed())
 			renderText(apiResult.getJson());
 		else

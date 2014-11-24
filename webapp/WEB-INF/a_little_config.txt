@@ -1,7 +1,7 @@
 # 使用的数据库类型，根据db.type的值，下面对应类型的数据库连接要配置正确
 db.type = mysql
 
-jdbcUrl = jdbc:mysql://127.0.0.1:3306/jfinaluib?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull
+jdbcUrl = jdbc:mysql://192.168.2.100:3306/oa?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull
 userName = test
 password = test
 

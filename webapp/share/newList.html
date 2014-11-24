@@ -1,9 +1,10 @@
 <div class="content">
     <ul class="table-view">
-	<#list list as share>
+	<#list list as m>
 	 	<li class="table-view-cell">
-			${new.TITLE!}
-			${new.CONTENT!}
+			${m.title!}
+			<p>${m.createDate}</p>
+			${m.content!}
 		</li>
 	</#list>
 </ul>

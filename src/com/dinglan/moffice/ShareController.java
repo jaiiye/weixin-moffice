@@ -68,9 +68,9 @@ public class ShareController extends Controller{
 	 * 取得公告
 	 */
 	public void newList() {
-		List<Stimulate> list =Stimulate.me.list(1,40);
+		List<Stimulate> list =Stimulate.me.list(1,10);
 		this.setAttr("list", list);
-		this.render("/share/new.html");
+		this.render("/share/newList.html");
 	}
 	/*
 	 * 取得公告

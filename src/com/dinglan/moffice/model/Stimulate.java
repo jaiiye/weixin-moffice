@@ -9,7 +9,7 @@ import com.jfinal.plugin.activerecord.Page;
 public class Stimulate extends Model<Stimulate>{
 	public static final Stimulate me = new Stimulate();
 	public List<Stimulate> list(int pageNumber, int pageSize) {
-		Page<Stimulate> pages = paginate(pageNumber, pageSize, "SELECT id,title,content ", "FROM core_stimulate ORDER BY publishdatetime desc");
+		Page<Stimulate> pages = paginate(pageNumber, pageSize, "SELECT id,title,content,publishdatetime AS createDate  ", "FROM core_stimulate ORDER BY publishdatetime desc");
 		return pages.getList();
 	}
 }
