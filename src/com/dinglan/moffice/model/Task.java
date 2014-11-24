@@ -10,7 +10,7 @@ import com.jfinal.plugin.activerecord.Page;
 @SuppressWarnings("serial")
 public class Task extends Model<Task> {
 	public static final Task me = new Task();
-	
+	private String fields="SELECT CASE WHEN parentId=0 THEN id ELSE parentId END AS id,id AS rawId,parentId,fromUserId,toUserId,title,content,createTime,state,toUsers ";
 	public Task create(Actor from,List<Actor> actors,String title,String content)
 	{
 		Date date=new Date();
@@ -61,7 +61,7 @@ public class Task extends Model<Task> {
 		if(sign.equals("to"))   sql+=" where state=0 and parentId>0 and toUserId='"+id+"'";
 		if(sign.equals("stop")) sql+=" where state=1 and toUserId='"+id+"'";
 		
-		Page<Task> pages = paginate(pageNumber, pageSize, "select *",sql+" order by id desc" );
+		Page<Task> pages = paginate(pageNumber, pageSize,fields,sql+" order by id desc" );
 		return wrapList(pages);
 	}
 	private static List<Task> wrapList(Page<Task> pages){

@@ -29,6 +29,9 @@ public class WeixinConfig extends JFinalConfig {
 		super.loadPropertyFile("a_little_config.txt");
 		me.setDevMode(getPropertyToBoolean("devMode", false));
 		
+		//配置统一异常页面
+		me.setError404View("/common/404.html");
+		
 		// 配置微信 API 相关常量
 		ApiConfig.setDevMode(me.getDevMode());
 		ApiConfig.setUrl(getProperty("url"));
@@ -37,6 +40,7 @@ public class WeixinConfig extends JFinalConfig {
 		ApiConfig.setAppSecret(getProperty("appSecret"));
 		ApiConfig.setAgentId(getProperty("agentId"));
 		ApiConfig.setEncodingAESKey(getProperty("encodingAESKey"));
+		
 	}
 	
 	public void configRoute(Routes me) {
