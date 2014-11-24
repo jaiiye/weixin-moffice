@@ -119,12 +119,12 @@
 	};
 	function updateCount(){
 		$("#msg").html("更新中...");
-		$.getJSON('/task/count?token='+token,{},function(ret){
+		$.getJSON('count?token='+token,{},function(ret){
 			refresh(ret);
 		});
 	};
 	function pullCount(){
-		$.getJSON('/task/count?token='+token,{},function(ret){
+		$.getJSON('count?token='+token,{},function(ret){
 			refresh(ret);
 			//setTimeout(pullCount,5000);  //自动刷新  
 		});
