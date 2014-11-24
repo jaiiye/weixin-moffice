@@ -6,6 +6,7 @@
  function sendMsg(id){
 	 toUserId=id;
 	 $("#form1").show();
+	 debugger;
  };
 
  //提交反馈；
@@ -43,12 +44,12 @@
  </header>
  
  <div class="content">
- 		<form id="form1" class="input-group" style="display:none">
+ 		<div id="form1" class="input-group" style="display:none">
 		  <label class="sub-title">反馈内容：</label>
 		  <textarea id="content" rows="2"></textarea>
-		  <button ontouchend='submitMsg()' class="btn btn-positive btn-block">提交反馈</button>
+		  <button type='button' ontouchend='submitMsg()' class="btn btn-positive btn-block">提交反馈</button>
 		  <div style="height:1000px;"></div>
-		</form>
+		</div>
 		
   		<div class="content-padded">
 		  <p>
