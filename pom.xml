@@ -110,7 +110,7 @@
 		    <artifactId>weixin-corp</artifactId>  
 		        <version>0.1</version>  
 		        <scope>system</scope>  
-		        <systemPath>F:/Media/weixin-moffice/doc/weixin-corp-0.1-SNAPSHOT.jar</systemPath>  
+		        <systemPath>${project.basedir}\doc\weixin-corp-0.1-SNAPSHOT.jar</systemPath>  
 		</dependency>  
 	</dependencies>
 
