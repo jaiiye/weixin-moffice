@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.dinglan.moffice.kit.ActorKit;
 import com.dinglan.moffice.model.Actor;
 import com.dinglan.moffice.model.CacheHelper;
 import com.dinglan.moffice.model.Contact;

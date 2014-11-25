@@ -1,5 +1,6 @@
 package com.dinglan.moffice;
 
+import com.dinglan.moffice.kit.ShareKit;
 import com.dinglan.weixin.api.ApiConfig;
 import com.dinglan.weixin.kit.HttpKit;
 import com.dinglan.weixin.kit.WxCryptUtil;

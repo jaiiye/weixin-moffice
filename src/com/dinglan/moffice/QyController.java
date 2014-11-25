@@ -1,4 +1,5 @@
 package com.dinglan.moffice;
+import com.dinglan.moffice.kit.KeywordKit;
 import com.dinglan.weixin.msg.InFollowEvent;
 import com.dinglan.weixin.msg.InImageMsg;
 import com.dinglan.weixin.msg.InLinkMsg;

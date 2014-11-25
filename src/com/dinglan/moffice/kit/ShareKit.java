@@ -1,4 +1,4 @@
-package com.dinglan.moffice;
+package com.dinglan.moffice.kit;
 
 import com.dinglan.moffice.model.Share;
 import com.dinglan.weixin.msg.InImageMsg;
