@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.dinglan.ext.kit.SqlKit;
 import com.dinglan.ext.plugin.TableBind;
+import com.dinglan.moffice.kit.CacheHelper;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
 

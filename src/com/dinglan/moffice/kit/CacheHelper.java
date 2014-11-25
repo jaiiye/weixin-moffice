@@ -1,4 +1,4 @@
-package com.dinglan.moffice.model;
+package com.dinglan.moffice.kit;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.dinglan.moffice.model.Actor;
+import com.dinglan.moffice.model.User;
 import com.jfinal.plugin.ehcache.CacheKit;
 
 public class CacheHelper {

@@ -1,6 +1,5 @@
 package com.dinglan.moffice.kit;
 import com.dinglan.moffice.model.Actor;
-import com.dinglan.moffice.model.CacheHelper;
 
 public class ActorKit {
 	
