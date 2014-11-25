@@ -81,11 +81,6 @@
 			<version>1.8</version>
 		</dependency>
 		<dependency>
-			<groupId>com.jfinal</groupId>
-			<artifactId>jfinal-ext</artifactId>
-			<version>3.1.2</version>
-		</dependency>
-		<dependency>
 			<groupId>it.sauronsoftware.cron4j</groupId>
 			<artifactId>cron4j</artifactId>
 			<version>2.2.5</version>
@@ -110,7 +105,14 @@
 		    <artifactId>weixin-corp</artifactId>  
 		        <version>0.1</version>  
 		        <scope>system</scope>  
-		        <systemPath>${project.basedir}\doc\weixin-corp-0.1-SNAPSHOT.jar</systemPath>  
+		        <systemPath>${project.basedir}\doc\weixin-corp-0.0.1-SNAPSHOT.jar</systemPath>  
+		</dependency>  
+		<dependency>  
+		    <groupId>com.dinglan</groupId>  
+		    <artifactId>dinglan-ext</artifactId>  
+		        <version>0.1</version>  
+		        <scope>system</scope>  
+		        <systemPath>${project.basedir}\doc\dinglan-ext-0.0.1-SNAPSHOT.jar</systemPath>  
 		</dependency>  
 	</dependencies>
 
