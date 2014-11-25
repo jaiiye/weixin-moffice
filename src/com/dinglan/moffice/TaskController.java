@@ -111,7 +111,7 @@ public class TaskController extends com.jfinal.core.Controller {
 		for (Task t : list) {
 			JsonTextMsg msg = new JsonTextMsg();
 			msg.agentid = ApiConfig.getAgentId();
-			msg.touser = task.getStr("toUserId");
+			msg.touser = t.getStr("toUserId");
 			msg.safe = "0";
 			msg.content = String.format("[%1$s]给您指派了任务，内容为：%2$s",
 					t.get("fromUserName"), t.get("content"));
