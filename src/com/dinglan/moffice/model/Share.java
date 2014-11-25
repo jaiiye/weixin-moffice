@@ -2,11 +2,13 @@ package com.dinglan.moffice.model;
 
 import java.util.List;
 
+import com.dinglan.ext.plugin.TableBind;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
 
 @SuppressWarnings("serial")
+@TableBind(tableName="wx_share")
 public class Share extends Model<Share> {
 	public static final Share me = new Share();
 	public Page<Share> paginateImage(int pageNumber, int pageSize) {

@@ -3,10 +3,12 @@ package com.dinglan.moffice.model;
 import java.util.Date;
 import java.util.List;
 
+import com.dinglan.ext.plugin.TableBind;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Model;
 
 @SuppressWarnings("serial")
+@TableBind(tableName="wx_contact")
 public class Contact extends Model<Contact> {
 	public static final Contact me = new Contact();
 	private String sql="from wx_contact where fromUserId='%1$s' order by id desc";

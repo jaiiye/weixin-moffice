@@ -11,6 +11,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
+import com.dinglan.ext.plugin.HttpTestCase;
 import com.dinglan.moffice.WeixinConfig;
 import com.dinglan.weixin.api.ApiConfig;
 import com.dinglan.weixin.kit.WxCryptUtil;
@@ -23,7 +24,7 @@ import com.dinglan.weixin.kit.WxCryptUtil;
  * invoke	调用url
  * findAttrAfterInvoke	action调用之后getAttr的值
  */
-public class QyTestCase extends BaseTestCase<WeixinConfig> {
+public class QyTestCase extends HttpTestCase<WeixinConfig> {
 	
 	String tpl="<xml><ToUserName><![CDATA[wxb21adacab9c87404]]></ToUserName>\n<Encrypt><![CDATA[%1$s]]></Encrypt>\n<AgentID><![CDATA[10]]></AgentID>\n</xml>";
 	

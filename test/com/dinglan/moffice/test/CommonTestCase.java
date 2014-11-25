@@ -5,14 +5,14 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.dinglan.ext.plugin.HttpTestCase;
 import com.dinglan.moffice.WeixinConfig;
-import com.dinglan.moffice.test.util.MockServletContext;
 import com.dinglan.weixin.api.ApiConfig;
 import com.dinglan.weixin.api.ApiResult;
 import com.dinglan.weixin.api.UserApi;
 import com.dinglan.weixin.kit.WxCryptUtil;
 
-public class CommonTestCase extends BaseTestCase<WeixinConfig> {
+public class CommonTestCase extends HttpTestCase<WeixinConfig> {
 	String timestamp="1416187783";
 	String nonce="1766739666";
 	String msg_signature="c4eb00b041686352e79086a41431eebe60b682c0";
@@ -82,14 +82,5 @@ public class CommonTestCase extends BaseTestCase<WeixinConfig> {
 		String code="jvu__HxiuuuHeDA04xWpGdYCTmUq2kvV827iKWWnZXD3SvIxTkVarNsXgbIra3YisecAZjLRWVD-1YmKKakn_A";
 		ApiResult ret=UserApi.getUserByCode("10", code);
 		System.out.println(ret.getJson()+":"+ret.get("UserId"));
-	}
-	
-	@Test
-	@SuppressWarnings("rawtypes")
-	public void getPath(){
-		Class cls =MockServletContext.class;
-		System.out.println(cls.getResource("").getFile());
-		System.out.println(cls.getResource(".").getFile());
-		System.out.println(cls.getResource("/").getFile());
 	}
 }

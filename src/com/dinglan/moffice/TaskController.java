@@ -115,7 +115,7 @@ public class TaskController extends com.jfinal.core.Controller {
 			msg.safe = "0";
 			msg.content = String.format("[%1$s]给您指派了任务，内容为：%2$s",
 					t.get("fromUserName"), t.get("content"));
-			Notice model = new Notice();
+			Notice model = Notice.me.create();
 			model.set("content", msg.toString());
 			model.save();
 		}
@@ -133,7 +133,7 @@ public class TaskController extends com.jfinal.core.Controller {
 		msg.content = String.format("[%1$s]对您的任务做了反馈，内容为：%2$s", actor.name,
 				detail.get("content"));
 
-		Notice model = new Notice();
+		Notice model = Notice.me.create();
 		model.set("content", msg.toString());
 		model.save();
 	}

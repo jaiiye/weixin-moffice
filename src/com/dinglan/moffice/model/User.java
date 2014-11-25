@@ -1,9 +1,11 @@
 package com.dinglan.moffice.model;
 
+import com.dinglan.ext.plugin.TableBind;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
 
 @SuppressWarnings("serial")
+@TableBind(tableName="core_employee")
 public class User  extends Model<User>{
 
 	private String select=" select `name`,phone,stateType ";

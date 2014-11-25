@@ -4,9 +4,10 @@ package com.dinglan.moffice.test;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.dinglan.ext.plugin.HttpTestCase;
 import com.dinglan.moffice.WeixinConfig;
 
-public class ShareTestCase extends BaseTestCase<WeixinConfig> {
+public class ShareTestCase extends HttpTestCase<WeixinConfig> {
 	@Ignore
 	public void getCommitList(){
 		String url = "/share/commentList";

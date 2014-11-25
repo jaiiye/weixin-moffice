@@ -2,9 +2,10 @@ package com.dinglan.moffice.test;
 
 import org.junit.Test;
 
+import com.dinglan.ext.plugin.HttpTestCase;
 import com.dinglan.moffice.WeixinConfig;
 
-public class TaskTestCase extends BaseTestCase<WeixinConfig> {
+public class TaskTestCase extends HttpTestCase<WeixinConfig> {
 	
 	private String token= "15991890112";
 	@Test

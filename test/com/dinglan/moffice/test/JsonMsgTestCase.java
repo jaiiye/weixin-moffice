@@ -1,5 +1,6 @@
 package com.dinglan.moffice.test;
 
+import com.dinglan.ext.plugin.HttpTestCase;
 import com.dinglan.moffice.WeixinConfig;
 import com.dinglan.weixin.api.ApiResult;
 import com.dinglan.weixin.api.MessageApi;
@@ -7,7 +8,7 @@ import com.dinglan.weixin.msg.JsonTextMsg;
 
 import org.junit.Test;
 
-public class JsonMsgTestCase extends BaseTestCase<WeixinConfig> {
+public class JsonMsgTestCase extends HttpTestCase<WeixinConfig> {
 	@Test
 	public void getJsonTextMsg(){
 		

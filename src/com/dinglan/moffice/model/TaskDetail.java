@@ -3,9 +3,11 @@ package com.dinglan.moffice.model;
 import java.util.Date;
 import java.util.List;
 
+import com.dinglan.ext.plugin.TableBind;
 import com.jfinal.plugin.activerecord.Model;
 
 @SuppressWarnings("serial")
+@TableBind(tableName="wx_taskDetail")
 public class TaskDetail extends Model<TaskDetail> {
 	public static final TaskDetail me = new TaskDetail();
 	public TaskDetail  create(String taskId,String fromUserId,String toUserId,String title,String content)

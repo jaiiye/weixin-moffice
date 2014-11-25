@@ -2,14 +2,16 @@ package com.dinglan.moffice.model;
 
 import java.util.Date;
 import java.util.List;
-import com.jfinal.ext.plugin.sqlinxml.SqlKit;
 
+import com.dinglan.ext.kit.SqlKit;
+import com.dinglan.ext.plugin.TableBind;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
 
 @SuppressWarnings("serial")
+@TableBind(tableName="wx_task")
 public class Task extends Model<Task> {
-	public static final Task me = new Task();
+	public static Task me = new Task();
 	private String fields="SELECT CASE WHEN parentId=0 THEN id ELSE parentId END AS id,id AS rawId,parentId,fromUserId,toUserId,title,content,createTime,state,toUsers ";
 	public Task create(Actor from,List<Actor> actors,String title,String content)
 	{
